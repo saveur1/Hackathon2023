@@ -90,7 +90,7 @@ def barchart_with_line():
 
 def MacroEconomicHome():
     st.title(":house: Macro Economic Aggregate")
-    st.markdown("<style>div.block-container{padding-top:1.5rem;}</style>", unsafe_allow_html=True)
+    st.markdown("<style>div.block-container{padding-top:1rem;}</style>", unsafe_allow_html=True)
 
     MacroTable()
     
@@ -116,7 +116,7 @@ excel_file = 'CPI.xlsx'
 def all():
    st.title("CONSUMER PRICE INDEX (All Rwanda)")
    st.subheader("Base: 2014; Reference: February 2014=100")
-   st.markdown("<style>div.block-container{padding-top:1.5rem;}</style>", unsafe_allow_html=True)
+   st.markdown("<style>div.block-container{padding-top:1rem;}</style>", unsafe_allow_html=True)
    # Select the worksheet you want to display
    sheet_name = 'rw'
 
@@ -161,6 +161,7 @@ def Urban():
 
   st.header("CONSUMER PRICE INDEX (All Urban)")
   st.subheader("Base: 2014; Reference: February 2014=100")
+  st.markdown("<style>div.block-container{padding-top:1rem;}</style>", unsafe_allow_html=True)
     
   # Create a multiselect widget
   selected_columns = st.multiselect('Filter: ',df.columns,default=["YEAR","GENERAL INDEX (CPI)","Food and non-alcoholic beverages","   Bread and cereals","Meat","Milk, cheese and eggs","Vegetables","Non-alcoholic beverages","Alcoholic beverages and tobacco","Clothing and footwear","Housing, water, electricity, gas and other fuel","Furnishing, household and equipment","Health"])
@@ -199,6 +200,7 @@ def Rural():
 
   st.header("CONSUMER PRICE INDEX (All Rural)")
   st.subheader("Base: 2014; Reference: February 2014=100")
+  st.markdown("<style>div.block-container{padding-top:1rem;}</style>", unsafe_allow_html=True)
     
   # Create a multiselect widget
   selected_columns = st.multiselect('Filter: ',df.columns,default=["YEAR","GENERAL INDEX (CPI)","Food and non-alcoholic beverages","   Bread and cereals","Meat","Milk, cheese and eggs","Vegetables","Non-alcoholic beverages","Alcoholic beverages and tobacco","Clothing and footwear","Housing, water, electricity, gas and other fuel","Furnishing, household and equipment","Health"])
@@ -236,6 +238,7 @@ def Other_Indices():
 
   st.header("CONSUMER PRICE INDEX (Other indices), Urban only")
   st.subheader("Base: 2014; Reference: February 2014=100")
+  st.markdown("<style>div.block-container{padding-top:1rem;}</style>", unsafe_allow_html=True)
     
   # Create a multiselect widget
   selected_columns = st.multiselect('Filter: ',df.columns,default=["YEAR","Local Goods Index","Local Food and non-alcoholic beverages","Local Housing, water, electricity, gas and other fuels","Local Transport","Imported Goods Index","Imported Food and non-alcoholic beverages","Imported Furnishing, household equipment","Imported Transport","Fresh Products(1) index","Energy index","General Index excluding fresh Products and energy(2)"])
@@ -272,6 +275,7 @@ def sideBar():
       selected= om.option_menu(
          menu_title="CONSUMER PRICE INDEX",
          options=["Home","Urban","Rural","Other_Indices","All Rwanda"],
+         icons=["house","wallet-fill","view-stacked","three-dots","card-text"],
          menu_icon="cast",
          default_index = 0
       )
