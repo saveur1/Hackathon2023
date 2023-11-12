@@ -266,6 +266,7 @@ def Other_Indices():
 # ALL RWANDA
 def sideBar():
    #side bar
+   st.sidebar.image("logo/logo2.png")
 
    with st.sidebar:
       selected= om.option_menu(

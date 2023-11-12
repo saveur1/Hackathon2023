@@ -132,7 +132,7 @@ st.sidebar.header("GDP Filters")
 
 def MacroEconomicHome():
     MacroTable()
-    
+
     # GDPs Trending Chart
     gdps_trends_chart()
 
@@ -147,7 +147,7 @@ def MacroEconomicHome():
         barchart_with_line()
 
 
-
+MacroEconomicHome()
 #theme
 hide_st_style="""
 
