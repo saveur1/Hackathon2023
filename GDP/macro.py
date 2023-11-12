@@ -11,7 +11,7 @@ excel_file = 'GDP.xlsx'
 # ALL RWANDA
 def all():
   # Select the worksheet you want to display
-  sheet_name = 'in billion Rwf'
+  sheet_name = 'Macro-economic aggregates'
 
    # Read the worksheet into a Pandas DataFrame
   df = pd.read_excel(excel_file, sheet_name)
@@ -20,7 +20,7 @@ def all():
   st.header("Macro-economic aggregates")
 
   # Create a multiselect widget
-  selected_columns = st.multiselect('Filter: ',df.columns,default=["YEAR","GROSS DOMESTIC PRODUCT (GDP)","INDUSTRY","SERVICES","TAXES LESS SUBSIDIES ON PRODUCTS"])
+  selected_columns = st.multiselect('Filter: ',df.columns,default=["YEAR","GDP at current prices","GDP at constant 2017 prices","Implicit GDP deflator","GDP per head (in '000 Rwf)","GDP per head (in current US dollars)","Gross Domestic Product at current prices","Factor income from abroad, net","Gross National Disposible Income","Less Final consumption expenditure","Gross National Saving"])
 
   # Filter the DataFrame based on the selected columns
   df_filtered = df[selected_columns]
@@ -39,11 +39,9 @@ def all():
 
 
    # Create a multiselect widget
-  selected_columns = st.multiselect('Filter: ',df.columns,default=["GROSS DOMESTIC PRODUCT (GDP)","INDUSTRY","SERVICES","TAXES LESS SUBSIDIES ON PRODUCTS"])
+  selected_columns = st.multiselect('Filter: ',df.columns,default=["GDP at current prices"])
 
-  fig = px.line(df, x='YEAR', y=selected_columns, title='Gross Domestic product by Kind of Activity at current prices ( in billion Rwf)')
-
-  left,right=st.columns(2)
-  left.plotly_chart(fig,use_container_width=True)
-  right.plotly_chart(fig,use_container_width=True)
+  fig = px.line(df, x='YEAR', y=selected_columns, title='Consumption by Year (Source: National Institute of Statistics of Rwanda)')
+  
+  st.plotly_chart(fig,use_container_width=True)
 all()
