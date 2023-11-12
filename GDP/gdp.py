@@ -25,9 +25,12 @@ def all():
   df4 = pd.read_excel(excel_file, table2a)
   df5 = pd.read_excel(excel_file, table2b)
   df6 = pd.read_excel(excel_file, table3)
-  df2 = df2.apply(lambda x: x * 100)
+  #df2 = df2.apply(lambda x: x * 100)
+  #df4 = df4.apply(lambda x: x * 100)
+  df2 = df2.apply(lambda x: x * 100 if x.name != 'YEAR' else x)
+  df4 = df4.apply(lambda x: x * 100 if x.name != 'YEAR' else x)
 
-  st.header("Gross Domestic product by Kind of Acgittivity")
+  st.header("Gross Domestic product by Kind of Activity")
   table1,table1A,table2=st.columns(3)
   table2A,table2B,table3=st.columns(3)
   
@@ -153,30 +156,30 @@ def all():
     selected_columns2 = st.multiselect('Filter: ',df2.columns,default=["GROSS DOMESTIC PRODUCT (GDP)","INDUSTRY","SERVICES","TAXES LESS SUBSIDIES ON PRODUCTS"],key=11)
     
     fig= px.line(df2, x='YEAR', y=selected_columns2, title='Gross Domestic product by Kind of Activity Shares at current prices ( percentages)')
-    fig.update_layout(yaxis_title="Rwf in billion")
+    fig.update_layout(yaxis_title="Percentage")
     graph1A.plotly_chart(fig,use_container_width=True)
     
   with graph2:
     selected_columns3 = st.multiselect('Filter: ',df3.columns,default=["GROSS DOMESTIC PRODUCT (GDP)","INDUSTRY","SERVICES","TAXES LESS SUBSIDIES ON PRODUCTS"],key=12)
-    fig2 = px.line(df3, x='YEAR', y=selected_columns3, title='Gross Domestic product by Kind of Activity Shares at current prices ( percentages)')
-    fig2.update_layout(yaxis_title="Percentage")
+    fig2 = px.line(df3, x='YEAR', y=selected_columns3, title='Gross Domestic product by Kind of Activity at constant 2017 prices(in billion Rwf) ')
+    fig2.update_layout(yaxis_title="billion Rwf")
     graph2.plotly_chart(fig2,use_container_width=True)
     
   with graph2A:
-    selected_columns4 = st.multiselect('Filter: ',df4.columns,default=["GROSS DOMESTIC PRODUCT (GDP)","INDUSTRY","SERVICES","TAXES LESS SUBSIDIES ON PRODUCTS"],key=13)
-    fig2 = px.line(df4, x='YEAR', y=selected_columns4, title='Gross Domestic product by Kind of Activity Growth rates at constant 2017 prices ( percentage change from previous year)')
+    selected_columns4 = st.multiselect('Filter: ',df4.columns,default=["GROSS DOMESTIC PRODUCT (GDP)"],key=13)
+    fig2 = px.bar(df4, x='YEAR', y=selected_columns4, title='Gross Domestic product by Kind of Activity Growth rates at constant 2017 prices ( percentage change from previous year)')
     fig2.update_layout(yaxis_title="Percentage")
     graph2A.plotly_chart(fig2,use_container_width=True)
     
   with graph2B:
-    selected_columns5 = st.multiselect('Filter: ',df5.columns,default=["GROSS DOMESTIC PRODUCT (GDP)","INDUSTRY","SERVICES","TAXES LESS SUBSIDIES ON PRODUCTS"],key=14)
-    fig2 = px.line(df5, x='YEAR', y=selected_columns5, title='Gross Domestic product by Kind of Activity Growth rates at constant 2017 prices ( Percentage points)')
+    selected_columns5 = st.multiselect('Filter: ',df5.columns,default=["GROSS DOMESTIC PRODUCT (GDP)"],key=14)
+    fig2 = px.bar(df5, x='YEAR', y=selected_columns5, title='Gross Domestic product by Kind of Activity Growth rates at constant 2017 prices ( Percentage points)')
     fig2.update_layout(yaxis_title="Percentage")
     graph2B.plotly_chart(fig2,use_container_width=True)
     
   with graph3:
-    selected_columns6 = st.multiselect('Filter: ',df6.columns,default=["GROSS DOMESTIC PRODUCT (GDP)","INDUSTRY","SERVICES","TAXES LESS SUBSIDIES ON PRODUCTS"],key=15)
-    fig2 = px.line(df6, x='YEAR', y=selected_columns6, title='Gross Domestic product by Kind of Activity Deflators (2017=100)')
+    selected_columns6 = st.multiselect('Filter: ',df6.columns,default=["GROSS DOMESTIC PRODUCT (GDP)"],key=15)
+    fig2 = px.bar(df6, x='YEAR', y=selected_columns6, title='Gross Domestic product by Kind of Activity Deflators (2017=100)')
     fig2.update_layout(yaxis_title="Percentage")
     graph3.plotly_chart(fig2,use_container_width=True)
 all()
