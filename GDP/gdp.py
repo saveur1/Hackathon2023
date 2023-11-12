@@ -27,7 +27,7 @@ def all():
   df6 = pd.read_excel(excel_file, table3)
   df2 = df2.apply(lambda x: x * 100)
 
-  st.header("Gross Domestic product by Kind of Activity")
+  st.header("Gross Domestic product by Kind of Acgittivity")
   table1,table1A,table2=st.columns(3)
   table2A,table2B,table3=st.columns(3)
   
