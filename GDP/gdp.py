@@ -16,6 +16,7 @@ def all():
   table2= "2017 prices in billion"
   table2a= "2017 prices previous year"
   table2b= "2017 prices percentage point"
+  table3 = "Deflators"
 
   # Read the worksheet into a Pandas DataFrame
   df1 = pd.read_excel(excel_file, table1)
@@ -23,11 +24,13 @@ def all():
   df3 = pd.read_excel(excel_file, table2)
   df4 = pd.read_excel(excel_file, table2a)
   df5 = pd.read_excel(excel_file, table2b)
+  df6 = pd.read_excel(excel_file, table3)
   df2 = df2.apply(lambda x: x * 100)
 
   st.header("Gross Domestic product by Kind of Activity")
-  table1,table1A=st.columns(2)
-  table2,table2A,table2B=st.columns(3)
+  table1,table1A,table2=st.columns(3)
+  table2A,table2B,table3=st.columns(3)
+  
 
   with table1:
     st.subheader("Table 1")
@@ -111,6 +114,23 @@ def all():
       df5_filtered['YEAR'] = df5_filtered['YEAR'].dt.date
       # Display the filtered DataFrame in Streamlit
       st.dataframe(df5_filtered,use_container_width=True)
+      
+  with table3:
+    st.subheader("Table 3")
+    st.caption("Gross Domestic product by Kind of Activity Deflators (2017=100)")
+    with st.expander("Expand"):
+      # Create a multiselect widget
+      selected_columns6 = st.multiselect('Filter: ',df6.columns,default=["YEAR","GROSS DOMESTIC PRODUCT (GDP)","INDUSTRY","SERVICES","TAXES LESS SUBSIDIES ON PRODUCTS"],key=6)
+
+      # Filter the DataFrame based on the selected columns
+      df6_filtered = df6[selected_columns6]
+      # Convert the year column to a Pandas datetime object
+      df6_filtered['YEAR'] = pd.to_datetime(df6['YEAR'])
+
+      # Extract the date from the Pandas datetime object
+      df6_filtered['YEAR'] = df6_filtered['YEAR'].dt.date
+      # Display the filtered DataFrame in Streamlit
+      st.dataframe(df6_filtered,use_container_width=True)
     
   
   ## Graph
@@ -120,7 +140,7 @@ def all():
 
   graph1,graph1A=st.columns(2)
   graph2,graph2A=st.columns(2)
-  graph2B,graph2C=st.columns(2)
+  graph2B,graph3=st.columns(2)
   # Create a multiselect widget
   with graph1:
     selected_columns1 = st.multiselect('Filter: ',df1.columns,default=["GROSS DOMESTIC PRODUCT (GDP)","INDUSTRY","SERVICES","TAXES LESS SUBSIDIES ON PRODUCTS"],key=0)
@@ -153,4 +173,10 @@ def all():
     fig2 = px.line(df5, x='YEAR', y=selected_columns5, title='Gross Domestic product by Kind of Activity Growth rates at constant 2017 prices ( Percentage points)')
     fig2.update_layout(yaxis_title="Percentage")
     graph2B.plotly_chart(fig2,use_container_width=True)
+    
+  with graph3:
+    selected_columns6 = st.multiselect('Filter: ',df6.columns,default=["GROSS DOMESTIC PRODUCT (GDP)","INDUSTRY","SERVICES","TAXES LESS SUBSIDIES ON PRODUCTS"],key=15)
+    fig2 = px.line(df6, x='YEAR', y=selected_columns6, title='Gross Domestic product by Kind of Activity Deflators (2017=100)')
+    fig2.update_layout(yaxis_title="Percentage")
+    graph3.plotly_chart(fig2,use_container_width=True)
 all()
