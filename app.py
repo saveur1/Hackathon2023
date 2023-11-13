@@ -179,16 +179,13 @@ def kindOfActivity():
     with st.expander("Expand"):
       # Create a multiselect widget
       selected_columns = st.multiselect('Filter: ',df1.columns,default=["YEAR","GROSS DOMESTIC PRODUCT (GDP)","INDUSTRY","SERVICES","TAXES LESS SUBSIDIES ON PRODUCTS"])
+      # Convert the Year column to datetime format
+      df1["YEAR"] = pd.to_datetime(df1["YEAR"], format="%Y")
 
-      # Filter the DataFrame based on the selected columns
-      df_filtered = df1[selected_columns]
-      # Convert the year column to a Pandas datetime object
-      df_filtered['YEAR'] = pd.to_datetime(df1['YEAR'])
-
-      # Extract the date from the Pandas datetime object
-      df_filtered['YEAR'] = df_filtered['YEAR'].dt.date
+      # Format the Year column as YYYY
+      df1["YEAR"] = df1["YEAR"].dt.strftime("%Y")
       # Display the filtered DataFrame in Streamlit
-      st.dataframe(df_filtered,use_container_width=True)
+      st.dataframe(df1,use_container_width=True)
   with table1A:
     st.subheader("Table 1A")
     st.caption("Gross Domestic product by Kind of Activity Shares at current prices ( percentages)")
@@ -196,15 +193,13 @@ def kindOfActivity():
       # Create a multiselect widget
       selected_columns2 = st.multiselect('Filter: ',df2.columns,default=["YEAR","GROSS DOMESTIC PRODUCT (GDP)","INDUSTRY","SERVICES","TAXES LESS SUBSIDIES ON PRODUCTS"], key=2)
 
-      # Filter the DataFrame based on the selected columns
-      df2_filtered = df2[selected_columns2]
-      # Convert the year column to a Pandas datetime object
-      df2_filtered['YEAR'] = pd.to_datetime(df2['YEAR'])
+      # Convert the Year column to datetime format
+      df2["YEAR"] = pd.to_datetime(df2["YEAR"], format="%Y")
 
-      # Extract the date from the Pandas datetime object
-      df2_filtered['YEAR'] = df2_filtered['YEAR'].dt.date
+      # Format the Year column as YYYY
+      df2["YEAR"] = df2["YEAR"].dt.strftime("%Y")
       # Display the filtered DataFrame in Streamlit
-      st.dataframe(df2_filtered,use_container_width=True)
+      st.dataframe(df2,use_container_width=True)
     
   with table2:
     st.subheader("Table 2")
@@ -213,15 +208,13 @@ def kindOfActivity():
       # Create a multiselect widget
       selected_columns3 = st.multiselect('Filter: ',df3.columns,default=["YEAR","GROSS DOMESTIC PRODUCT (GDP)","INDUSTRY","SERVICES","TAXES LESS SUBSIDIES ON PRODUCTS"],key=3)
 
-      # Filter the DataFrame based on the selected columns
-      df3_filtered = df3[selected_columns3]
-      # Convert the year column to a Pandas datetime object
-      df3_filtered['YEAR'] = pd.to_datetime(df3['YEAR'])
+       # Convert the Year column to datetime format
+      df3["YEAR"] = pd.to_datetime(df3["YEAR"], format="%Y")
 
-      # Extract the date from the Pandas datetime object
-      df3_filtered['YEAR'] = df3_filtered['YEAR'].dt.date
+      # Format the Year column as YYYY
+      df3["YEAR"] = df3["YEAR"].dt.strftime("%Y")
       # Display the filtered DataFrame in Streamlit
-      st.dataframe(df3_filtered,use_container_width=True)
+      st.dataframe(df3,use_container_width=True)
   with table2A:
     st.subheader("Table 2A")
     st.caption("Gross Domestic product by Kind of Activity Growth rates at constant 2017 prices ( percentage change from previous year)")
@@ -229,15 +222,13 @@ def kindOfActivity():
       # Create a multiselect widget
       selected_columns4 = st.multiselect('Filter: ',df4.columns,default=["YEAR","GROSS DOMESTIC PRODUCT (GDP)","INDUSTRY","SERVICES","TAXES LESS SUBSIDIES ON PRODUCTS"], key=4)
 
-      # Filter the DataFrame based on the selected columns
-      df4_filtered = df4[selected_columns4]
-      # Convert the year column to a Pandas datetime object
-      df4_filtered['YEAR'] = pd.to_datetime(df4['YEAR'])
+      # Convert the Year column to datetime format
+      df4["YEAR"] = pd.to_datetime(df4["YEAR"], format="%Y")
 
-      # Extract the date from the Pandas datetime object
-      df4_filtered['YEAR'] = df4_filtered['YEAR'].dt.date
+      # Format the Year column as YYYY
+      df4["YEAR"] = df4["YEAR"].dt.strftime("%Y")
       # Display the filtered DataFrame in Streamlit
-      st.dataframe(df4_filtered,use_container_width=True)
+      st.dataframe(df4,use_container_width=True)
     
   with table2B:
     st.subheader("Table 2B")
@@ -246,15 +237,13 @@ def kindOfActivity():
       # Create a multiselect widget
       selected_columns5 = st.multiselect('Filter: ',df5.columns,default=["YEAR","GROSS DOMESTIC PRODUCT (GDP)","INDUSTRY","SERVICES","TAXES LESS SUBSIDIES ON PRODUCTS"],key=5)
 
-      # Filter the DataFrame based on the selected columns
-      df5_filtered = df5[selected_columns5]
-      # Convert the year column to a Pandas datetime object
-      df5_filtered['YEAR'] = pd.to_datetime(df5['YEAR'])
+      # Convert the Year column to datetime format
+      df5["YEAR"] = pd.to_datetime(df5["YEAR"], format="%Y")
 
-      # Extract the date from the Pandas datetime object
-      df5_filtered['YEAR'] = df5_filtered['YEAR'].dt.date
+      # Format the Year column as YYYY
+      df5["YEAR"] = df5["YEAR"].dt.strftime("%Y")
       # Display the filtered DataFrame in Streamlit
-      st.dataframe(df5_filtered,use_container_width=True)
+      st.dataframe(df5,use_container_width=True)
       
   with table3:
     st.subheader("Table 3")
@@ -263,15 +252,13 @@ def kindOfActivity():
       # Create a multiselect widget
       selected_columns6 = st.multiselect('Filter: ',df6.columns,default=["YEAR","GROSS DOMESTIC PRODUCT (GDP)","INDUSTRY","SERVICES","TAXES LESS SUBSIDIES ON PRODUCTS"],key=6)
 
-      # Filter the DataFrame based on the selected columns
-      df6_filtered = df6[selected_columns6]
-      # Convert the year column to a Pandas datetime object
-      df6_filtered['YEAR'] = pd.to_datetime(df6['YEAR'])
+      # Convert the Year column to datetime format
+      df6["YEAR"] = pd.to_datetime(df6["YEAR"], format="%Y")
 
-      # Extract the date from the Pandas datetime object
-      df6_filtered['YEAR'] = df6_filtered['YEAR'].dt.date
+      # Format the Year column as YYYY
+      df6["YEAR"] = df6["YEAR"].dt.strftime("%Y")
       # Display the filtered DataFrame in Streamlit
-      st.dataframe(df6_filtered,use_container_width=True)
+      st.dataframe(df6,use_container_width=True)
     
   
   ## Graph
@@ -477,7 +464,7 @@ def Other_Indices():
    # Create a multiselect widget
   selected_columns = st.multiselect('Filter: ',df.columns,default=["Local Goods Index","Imported Goods Index","Fresh Products(1) index","Energy index"])
 
-  fig = px.line(df, x='YEAR', y=selected_columns, title='Consumption by Year (Source: National Institute of Statistics of Rwanda)')
+  fig = px.bar(df, x='YEAR', y=selected_columns, title='Consumption by Year (Source: National Institute of Statistics of Rwanda)')
   
   st.plotly_chart(fig,use_container_width=True)
   
