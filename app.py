@@ -545,25 +545,25 @@ def weights():
       tablew3,tablew4=st.columns(2)
       with tablew1:
             st.subheader("Weights (All Rwanda) TABLE")
-            st.caption("Gross Domestic product by Kind of Activity at current prices ( in billion Rwf)")
+            st.caption("Overall Consumption in Rwanda")
             with st.expander("""Expand"""): 
                   st.dataframe(weight1)
                   
       with tablew2:
             st.subheader("Weights (Urban) TABLE")
-            st.caption("Gross Domestic product by Kind of Activity at current prices ( in billion Rwf)")
+            st.caption("Consumption Trends in Urban Rwanda")
             with st.expander("""Expand"""): 
                   st.dataframe(weight1)
                   
       with tablew3:
             st.subheader("Weights (Rular) TABLE")
-            st.caption("Gross Domestic product by Kind of Activity at current prices ( in billion Rwf)")
+            st.caption("Consumption Pattern in Rural Rwanda")
             with st.expander("""Expand"""): 
                   st.dataframe(weight1)
                   
       with tablew4:
             st.subheader("Weights (Other indices) TABLE")
-            st.caption("Gross Domestic product by Kind of Activity at current prices ( in billion Rwf)")
+            st.caption("Consumption Analysis Based on Other Indices")
             with st.expander("""Expand"""): 
                   st.dataframe(weight1)
       allw,urbanw=st.columns(2)
