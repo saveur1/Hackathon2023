@@ -1,10 +1,43 @@
-# Streamlit-Dashboard-Descriptive-Analytics-with-MYSQL
+# **Rwanda Economic Dashboard: An Interactive Visualization of GDP and CPI Trends**
 
-What is descriptive analytics?
+This interactive dashboard presents economic data for Rwanda, utilizing the Python framework Streamlit. The dashboard incorporates two key datasets: GDP and CPI data from the National Institute of Statistics of Rwanda (NISR) 
 
-Descriptive analytics is a type of data analytics that looks at past data to give an account of what has happened. Results are typically presented in reports, dashboards, bar charts and other visualizations that are easily understood.
+## Data Sources
 
-Descriptive statistics provide simple summaries about the sample and about the observations that have been made. Such summaries may be either quantitative, i.e. summary statistics, or visual, i.e. simple-to-understand graphs. These summaries may either form the basis of the initial description of the data as part of a more extensive statistical analysis, or they may be sufficient in and of themselves for a particular investigation.
+* GDP data: National Institute of Statistics of Rwanda (NISR): https://www.statistics.gov.rw/publication/1914
+* CPI data: National Institute of Statistics of Rwanda (NISR): https://www.statistics.gov.rw/publication/1873
+
+## Features
+
+* Visualizes trends in GDP and CPI over time
+* Allows users to explore and analyze data interactively
+* Provides insights into the economic performance of Rwanda
+
+## Technology Stack
+
+* Streamlit: Python framework for creating interactive data visualizations
+* Pandas: Python library for data manipulation and analysis
+* Matplotlib: Python library for data visualization
+
+## Usage
+
+1. Clone the repository
+2. Install Streamlit:
+   ```
+   pip install streamlit
+   ```
+3. install all project dependices:
+   ```
+   pip install -r requirements.txt
+   ```
+4. Run the dashboard:
+   ```
+   streamlit run app.py
+   ```
+
+## License
+
+**MIT License**
 
 ## Running this Projects with Pip Virtual Environments and Pip Requirements
 
@@ -13,12 +46,6 @@ Streamlit projects are typically run using a Pip and virtual environment to isol
 ### Installing Pip and venv
 
 To manage virtual environments and install Pip requirements, you'll need to install Pip
-
-Bash
-
-```
-python3 -m venv venv
-```
 
 ### Creating a Virtual Environment
 
