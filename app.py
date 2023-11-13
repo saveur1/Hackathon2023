@@ -6,7 +6,7 @@ import plotly.graph_objs as go
 import plotly.express as px
 import streamlit_option_menu as om
 st.set_page_config(page_title="GDP&CPI Dashboard",layout="wide",page_icon="🇷🇼")
-st.title(":house: NISR GDP & CPI Dashboard")
+st.title("""GDP & CPI Dashboard""")
 
 # Style
 with open('style.css')as f:
@@ -20,7 +20,7 @@ df1 = df1.rename(columns=lambda x: x.strip())
 
 #Macro Economic Table
 def MacroTable():
-    with st.expander("GDP Summary Table"):
+    with st.expander("Rwanda's GDP Macroeconomic Aggregates: A Historical Perspective from 1999 to 2022 Table"):
         showData = st.multiselect('Filter: ', df1.columns, default=[
                             "Years", "GDP at current prices", "Growth rate-cp", "Growth rate", "Implicit GDP deflator", "Growth rate-d", "GDP per head (in '000 Rwf)", "GDP per head (in current US dollars)"])
         st.dataframe(df1[showData],use_container_width=True)
@@ -29,7 +29,7 @@ def gdps_trends_chart():
     selected_columns = st.multiselect("Filters:", df1.columns, default=[
             "GDP at current prices", "GDP at constant 2017 prices"])
     fig = px.line(df1, x="Years", y=selected_columns)
-    fig.update_layout(yaxis_title="in billion Rwf",legend=dict(yanchor="bottom", y=-1, xanchor="center", x=0.5))
+    fig.update_layout(title="Charting Rwanda's Economic Rise: A Line Graph Perspective on GDP from 1999 to 2022",yaxis_title="in billion Rwf",legend=dict(yanchor="bottom", y=-1, xanchor="center", x=0.5))
     st.plotly_chart(fig, use_container_width=True)
 
 def donut_chart():
@@ -127,7 +127,7 @@ def expanditure_on_gdp():
     st.plotly_chart(fig, use_container_width=True)
 
 def MacroEconomicHome():
-    st.subheader(":house: Macro Economic Aggregate")
+    st.subheader(":house: Rwanda's GDP Macroeconomic Aggregates")
     st.markdown("<style>div.block-container{padding-top:1rem;}</style>", unsafe_allow_html=True)
 
     MacroTable()
@@ -136,7 +136,7 @@ def MacroEconomicHome():
     gdps_trends_chart()
 
     st.subheader(""" 
-    Gross Domestic Product 2022
+    Rwanda's GDP Highlights in 2022: A Visual Representation
     """)
 
     col1,col2 = st.columns((2))
@@ -316,33 +316,38 @@ def kindOfActivity():
 
 # Load the Excel workbook
 excel_file = 'CPI.xlsx'
-
+allRwanda_Weights= 'allRwanda_Weights'
+urban_Weights= 'urban_Weights'
+rural_Weights= 'rural_Weights'
+otherIndices_Weights= 'otherIndices_Weights'
+weight1 = pd.read_excel(excel_file, allRwanda_Weights)
+weight2 = pd.read_excel(excel_file, urban_Weights)
+weight3 = pd.read_excel(excel_file, rural_Weights)
+weight4 = pd.read_excel(excel_file, otherIndices_Weights)
 # ALL RWANDA
 def all():
-   st.subheader("CONSUMER PRICE INDEX (All Rwanda)")
+   st.subheader("Rwanda's CPI from 2009 to 2022")
    st.info("Base: 2014; Reference: February 2014=100")
    st.markdown("<style>div.block-container{padding-top:1rem;}</style>", unsafe_allow_html=True)
    # Select the worksheet you want to display
    sheet_name = 'rw'
-
+   
    # Read the worksheet into a Pandas DataFrame
    df = pd.read_excel(excel_file, sheet_name)
-      
-   # Create a multiselect widget
-   selected_columns = st.multiselect('Filter: ',df.columns,default=["YEAR","GENERAL INDEX (CPI)","Food and non-alcoholic beverages","   Bread and cereals","Meat","Milk, cheese and eggs","Vegetables","Non-alcoholic beverages","Alcoholic beverages and tobacco","Clothing and footwear","Housing, water, electricity, gas and other fuel","Furnishing, household and equipment","Health"])
+   with st.expander("""Rwanda's CPI from 2009 to 2022 TABLE"""):  
+      # Create a multiselect widget
+      selected_columns = st.multiselect('Filter: ',df.columns,default=["YEAR","GENERAL INDEX (CPI)","Food and non-alcoholic beverages","   Bread and cereals","Meat","Milk, cheese and eggs","Vegetables","Non-alcoholic beverages","Alcoholic beverages and tobacco","Clothing and footwear","Housing, water, electricity, gas and other fuel","Furnishing, household and equipment","Health"])
 
-   # Filter the DataFrame based on the selected columns
-   df_filtered = df[selected_columns]
-   # Convert the year column to a Pandas datetime object
-   df_filtered['YEAR'] = pd.to_datetime(df['YEAR'])
+      # Filter the DataFrame based on the selected columns
+      df_filtered = df[selected_columns]
+      # Convert the year column to a Pandas datetime object
+      df_filtered['YEAR'] = pd.to_datetime(df['YEAR'])
 
-   # Extract the date from the Pandas datetime object
-   df_filtered['YEAR'] = df_filtered['YEAR'].dt.date
-   # Display the filtered DataFrame in Streamlit
-
-   st.dataframe(df_filtered)
-
-   st.subheader("Graph")
+      # Extract the date from the Pandas datetime object
+      df_filtered['YEAR'] = df_filtered['YEAR'].dt.date
+      # Display the filtered DataFrame in 
+      st.dataframe(df_filtered)
+   
    column_names = df.columns.tolist()
    column_names.remove('YEAR')
 
@@ -350,7 +355,7 @@ def all():
    # Create a multiselect widget
    selected_columns = st.multiselect('Filter: ',df.columns,default=["GENERAL INDEX (CPI)"])
 
-   fig = px.line(df, x='YEAR', y=selected_columns, title='Consumption by Year (Source: National Institute of Statistics of Rwanda)')
+   fig = px.line(df, x='YEAR', y=selected_columns, title='Tracking Rwandas Inflationary Landscape: CPI Analysis from 2009 to 2022')
    fig.update_layout(yaxis_title="Percentage",legend=dict(yanchor="bottom", y=-1, xanchor="center", x=0.5))
    st.plotly_chart(fig,use_container_width=True)
 
@@ -364,25 +369,24 @@ def Urban():
   df = pd.read_excel(excel_file, sheet_name)
 
 
-  st.subheader("CONSUMER PRICE INDEX (All Urban)")
+  st.subheader("Urban CPI in Rwanda: 2009 to 2022")
   st.info("Base: 2014; Reference: February 2014=100")
   st.markdown("<style>div.block-container{padding-top:1rem;}</style>", unsafe_allow_html=True)
     
-  # Create a multiselect widget
-  selected_columns = st.multiselect('Filter: ',df.columns,default=["YEAR","GENERAL INDEX (CPI)","Food and non-alcoholic beverages","   Bread and cereals","Meat","Milk, cheese and eggs","Vegetables","Non-alcoholic beverages","Alcoholic beverages and tobacco","Clothing and footwear","Housing, water, electricity, gas and other fuel","Furnishing, household and equipment","Health"])
+  with st.expander("""Urban CPI in Rwanda: 2009 to 2022 TABLE"""):  
+      # Create a multiselect widget
+      selected_columns = st.multiselect('Filter: ',df.columns,default=["YEAR","GENERAL INDEX (CPI)","Food and non-alcoholic beverages","   Bread and cereals","Meat","Milk, cheese and eggs","Vegetables","Non-alcoholic beverages","Alcoholic beverages and tobacco","Clothing and footwear","Housing, water, electricity, gas and other fuel","Furnishing, household and equipment","Health"])
 
-  # Filter the DataFrame based on the selected columns
-  df_filtered = df[selected_columns]
-  # Convert the year column to a Pandas datetime object
-  df_filtered['YEAR'] = pd.to_datetime(df['YEAR'])
+      # Filter the DataFrame based on the selected columns
+      df_filtered = df[selected_columns]
+      # Convert the year column to a Pandas datetime object
+      df_filtered['YEAR'] = pd.to_datetime(df['YEAR'])
 
-  # Extract the date from the Pandas datetime object
-  df_filtered['YEAR'] = df_filtered['YEAR'].dt.date
-  # Display the filtered DataFrame in Streamlit
-
-  st.dataframe(df_filtered)
+      # Extract the date from the Pandas datetime object
+      df_filtered['YEAR'] = df_filtered['YEAR'].dt.date
+      # Display the filtered DataFrame in 
+      st.dataframe(df_filtered)
   
-  st.subheader("Graph")
   column_names = df.columns.tolist()
   column_names.remove('YEAR')
 
@@ -390,7 +394,7 @@ def Urban():
    # Create a multiselect widget
   selected_columns = st.multiselect('Filter: ',df.columns,default=["GENERAL INDEX (CPI)"])
 
-  fig = px.line(df, x='YEAR', y=selected_columns, title='Consumption by Year (Source: National Institute of Statistics of Rwanda)')
+  fig = px.line(df, x='YEAR', y=selected_columns, title='Deciphering Urban Consumption Dynamics in Rwanda: A Focus on CPI Trends from 2009 to 2022')
   fig.update_layout(yaxis_title="Percentage",legend=dict(yanchor="bottom", y=-1, xanchor="center", x=0.5))
   st.plotly_chart(fig,use_container_width=True)
 
@@ -403,32 +407,31 @@ def Rural():
   df = pd.read_excel(excel_file, sheet_name)
 
 
-  st.subheader("CONSUMER PRICE INDEX (All Rural)")
+  st.subheader("Rural CPI in Rwanda: 2009 to 2022)")
   st.info("Base: 2014; Reference: February 2014=100")
   st.markdown("<style>div.block-container{padding-top:1rem;}</style>", unsafe_allow_html=True)
     
-  # Create a multiselect widget
-  selected_columns = st.multiselect('Filter: ',df.columns,default=["YEAR","GENERAL INDEX (CPI)","Food and non-alcoholic beverages","   Bread and cereals","Meat","Milk, cheese and eggs","Vegetables","Non-alcoholic beverages","Alcoholic beverages and tobacco","Clothing and footwear","Housing, water, electricity, gas and other fuel","Furnishing, household and equipment","Health"])
+  with st.expander("""Rural CPI in Rwanda: 2009 to 2022 TABLE"""):  
+      # Create a multiselect widget
+      selected_columns = st.multiselect('Filter: ',df.columns,default=["YEAR","GENERAL INDEX (CPI)","Food and non-alcoholic beverages","   Bread and cereals","Meat","Milk, cheese and eggs","Vegetables","Non-alcoholic beverages","Alcoholic beverages and tobacco","Clothing and footwear","Housing, water, electricity, gas and other fuel","Furnishing, household and equipment","Health"])
 
-  # Filter the DataFrame based on the selected columns
-  df_filtered = df[selected_columns]
-  # Convert the year column to a Pandas datetime object
-  df_filtered['YEAR'] = pd.to_datetime(df['YEAR'])
+      # Filter the DataFrame based on the selected columns
+      df_filtered = df[selected_columns]
+      # Convert the year column to a Pandas datetime object
+      df_filtered['YEAR'] = pd.to_datetime(df['YEAR'])
 
-  # Extract the date from the Pandas datetime object
-  df_filtered['YEAR'] = df_filtered['YEAR'].dt.date
-  # Display the filtered DataFrame in Streamlit
-
-  st.dataframe(df_filtered)
+      # Extract the date from the Pandas datetime object
+      df_filtered['YEAR'] = df_filtered['YEAR'].dt.date
+      # Display the filtered DataFrame in 
+      st.dataframe(df_filtered)
   
-  st.subheader("Graph")
   column_names = df.columns.tolist()
   column_names.remove('YEAR')
 
    # Create a multiselect widget
   selected_columns = st.multiselect('Filter: ',df.columns,default=["GENERAL INDEX (CPI)"])
 
-  fig = px.line(df, x='YEAR', y=selected_columns, title='Consumption by Year (Source: National Institute of Statistics of Rwanda)')
+  fig = px.line(df, x='YEAR', y=selected_columns, title='Unveiling Rural Consumption Dynamics in Rwanda: A Focus on CPI Trends from 2009 to 2022')
   fig.update_layout(yaxis_title="Percentage",legend=dict(yanchor="bottom", y=-1, xanchor="center", x=0.5))
   st.plotly_chart(fig,use_container_width=True)
 # ALL RWANDA
@@ -441,25 +444,24 @@ def Other_Indices():
   df = pd.read_excel(excel_file, sheet_name)
 
 
-  st.subheader("CONSUMER PRICE INDEX (Other indices), Urban only")
+  st.subheader("Other indices CPI in Rwanda: 2009 to 2022, Urban only")
   st.info("Base: 2014; Reference: February 2014=100")
   st.markdown("<style>div.block-container{padding-top:1rem;}</style>", unsafe_allow_html=True)
     
-  # Create a multiselect widget
-  selected_columns = st.multiselect('Filter: ',df.columns,default=["YEAR","Local Goods Index","Local Food and non-alcoholic beverages","Local Housing, water, electricity, gas and other fuels","Local Transport","Imported Goods Index","Imported Food and non-alcoholic beverages","Imported Furnishing, household equipment","Imported Transport","Fresh Products(1) index","Energy index","General Index excluding fresh Products and energy(2)"])
-
-  # Filter the DataFrame based on the selected columns
-  df_filtered = df[selected_columns]
-  # Convert the year column to a Pandas datetime object
-  df_filtered['YEAR'] = pd.to_datetime(df['YEAR'])
-
-  # Extract the date from the Pandas datetime object
-  df_filtered['YEAR'] = df_filtered['YEAR'].dt.date
-  # Display the filtered DataFrame in Streamlit
-
-  st.dataframe(df_filtered)
   
-  st.subheader("Graph")
+
+  with st.expander("""Other indices CPI in Rwanda: 2009 to 2022 TABLE"""):  
+     # Create a multiselect widget
+      selected_columns = st.multiselect('Filter: ',df.columns,default=["YEAR","Local Goods Index","Local Food and non-alcoholic beverages","Local Housing, water, electricity, gas and other fuels","Local Transport","Imported Goods Index","Imported Food and non-alcoholic beverages","Imported Furnishing, household equipment","Imported Transport","Fresh Products(1) index","Energy index","General Index excluding fresh Products and energy(2)"])
+      # Filter the DataFrame based on the selected columns
+      df_filtered = df[selected_columns]
+      # Convert the year column to a Pandas datetime object
+      df_filtered['YEAR'] = pd.to_datetime(df['YEAR'])
+
+      # Extract the date from the Pandas datetime object
+      df_filtered['YEAR'] = df_filtered['YEAR'].dt.date
+      # Display the filtered DataFrame in 
+      st.dataframe(df_filtered)
   column_names = df.columns.tolist()
   column_names.remove('YEAR')
 
@@ -467,12 +469,79 @@ def Other_Indices():
    # Create a multiselect widget
   selected_columns = st.multiselect('Filter: ',df.columns,default=["Local Goods Index","Imported Goods Index","Fresh Products(1) index","Energy index"])
 
-  fig = px.bar(df, x='YEAR', y=selected_columns, title='Consumption by Year (Source: National Institute of Statistics of Rwanda)')
+  fig = px.bar(df, x='YEAR', y=selected_columns, title='Complementing CPI Analysis with Additional Indices: A Comprehensive Look at Rwandas Consumption Trends')
   fig.update_layout(yaxis_title="Percentage",legend=dict(yanchor="bottom", y=-1, xanchor="center", x=0.5))
   st.plotly_chart(fig,use_container_width=True)
   
 def Deflator():
      st.info("Deflator")
+     
+def weights():
+      tablew1,tablew2=st.columns(2)
+      tablew3,tablew4=st.columns(2)
+      with tablew1:
+            st.subheader("Overall Consumption in Rwanda Table")
+            st.caption("Overall Consumption in Rwanda")
+            with st.expander("""Expand"""): 
+                  st.dataframe(weight1)
+                  
+      with tablew2:
+            st.subheader("Consumption Trends in Urban Rwanda Table")
+            st.caption("Consumption Trends in Urban Rwanda")
+            with st.expander("""Expand"""): 
+                  st.dataframe(weight2)
+                  
+      with tablew3:
+            st.subheader("Consumption Pattern in Rural Rwanda Table")
+            st.caption("Consumption Pattern in Rural Rwanda")
+            with st.expander("""Expand"""): 
+                  st.dataframe(weight3)
+                  
+      with tablew4:
+            st.subheader("Consumption Analysis Based on Other Indices Table")
+            st.caption("Consumption Analysis Based on Other Indices")
+            with st.expander("""Expand"""): 
+                  st.dataframe(weight4)
+      allw,urbanw=st.columns(2)
+      rularw,otherw=st.columns(2)
+      with allw:
+            fig11 = px.bar(weight1, 
+                            x='Categories', 
+                            y='Weights',
+                            orientation="v", 
+                            title='Overall Consumption in Rwanda'
+                            )
+            fig11.update_layout(yaxis_title="Weights",legend=dict(yanchor="bottom", y=1, xanchor="right", x=0.5))
+            st.plotly_chart(fig11,use_container_width=True)
+      with urbanw:
+            fig11 = px.bar(weight2, 
+                            x='Categories', 
+                            y='Weights',
+                            orientation="v", 
+                            title='Consumption Trends in Urban Rwanda'
+                            )
+            fig11.update_layout(yaxis_title="Weights",legend=dict(yanchor="bottom", y=1, xanchor="right", x=0.5))
+            st.plotly_chart(fig11,use_container_width=True)
+            
+      with rularw:
+            fig11 = px.bar(weight3, 
+                            x='Categories', 
+                            y='Weights',
+                            orientation="v", 
+                            title='Consumption Pattern in Rural Rwanda'
+                            )
+            fig11.update_layout(yaxis_title="Weights",legend=dict(yanchor="bottom", y=1, xanchor="right", x=0.5))
+            st.plotly_chart(fig11,use_container_width=True)
+      with otherw:
+            fig11 = px.bar(weight4, 
+                            x='Categories', 
+                            y='Weights',
+                            orientation="v", 
+                            title='Consumption Analysis Based on Other Indices'
+                            )
+            fig11.update_layout(yaxis_title="Weights",legend=dict(yanchor="bottom", y=1, xanchor="right", x=0.5))
+            st.plotly_chart(fig11,use_container_width=True)
+     
 #SIDEBAR
 def cpi_dashboard():
     # Display CPI dashboard attributes
@@ -480,12 +549,13 @@ def cpi_dashboard():
     with st.sidebar:
        selected= om.option_menu(
           menu_title=None,
-          options=["All Rwanda","Urban","Rural","Other_Indices"],
+          options=["Weights","All Rwanda","Urban","Rural","Other_Indices"],
           icons=["house","wallet-fill","view-stacked","three-dots","card-text"],
           menu_icon="cast",
           default_index = 0
        )
-   
+    if selected=="Weights":
+       weights()
     if selected=="All Rwanda":
       all()
     if selected=="Urban":
@@ -501,7 +571,7 @@ def gdp_dashboard():
     with st.sidebar:
        selected= om.option_menu(
           menu_title=None,
-          options=["Macro economic aggregates","GDP BY Kind of activity","Deflator"],
+          options=["Macro economic aggregates","GDP BY Kind of activity","Expenditure GDP"],
           icons=["house","wallet-fill","view-stacked","three-dots","card-text"],
           menu_icon="cast",
           default_index = 0
@@ -510,7 +580,7 @@ def gdp_dashboard():
        MacroEconomicHome()   
     if selected=="GDP BY Kind of activity":
        kindOfActivity()
-    if selected=="Deflator":
+    if selected=="Expenditure GDP":
        Deflator()
 
 
