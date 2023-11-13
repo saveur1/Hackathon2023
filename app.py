@@ -312,7 +312,7 @@ def sideBar():
 
    with st.sidebar:
       selected= om.option_menu(
-         menu_title="CONSUMER PRICE INDEX",
+         menu_title=None,
          options=["Home","Urban","Rural","Other_Indices","All Rwanda"],
          icons=["house","wallet-fill","view-stacked","three-dots","card-text"],
          menu_icon="cast",
