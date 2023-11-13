@@ -20,7 +20,7 @@ df1 = df1.rename(columns=lambda x: x.strip())
 
 #Macro Economic Table
 def MacroTable():
-    with st.expander("GDP Summary Table"):
+    with st.expander("Rwanda's GDP Macroeconomic Aggregates: A Historical Perspective from 1999 to 2022 Table"):
         showData = st.multiselect('Filter: ', df1.columns, default=[
                             "Years", "GDP at current prices", "Growth rate-cp", "Growth rate", "Implicit GDP deflator", "Growth rate-d", "GDP per head (in '000 Rwf)", "GDP per head (in current US dollars)"])
         st.dataframe(df1[showData],use_container_width=True)
@@ -29,7 +29,7 @@ def gdps_trends_chart():
     selected_columns = st.multiselect("Filters:", df1.columns, default=[
             "GDP at current prices", "GDP at constant 2017 prices"])
     fig = px.line(df1, x="Years", y=selected_columns)
-    fig.update_layout(yaxis_title="in billion Rwf",legend=dict(yanchor="bottom", y=-1, xanchor="center", x=0.5))
+    fig.update_layout(title="Charting Rwanda's Economic Rise: A Line Graph Perspective on GDP from 1999 to 2022",yaxis_title="in billion Rwf",legend=dict(yanchor="bottom", y=-1, xanchor="center", x=0.5))
     st.plotly_chart(fig, use_container_width=True)
 
 def donut_chart():
@@ -127,7 +127,7 @@ def expanditure_on_gdp():
     st.plotly_chart(fig, use_container_width=True)
 
 def MacroEconomicHome():
-    st.subheader(":house: Macro Economic Aggregate")
+    st.subheader(":house: Rwanda's GDP Macroeconomic Aggregates")
     st.markdown("<style>div.block-container{padding-top:1rem;}</style>", unsafe_allow_html=True)
 
     MacroTable()
@@ -136,7 +136,7 @@ def MacroEconomicHome():
     gdps_trends_chart()
 
     st.subheader(""" 
-    Gross Domestic Product 2022
+    Rwanda's GDP Highlights in 2022: A Visual Representation
     """)
 
     col1,col2 = st.columns((2))
@@ -317,7 +317,13 @@ def kindOfActivity():
 # Load the Excel workbook
 excel_file = 'CPI.xlsx'
 allRwanda_Weights= 'allRwanda_Weights'
+urban_Weights= 'urban_Weights'
+rural_Weights= 'rural_Weights'
+otherIndices_Weights= 'otherIndices_Weights'
 weight1 = pd.read_excel(excel_file, allRwanda_Weights)
+weight2 = pd.read_excel(excel_file, urban_Weights)
+weight3 = pd.read_excel(excel_file, rural_Weights)
+weight4 = pd.read_excel(excel_file, otherIndices_Weights)
 # ALL RWANDA
 def all():
    st.subheader("Rwanda's CPI from 2009 to 2022")
@@ -341,73 +347,7 @@ def all():
       df_filtered['YEAR'] = df_filtered['YEAR'].dt.date
       # Display the filtered DataFrame in 
       st.dataframe(df_filtered)
-   #Weight function
-   def weights():
-      tablew1,tablew2=st.columns(2)
-      tablew3,tablew4=st.columns(2)
-      with tablew1:
-            st.subheader("Weights (All Rwanda) TABLE")
-            st.caption("Gross Domestic product by Kind of Activity at current prices ( in billion Rwf)")
-            with st.expander("""Expand"""): 
-                  st.dataframe(weight1)
-                  
-      with tablew2:
-            st.subheader("Weights (Urban) TABLE")
-            st.caption("Gross Domestic product by Kind of Activity at current prices ( in billion Rwf)")
-            with st.expander("""Expand"""): 
-                  st.dataframe(weight1)
-                  
-      with tablew3:
-            st.subheader("Weights (Rular) TABLE")
-            st.caption("Gross Domestic product by Kind of Activity at current prices ( in billion Rwf)")
-            with st.expander("""Expand"""): 
-                  st.dataframe(weight1)
-                  
-      with tablew4:
-            st.subheader("Weights (Other indices) TABLE")
-            st.caption("Gross Domestic product by Kind of Activity at current prices ( in billion Rwf)")
-            with st.expander("""Expand"""): 
-                  st.dataframe(weight1)
-      allw,urbanw=st.columns(2)
-      rularw,otherw=st.columns(2)
-      with allw:
-            fig11 = px.bar(weight1, 
-                            x='Categories', 
-                            y='Weights',
-                            orientation="v", 
-                            title='Weights (All Rwanda)'
-                            )
-            fig11.update_layout(yaxis_title="Weights",legend=dict(yanchor="bottom", y=1, xanchor="right", x=0.5))
-            st.plotly_chart(fig11,use_container_width=True)
-      with urbanw:
-            fig11 = px.bar(weight1, 
-                            x='Categories', 
-                            y='Weights',
-                            orientation="v", 
-                            title='Weights (Urban)'
-                            )
-            fig11.update_layout(yaxis_title="Weights",legend=dict(yanchor="bottom", y=1, xanchor="right", x=0.5))
-            st.plotly_chart(fig11,use_container_width=True)
-            
-      with rularw:
-            fig11 = px.bar(weight1, 
-                            x='Categories', 
-                            y='Weights',
-                            orientation="v", 
-                            title='Weights (rular)'
-                            )
-            fig11.update_layout(yaxis_title="Weights",legend=dict(yanchor="bottom", y=1, xanchor="right", x=0.5))
-            st.plotly_chart(fig11,use_container_width=True)
-      with otherw:
-            fig11 = px.bar(weight1, 
-                            x='Categories', 
-                            y='Weights',
-                            orientation="v", 
-                            title='Weights (Other Indices)'
-                            )
-            fig11.update_layout(yaxis_title="Weights",legend=dict(yanchor="bottom", y=1, xanchor="right", x=0.5))
-            st.plotly_chart(fig11,use_container_width=True)
-        
+   
    column_names = df.columns.tolist()
    column_names.remove('YEAR')
 
@@ -549,19 +489,19 @@ def weights():
             st.subheader("Consumption Trends in Urban Rwanda Table")
             st.caption("Consumption Trends in Urban Rwanda")
             with st.expander("""Expand"""): 
-                  st.dataframe(weight1)
+                  st.dataframe(weight2)
                   
       with tablew3:
             st.subheader("Consumption Pattern in Rural Rwanda Table")
             st.caption("Consumption Pattern in Rural Rwanda")
             with st.expander("""Expand"""): 
-                  st.dataframe(weight1)
+                  st.dataframe(weight3)
                   
       with tablew4:
             st.subheader("Consumption Analysis Based on Other Indices Table")
             st.caption("Consumption Analysis Based on Other Indices")
             with st.expander("""Expand"""): 
-                  st.dataframe(weight1)
+                  st.dataframe(weight4)
       allw,urbanw=st.columns(2)
       rularw,otherw=st.columns(2)
       with allw:
@@ -574,7 +514,7 @@ def weights():
             fig11.update_layout(yaxis_title="Weights",legend=dict(yanchor="bottom", y=1, xanchor="right", x=0.5))
             st.plotly_chart(fig11,use_container_width=True)
       with urbanw:
-            fig11 = px.bar(weight1, 
+            fig11 = px.bar(weight2, 
                             x='Categories', 
                             y='Weights',
                             orientation="v", 
@@ -584,7 +524,7 @@ def weights():
             st.plotly_chart(fig11,use_container_width=True)
             
       with rularw:
-            fig11 = px.bar(weight1, 
+            fig11 = px.bar(weight3, 
                             x='Categories', 
                             y='Weights',
                             orientation="v", 
@@ -593,7 +533,7 @@ def weights():
             fig11.update_layout(yaxis_title="Weights",legend=dict(yanchor="bottom", y=1, xanchor="right", x=0.5))
             st.plotly_chart(fig11,use_container_width=True)
       with otherw:
-            fig11 = px.bar(weight1, 
+            fig11 = px.bar(weight4, 
                             x='Categories', 
                             y='Weights',
                             orientation="v", 
