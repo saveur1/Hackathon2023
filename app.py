@@ -573,7 +573,7 @@ def weights():
                             x='Categories', 
                             y='Weights',
                             orientation="v", 
-                            title='Weights (All Rwanda)'
+                            title='Overall Consumption in Rwanda'
                             )
             fig11.update_layout(yaxis_title="Weights",legend=dict(yanchor="bottom", y=1, xanchor="right", x=0.5))
             st.plotly_chart(fig11,use_container_width=True)
@@ -582,7 +582,7 @@ def weights():
                             x='Categories', 
                             y='Weights',
                             orientation="v", 
-                            title='Weights (Urban)'
+                            title='Consumption Trends in Urban Rwanda'
                             )
             fig11.update_layout(yaxis_title="Weights",legend=dict(yanchor="bottom", y=1, xanchor="right", x=0.5))
             st.plotly_chart(fig11,use_container_width=True)
@@ -592,7 +592,7 @@ def weights():
                             x='Categories', 
                             y='Weights',
                             orientation="v", 
-                            title='Weights (rular)'
+                            title='Consumption Pattern in Rural Rwanda'
                             )
             fig11.update_layout(yaxis_title="Weights",legend=dict(yanchor="bottom", y=1, xanchor="right", x=0.5))
             st.plotly_chart(fig11,use_container_width=True)
@@ -601,7 +601,7 @@ def weights():
                             x='Categories', 
                             y='Weights',
                             orientation="v", 
-                            title='Weights (Other Indices)'
+                            title='Consumption Analysis Based on Other Indices'
                             )
             fig11.update_layout(yaxis_title="Weights",legend=dict(yanchor="bottom", y=1, xanchor="right", x=0.5))
             st.plotly_chart(fig11,use_container_width=True)
