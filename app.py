@@ -6,7 +6,7 @@ import plotly.graph_objs as go
 import plotly.express as px
 import streamlit_option_menu as om
 st.set_page_config(page_title="GDP&CPI Dashboard",layout="wide",page_icon="🇷🇼")
-st.title("""NISR GDP & CPI Dashboard""")
+st.title("""GDP & CPI Dashboard""")
 
 # Style
 with open('style.css')as f:
