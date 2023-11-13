@@ -571,7 +571,7 @@ def gdp_dashboard():
     with st.sidebar:
        selected= om.option_menu(
           menu_title=None,
-          options=["Macro economic aggregates","GDP BY Kind of activity","Deflator"],
+          options=["Macro economic aggregates","GDP BY Kind of activity","Expenditure GDP"],
           icons=["house","wallet-fill","view-stacked","three-dots","card-text"],
           menu_icon="cast",
           default_index = 0
@@ -580,7 +580,7 @@ def gdp_dashboard():
        MacroEconomicHome()   
     if selected=="GDP BY Kind of activity":
        kindOfActivity()
-    if selected=="Deflator":
+    if selected=="Expenditure GDP":
        Deflator()
 
 
