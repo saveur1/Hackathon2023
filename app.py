@@ -29,7 +29,7 @@ def gdps_trends_chart():
     selected_columns = st.multiselect("Filters:", df1.columns, default=[
             "GDP at current prices", "GDP at constant 2017 prices"])
     fig = px.line(df1, x="Years", y=selected_columns)
-
+    fig.update_layout(yaxis_title="in billion Rwf")
     st.plotly_chart(fig, use_container_width=True)
 
 def donut_chart():
@@ -115,7 +115,7 @@ def expanditure_on_gdp():
     layout = go.Layout(
         title='Proportions of GDP and Percentage Change in GDP',
         xaxis=dict(title='Year'),
-        yaxis=dict(title='Billions of Francs', range=[-5000, 19000]),
+        yaxis=dict(title='in billion Rwf', range=[-5000, 19000]),
         barmode='stack'
     )
 
@@ -148,12 +148,12 @@ def MacroEconomicHome():
 def kindOfActivity():
   excel_file = 'GDP.xlsx'
   # Select the worksheet you want to display
-  table1 = 'in billion Rwf'
-  table1a= 'Shares at current prices'
-  table2= "2017 prices in billion"
-  table2a= "2017 prices previous year"
-  table2b= "2017 prices percentage point"
-  table3 = "Deflators"
+  table1 = 'TABLE1'
+  table1a= 'TABLE1A'
+  table2= "TABLE2"
+  table2a= "TABLE2AA"
+  table2b= "TABLE2B"
+  table3 = "TABLE3"
 
   # Read the worksheet into a Pandas DataFrame
   df1 = pd.read_excel(excel_file, table1)
@@ -287,7 +287,7 @@ def kindOfActivity():
   with graph2:
     selected_columns3 = st.multiselect('Filter: ',df3.columns,default=["GROSS DOMESTIC PRODUCT (GDP)","INDUSTRY","SERVICES","TAXES LESS SUBSIDIES ON PRODUCTS"],key=12)
     fig2 = px.line(df3, x='YEAR', y=selected_columns3, title='GDP by Kind of Activity at constant 2017 prices(in billion Rwf) ')
-    fig2.update_layout(yaxis_title="billion Rwf")
+    fig2.update_layout(yaxis_title="in billion Rwf")
     graph2.plotly_chart(fig2,use_container_width=True)
     
   with graph2A:
