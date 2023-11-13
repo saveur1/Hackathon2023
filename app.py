@@ -316,7 +316,8 @@ def kindOfActivity():
 
 # Load the Excel workbook
 excel_file = 'CPI.xlsx'
-
+allRwanda_Weights= 'allRwanda_Weights'
+weight1 = pd.read_excel(excel_file, allRwanda_Weights)
 # ALL RWANDA
 def all():
    st.subheader("CONSUMER PRICE INDEX (All Rwanda)")
@@ -324,10 +325,9 @@ def all():
    st.markdown("<style>div.block-container{padding-top:1rem;}</style>", unsafe_allow_html=True)
    # Select the worksheet you want to display
    sheet_name = 'rw'
-   allRwanda_Weights= 'allRwanda_Weights'
+   
    # Read the worksheet into a Pandas DataFrame
    df = pd.read_excel(excel_file, sheet_name)
-   weight1 = pd.read_excel(excel_file, allRwanda_Weights)
    with st.expander("""CONSUMER PRICE INDEX (All Rwanda) TABLE"""):  
       # Create a multiselect widget
       selected_columns = st.multiselect('Filter: ',df.columns,default=["YEAR","GENERAL INDEX (CPI)","Food and non-alcoholic beverages","   Bread and cereals","Meat","Milk, cheese and eggs","Vegetables","Non-alcoholic beverages","Alcoholic beverages and tobacco","Clothing and footwear","Housing, water, electricity, gas and other fuel","Furnishing, household and equipment","Health"])
@@ -341,27 +341,72 @@ def all():
       df_filtered['YEAR'] = df_filtered['YEAR'].dt.date
       # Display the filtered DataFrame in 
       st.dataframe(df_filtered)
-   with st.expander("""Weights (All Rwanda) TABLE TABLE"""): 
-        st.dataframe(weight1)
-   allrw,urbanw=st.columns(2)
-   with allrw:
-        fig11 = px.bar(weight1, 
-                        x='Categories', 
-                        y='Weights',
-                        orientation="v", 
-                        title='Weights (All Rwanda)'
-                        )
-        fig11.update_layout(yaxis_title="Weights",legend=dict(yanchor="bottom", y=1, xanchor="right", x=0.5))
-        st.plotly_chart(fig11,use_container_width=True)
-   with urbanw:
-        fig11 = px.bar(weight1, 
-                        x='Categories', 
-                        y='Weights',
-                        orientation="v", 
-                        title='Weights (All Rwanda)'
-                        )
-        fig11.update_layout(yaxis_title="Weights",legend=dict(yanchor="bottom", y=1, xanchor="right", x=0.5))
-        st.plotly_chart(fig11,use_container_width=True)
+   #Weight function
+   def weights():
+      tablew1,tablew2=st.columns(2)
+      tablew3,tablew4=st.columns(2)
+      with tablew1:
+            st.subheader("Weights (All Rwanda) TABLE")
+            st.caption("Gross Domestic product by Kind of Activity at current prices ( in billion Rwf)")
+            with st.expander("""Expand"""): 
+                  st.dataframe(weight1)
+                  
+      with tablew2:
+            st.subheader("Weights (Urban) TABLE")
+            st.caption("Gross Domestic product by Kind of Activity at current prices ( in billion Rwf)")
+            with st.expander("""Expand"""): 
+                  st.dataframe(weight1)
+                  
+      with tablew3:
+            st.subheader("Weights (Rular) TABLE")
+            st.caption("Gross Domestic product by Kind of Activity at current prices ( in billion Rwf)")
+            with st.expander("""Expand"""): 
+                  st.dataframe(weight1)
+                  
+      with tablew4:
+            st.subheader("Weights (Other indices) TABLE")
+            st.caption("Gross Domestic product by Kind of Activity at current prices ( in billion Rwf)")
+            with st.expander("""Expand"""): 
+                  st.dataframe(weight1)
+      allw,urbanw=st.columns(2)
+      rularw,otherw=st.columns(2)
+      with allw:
+            fig11 = px.bar(weight1, 
+                            x='Categories', 
+                            y='Weights',
+                            orientation="v", 
+                            title='Weights (All Rwanda)'
+                            )
+            fig11.update_layout(yaxis_title="Weights",legend=dict(yanchor="bottom", y=1, xanchor="right", x=0.5))
+            st.plotly_chart(fig11,use_container_width=True)
+      with urbanw:
+            fig11 = px.bar(weight1, 
+                            x='Categories', 
+                            y='Weights',
+                            orientation="v", 
+                            title='Weights (Urban)'
+                            )
+            fig11.update_layout(yaxis_title="Weights",legend=dict(yanchor="bottom", y=1, xanchor="right", x=0.5))
+            st.plotly_chart(fig11,use_container_width=True)
+            
+      with rularw:
+            fig11 = px.bar(weight1, 
+                            x='Categories', 
+                            y='Weights',
+                            orientation="v", 
+                            title='Weights (rular)'
+                            )
+            fig11.update_layout(yaxis_title="Weights",legend=dict(yanchor="bottom", y=1, xanchor="right", x=0.5))
+            st.plotly_chart(fig11,use_container_width=True)
+      with otherw:
+            fig11 = px.bar(weight1, 
+                            x='Categories', 
+                            y='Weights',
+                            orientation="v", 
+                            title='Weights (Other Indices)'
+                            )
+            fig11.update_layout(yaxis_title="Weights",legend=dict(yanchor="bottom", y=1, xanchor="right", x=0.5))
+            st.plotly_chart(fig11,use_container_width=True)
         
    st.subheader("""""""CPI (All Rwanda)""""""")
    column_names = df.columns.tolist()
@@ -494,6 +539,73 @@ def Other_Indices():
   
 def Deflator():
      st.info("Deflator")
+     
+def weights():
+      tablew1,tablew2=st.columns(2)
+      tablew3,tablew4=st.columns(2)
+      with tablew1:
+            st.subheader("Weights (All Rwanda) TABLE")
+            st.caption("Gross Domestic product by Kind of Activity at current prices ( in billion Rwf)")
+            with st.expander("""Expand"""): 
+                  st.dataframe(weight1)
+                  
+      with tablew2:
+            st.subheader("Weights (Urban) TABLE")
+            st.caption("Gross Domestic product by Kind of Activity at current prices ( in billion Rwf)")
+            with st.expander("""Expand"""): 
+                  st.dataframe(weight1)
+                  
+      with tablew3:
+            st.subheader("Weights (Rular) TABLE")
+            st.caption("Gross Domestic product by Kind of Activity at current prices ( in billion Rwf)")
+            with st.expander("""Expand"""): 
+                  st.dataframe(weight1)
+                  
+      with tablew4:
+            st.subheader("Weights (Other indices) TABLE")
+            st.caption("Gross Domestic product by Kind of Activity at current prices ( in billion Rwf)")
+            with st.expander("""Expand"""): 
+                  st.dataframe(weight1)
+      allw,urbanw=st.columns(2)
+      rularw,otherw=st.columns(2)
+      with allw:
+            fig11 = px.bar(weight1, 
+                            x='Categories', 
+                            y='Weights',
+                            orientation="v", 
+                            title='Weights (All Rwanda)'
+                            )
+            fig11.update_layout(yaxis_title="Weights",legend=dict(yanchor="bottom", y=1, xanchor="right", x=0.5))
+            st.plotly_chart(fig11,use_container_width=True)
+      with urbanw:
+            fig11 = px.bar(weight1, 
+                            x='Categories', 
+                            y='Weights',
+                            orientation="v", 
+                            title='Weights (Urban)'
+                            )
+            fig11.update_layout(yaxis_title="Weights",legend=dict(yanchor="bottom", y=1, xanchor="right", x=0.5))
+            st.plotly_chart(fig11,use_container_width=True)
+            
+      with rularw:
+            fig11 = px.bar(weight1, 
+                            x='Categories', 
+                            y='Weights',
+                            orientation="v", 
+                            title='Weights (rular)'
+                            )
+            fig11.update_layout(yaxis_title="Weights",legend=dict(yanchor="bottom", y=1, xanchor="right", x=0.5))
+            st.plotly_chart(fig11,use_container_width=True)
+      with otherw:
+            fig11 = px.bar(weight1, 
+                            x='Categories', 
+                            y='Weights',
+                            orientation="v", 
+                            title='Weights (Other Indices)'
+                            )
+            fig11.update_layout(yaxis_title="Weights",legend=dict(yanchor="bottom", y=1, xanchor="right", x=0.5))
+            st.plotly_chart(fig11,use_container_width=True)
+     
 #SIDEBAR
 def cpi_dashboard():
     # Display CPI dashboard attributes
@@ -501,12 +613,13 @@ def cpi_dashboard():
     with st.sidebar:
        selected= om.option_menu(
           menu_title=None,
-          options=["All Rwanda","Urban","Rural","Other_Indices"],
+          options=["Weights","All Rwanda","Urban","Rural","Other_Indices"],
           icons=["house","wallet-fill","view-stacked","three-dots","card-text"],
           menu_icon="cast",
           default_index = 0
        )
-   
+    if selected=="Weights":
+       weights()
     if selected=="All Rwanda":
       all()
     if selected=="Urban":
