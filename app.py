@@ -6,7 +6,7 @@ import plotly.graph_objs as go
 import plotly.express as px
 import streamlit_option_menu as om
 st.set_page_config(page_title="GDP&CPI Dashboard",layout="wide",page_icon="🇷🇼")
-st.title(":house: NISR GDP & CPI Dashboard")
+st.title("""NISR GDP & CPI Dashboard""")
 
 # Style
 with open('style.css')as f:
@@ -324,25 +324,46 @@ def all():
    st.markdown("<style>div.block-container{padding-top:1rem;}</style>", unsafe_allow_html=True)
    # Select the worksheet you want to display
    sheet_name = 'rw'
-
+   allRwanda_Weights= 'allRwanda_Weights'
    # Read the worksheet into a Pandas DataFrame
    df = pd.read_excel(excel_file, sheet_name)
-      
-   # Create a multiselect widget
-   selected_columns = st.multiselect('Filter: ',df.columns,default=["YEAR","GENERAL INDEX (CPI)","Food and non-alcoholic beverages","   Bread and cereals","Meat","Milk, cheese and eggs","Vegetables","Non-alcoholic beverages","Alcoholic beverages and tobacco","Clothing and footwear","Housing, water, electricity, gas and other fuel","Furnishing, household and equipment","Health"])
+   weight1 = pd.read_excel(excel_file, allRwanda_Weights)
+   with st.expander("""CONSUMER PRICE INDEX (All Rwanda) TABLE"""):  
+      # Create a multiselect widget
+      selected_columns = st.multiselect('Filter: ',df.columns,default=["YEAR","GENERAL INDEX (CPI)","Food and non-alcoholic beverages","   Bread and cereals","Meat","Milk, cheese and eggs","Vegetables","Non-alcoholic beverages","Alcoholic beverages and tobacco","Clothing and footwear","Housing, water, electricity, gas and other fuel","Furnishing, household and equipment","Health"])
 
-   # Filter the DataFrame based on the selected columns
-   df_filtered = df[selected_columns]
-   # Convert the year column to a Pandas datetime object
-   df_filtered['YEAR'] = pd.to_datetime(df['YEAR'])
+      # Filter the DataFrame based on the selected columns
+      df_filtered = df[selected_columns]
+      # Convert the year column to a Pandas datetime object
+      df_filtered['YEAR'] = pd.to_datetime(df['YEAR'])
 
-   # Extract the date from the Pandas datetime object
-   df_filtered['YEAR'] = df_filtered['YEAR'].dt.date
-   # Display the filtered DataFrame in Streamlit
-
-   st.dataframe(df_filtered)
-
-   st.subheader("Graph")
+      # Extract the date from the Pandas datetime object
+      df_filtered['YEAR'] = df_filtered['YEAR'].dt.date
+      # Display the filtered DataFrame in 
+      st.dataframe(df_filtered)
+   with st.expander("""Weights (All Rwanda) TABLE TABLE"""): 
+        st.dataframe(weight1)
+   allrw,urbanw=st.columns(2)
+   with allrw:
+        fig11 = px.bar(weight1, 
+                        x='Categories', 
+                        y='Weights',
+                        orientation="v", 
+                        title='Weights (All Rwanda)'
+                        )
+        fig11.update_layout(yaxis_title="Weights",legend=dict(yanchor="bottom", y=1, xanchor="right", x=0.5))
+        st.plotly_chart(fig11,use_container_width=True)
+   with urbanw:
+        fig11 = px.bar(weight1, 
+                        x='Categories', 
+                        y='Weights',
+                        orientation="v", 
+                        title='Weights (All Rwanda)'
+                        )
+        fig11.update_layout(yaxis_title="Weights",legend=dict(yanchor="bottom", y=1, xanchor="right", x=0.5))
+        st.plotly_chart(fig11,use_container_width=True)
+        
+   st.subheader("""""""CPI (All Rwanda)""""""")
    column_names = df.columns.tolist()
    column_names.remove('YEAR')
 
