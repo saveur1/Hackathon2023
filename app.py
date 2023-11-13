@@ -29,7 +29,7 @@ def gdps_trends_chart():
     selected_columns = st.multiselect("Filters:", df1.columns, default=[
             "GDP at current prices", "GDP at constant 2017 prices"])
     fig = px.line(df1, x="Years", y=selected_columns)
-    fig.update_layout(yaxis_title="in billion Rwf")
+    fig.update_layout(yaxis_title="in billion Rwf",legend=dict(yanchor="bottom", y=-1, xanchor="center", x=0.5))
     st.plotly_chart(fig, use_container_width=True)
 
 def donut_chart():
@@ -50,6 +50,7 @@ def donut_chart():
     # Create the layout for the chart
     layout = go.Layout(
         title='Percentage of GDP by Sector',
+        legend=dict(yanchor="bottom", y=-0.8, xanchor="center", x=0.5),
         annotations=[dict(text='Frw '+str(df1["GDP at current prices"][23])+' billion', x=0.5, y=0.5, font_size=20, showarrow=False)]
     )
 
@@ -80,6 +81,7 @@ def barchart_with_line():
     # Create the layout for the chart
     layout = go.Layout(
         title='Percentage Change in Agriculture, Industry, Services, and GDP',
+        legend=dict(yanchor="bottom", y=-0.8, xanchor="center", x=0.5),
         xaxis=dict(title='Years'),
         yaxis=dict(title='Percentage Change', range=[-7.5, 18]),
         barmode='group'
@@ -114,6 +116,7 @@ def expanditure_on_gdp():
     # Create the layout for the chart
     layout = go.Layout(
         title='Proportions of GDP and Percentage Change in GDP',
+        legend=dict(yanchor="bottom", y=-1, xanchor="center", x=0.5),
         xaxis=dict(title='Year'),
         yaxis=dict(title='in billion Rwf', range=[-5000, 19000]),
         barmode='stack'
@@ -274,38 +277,38 @@ def kindOfActivity():
     selected_columns1 = st.multiselect('Filter: ',df1.columns,default=["GROSS DOMESTIC PRODUCT (GDP)","INDUSTRY","SERVICES","TAXES LESS SUBSIDIES ON PRODUCTS"],key=0)
     
     fig= px.line(df1, x='YEAR', y=selected_columns1, title='GDP by Kind of Activity at current prices ( in billion Rwf)')
-    fig.update_layout(yaxis_title="Rwf in billion")
+    fig.update_layout(yaxis_title="Rwf in billion",legend=dict(yanchor="bottom", y=-1, xanchor="center", x=0.5))
     graph1.plotly_chart(fig,use_container_width=True)
   
   with graph1A:
     selected_columns2 = st.multiselect('Filter: ',df2.columns,default=["GROSS DOMESTIC PRODUCT (GDP)","INDUSTRY","SERVICES","TAXES LESS SUBSIDIES ON PRODUCTS"],key=11)
     
     fig= px.line(df2, x='YEAR', y=selected_columns2, title='GDP by Kind of Activity Shares at current prices ( percentages)')
-    fig.update_layout(yaxis_title="Percentage")
+    fig.update_layout(yaxis_title="Percentage",legend=dict(yanchor="bottom", y=-1, xanchor="center", x=0.5))
     graph1A.plotly_chart(fig,use_container_width=True)
     
   with graph2:
     selected_columns3 = st.multiselect('Filter: ',df3.columns,default=["GROSS DOMESTIC PRODUCT (GDP)","INDUSTRY","SERVICES","TAXES LESS SUBSIDIES ON PRODUCTS"],key=12)
     fig2 = px.line(df3, x='YEAR', y=selected_columns3, title='GDP by Kind of Activity at constant 2017 prices(in billion Rwf) ')
-    fig2.update_layout(yaxis_title="in billion Rwf")
+    fig2.update_layout(yaxis_title="in billion Rwf",legend=dict(yanchor="bottom", y=-1, xanchor="center", x=0.5))
     graph2.plotly_chart(fig2,use_container_width=True)
     
   with graph2A:
     selected_columns4 = st.multiselect('Filter: ',df4.columns,default=["GROSS DOMESTIC PRODUCT (GDP)"],key=13)
     fig2 = px.bar(df4, x='YEAR', y=selected_columns4, title='GDP by Kind of Activity Growth rates at constant 2017 prices ( percentage change from previous year)')
-    fig2.update_layout(yaxis_title="Percentage")
+    fig2.update_layout(yaxis_title="Percentage",legend=dict(yanchor="bottom", y=-1, xanchor="center", x=0.5))
     graph2A.plotly_chart(fig2,use_container_width=True)
     
   with graph2B:
     selected_columns5 = st.multiselect('Filter: ',df5.columns,default=["GROSS DOMESTIC PRODUCT (GDP)"],key=14)
     fig2 = px.bar(df5, x='YEAR', y=selected_columns5, title='GDP by Kind of Activity Growth rates at constant 2017 prices ( Percentage points)')
-    fig2.update_layout(yaxis_title="Percentage")
+    fig2.update_layout(yaxis_title="Percentage",legend=dict(yanchor="bottom", y=-1, xanchor="center", x=0.5))
     graph2B.plotly_chart(fig2,use_container_width=True)
     
   with graph3:
     selected_columns6 = st.multiselect('Filter: ',df6.columns,default=["GROSS DOMESTIC PRODUCT (GDP)"],key=15)
     fig2 = px.bar(df6, x='YEAR', y=selected_columns6, title='GDP by Kind of Activity Deflators (2017=100)')
-    fig2.update_layout(yaxis_title="Percentage")
+    fig2.update_layout(yaxis_title="Percentage",legend=dict(yanchor="bottom", y=-1, xanchor="center", x=0.5))
     graph3.plotly_chart(fig2,use_container_width=True)
 
 #                                       CONSUMER PRICE INDEX
@@ -348,7 +351,7 @@ def all():
    selected_columns = st.multiselect('Filter: ',df.columns,default=["GENERAL INDEX (CPI)"])
 
    fig = px.line(df, x='YEAR', y=selected_columns, title='Consumption by Year (Source: National Institute of Statistics of Rwanda)')
-
+   fig.update_layout(yaxis_title="Percentage",legend=dict(yanchor="bottom", y=-1, xanchor="center", x=0.5))
    st.plotly_chart(fig,use_container_width=True)
 
 
@@ -388,7 +391,7 @@ def Urban():
   selected_columns = st.multiselect('Filter: ',df.columns,default=["GENERAL INDEX (CPI)"])
 
   fig = px.line(df, x='YEAR', y=selected_columns, title='Consumption by Year (Source: National Institute of Statistics of Rwanda)')
-  
+  fig.update_layout(yaxis_title="Percentage",legend=dict(yanchor="bottom", y=-1, xanchor="center", x=0.5))
   st.plotly_chart(fig,use_container_width=True)
 
 # ALL RWANDA
@@ -426,7 +429,7 @@ def Rural():
   selected_columns = st.multiselect('Filter: ',df.columns,default=["GENERAL INDEX (CPI)"])
 
   fig = px.line(df, x='YEAR', y=selected_columns, title='Consumption by Year (Source: National Institute of Statistics of Rwanda)')
-  
+  fig.update_layout(yaxis_title="Percentage",legend=dict(yanchor="bottom", y=-1, xanchor="center", x=0.5))
   st.plotly_chart(fig,use_container_width=True)
 # ALL RWANDA
 
@@ -465,7 +468,7 @@ def Other_Indices():
   selected_columns = st.multiselect('Filter: ',df.columns,default=["Local Goods Index","Imported Goods Index","Fresh Products(1) index","Energy index"])
 
   fig = px.bar(df, x='YEAR', y=selected_columns, title='Consumption by Year (Source: National Institute of Statistics of Rwanda)')
-  
+  fig.update_layout(yaxis_title="Percentage",legend=dict(yanchor="bottom", y=-1, xanchor="center", x=0.5))
   st.plotly_chart(fig,use_container_width=True)
   
 def Deflator():
