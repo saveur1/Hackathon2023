@@ -1,6 +1,6 @@
 # **Rwanda Economic Dashboard: An Interactive Visualization of GDP and CPI Trends**
 
-This interactive dashboard presents economic data for Rwanda, utilizing the Python framework Streamlit. The dashboard incorporates two key datasets: GDP and CPI data from the National Institute of Statistics of Rwanda (NISR) 
+This interactive dashboard presents economic data for Rwanda, utilizing the Python framework Streamlit. The dashboard incorporates two key datasets: GDP and CPI data from the National Institute of Statistics of Rwanda (NISR)
 
 ## Data Sources
 
@@ -17,7 +17,7 @@ This interactive dashboard presents economic data for Rwanda, utilizing the Pyth
 
 * Streamlit: Python framework for creating interactive data visualizations
 * Pandas: Python library for data manipulation and analysis
-* Matplotlib: Python library for data visualization
+* Plotly: Python library for data visualization
 
 ## Usage
 
