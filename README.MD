@@ -6,7 +6,8 @@ This interactive dashboard presents economic data for Rwanda, utilizing the Pyth
 
 * GDP data: National Institute of Statistics of Rwanda (NISR): https://www.statistics.gov.rw/publication/1914
 * CPI data: National Institute of Statistics of Rwanda (NISR): https://www.statistics.gov.rw/publication/1873
-
+## Hosted Version
+https://nsr-hackathon.streamlit.app/
 ## Features
 
 * Visualizes trends in GDP and CPI over time
