@@ -135,7 +135,7 @@ def analyze_rwf_national_income_expenditure():
         legend=dict(yanchor="bottom", y=-1.8, xanchor="center", x=0.5),
         xaxis=dict(title='Year'),
         yaxis=dict(title='Billion in RWF'),
-        barmode='stack'
+        barmode='group'
     )
     # Create the figure and plot it using Plotly
     fig = go.Figure(data=[trace1, trace2, trace3, trace4,trace5, trace6, trace7, trace8, trace9], layout=layout)
