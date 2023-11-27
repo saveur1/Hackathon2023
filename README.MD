@@ -17,7 +17,7 @@ This interactive dashboard presents economic data for Rwanda, utilizing the Pyth
 
 * Streamlit: Python framework for creating interactive data visualizations
 * Pandas: Python library for data manipulation and analysis
-* Plotly: Python library for data visualization
+* Matplotlib: Python library for data visualization
 
 ## Usage
 
