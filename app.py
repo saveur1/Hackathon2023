@@ -7,7 +7,7 @@ import plotly.graph_objs as go
 import plotly.express as px
 import streamlit_option_menu as om
 st.set_page_config(page_title="GDP&CPI Dashboard",layout="wide",page_icon="🇷🇼")
-st.title("""GDP & CPI Dashboard""")
+st.markdown("<style>div.block-container{padding-top:1rem;}</style>", unsafe_allow_html=True)
 
 # Style
 with open('style.css')as f:
@@ -228,7 +228,6 @@ def barchart_with_line():
 
 def MacroEconomicHome():
     st.subheader(":house: Rwanda's GDP Macroeconomic Aggregates")
-    st.markdown("<style>div.block-container{padding-top:1rem;}</style>", unsafe_allow_html=True)
 
     MacroTable()
     
@@ -447,7 +446,6 @@ weight4 = pd.read_excel(excel_file, otherIndices_Weights)
 def all():
    st.subheader("Rwanda's CPI from 2009 to 2022")
    st.info("Base: 2014; Reference: February 2014=100")
-   st.markdown("<style>div.block-container{padding-top:1rem;}</style>", unsafe_allow_html=True)
    # Select the worksheet you want to display
    sheet_name = 'rw'
    
@@ -490,7 +488,6 @@ def Urban():
 
   st.subheader("Urban CPI in Rwanda: 2009 to 2022")
   st.info("Base: 2014; Reference: February 2014=100")
-  st.markdown("<style>div.block-container{padding-top:1rem;}</style>", unsafe_allow_html=True)
     
   with st.expander("""Urban CPI in Rwanda: 2009 to 2022 TABLE"""):  
       # Create a multiselect widget
@@ -528,7 +525,6 @@ def Rural():
 
   st.subheader("Rural CPI in Rwanda: 2009 to 2022)")
   st.info("Base: 2014; Reference: February 2014=100")
-  st.markdown("<style>div.block-container{padding-top:1rem;}</style>", unsafe_allow_html=True)
     
   with st.expander("""Rural CPI in Rwanda: 2009 to 2022 TABLE"""):  
       # Create a multiselect widget
@@ -565,7 +561,6 @@ def Other_Indices():
 
   st.subheader("Other indices CPI in Rwanda: 2009 to 2022, Urban only")
   st.info("Base: 2014; Reference: February 2014=100")
-  st.markdown("<style>div.block-container{padding-top:1rem;}</style>", unsafe_allow_html=True)
     
   
 
@@ -736,17 +731,57 @@ def gdp_dashboard():
     if selected=="Expenditure on GDP":
        ExpenditureOnGDP()
 
+def home_dashboard():
+    st.title("GDP and CPI Dashboard")
+    df_selection = pd.read_excel("GDP.xlsx",sheet_name="macro_economic")
+    df_selection = df_selection.rename(columns=lambda x: x.strip())
+
+    # gdp_per_capita = float(df_selection['GDP at current prices'][24])
+    # investment_mode = float(df_selection['Investment'].mode())
+    # investment_mean = float(df_selection['Investment'].mean())
+    # investment_median= float(df_selection['Investment'].median())
+    # rating = float(df_selection['Rating'].sum())
+
+
+    total1,total2,total3,total4,total5=st.columns(5,gap='large')
+    with total1:
+        st.info('GDP per Capita in 2022',icon="📌")
+        st.metric(label="sum TZS",value=f"{145.8995:,.0f}")
+
+    with total2:
+        st.info('GNP in 2022',icon="📌")
+        st.metric(label="mode TZS",value=f"{12.555:,.0f}")
+
+    with total3:
+        st.info('Nominal GDP in 2022',icon="📌")
+        st.metric(label="average TZS",value=f"{1345.0033:,.0f}")
+
+    with total4:
+        st.info('Real GDP in 2022',icon="📌")
+        st.metric(label="median TZS",value=f"{7451.3344:,.0f}")
+
+    with total5:
+        st.info('Total Population as in 2022',icon="📌")
+        st.metric(label="Rating",value=5,help=f""" Total Rating: {5} """)
+
+    st.markdown("""---""")
+
+
+
 
 st.sidebar.image("logo/logo2.png")
 
-st.sidebar.header("Dashboard Selection")
-dashboard_selection = st.sidebar.radio("Select Dashboard", ["GDP","CPI"])
+st.sidebar.markdown("# Welcome Back! ~ <span style='color:rgb(40,79,141)'>Admin</span>", unsafe_allow_html=True)
+with st.sidebar:
+  selected = om.option_menu(
+    menu_title="",
+    options=["Home","GDP","CPI","Welcome to the Future"],
+    icons=["house","wallet-fill","view-stacked"],
+    default_index=0
+  )
 
-if dashboard_selection == "CPI":
-    cpi_dashboard()
-elif dashboard_selection == "GDP":
-    gdp_dashboard()
-else:
-    st.sidebar.write("Please select a dashboard.")
+if selected == "Home":
+  home_dashboard()
+
 # Copyright notice
-st.markdown("Copyright (c) 2023 methode TWIZEYIMANA & Saveur BIKORIMANA")
+st.markdown("<div style='font-style:italic;text-align:center'>Copyright (c) 2023 Methode & Saveur</div>",unsafe_allow_html=True)

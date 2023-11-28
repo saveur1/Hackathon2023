@@ -10,6 +10,10 @@
    
 }
 
+.sidebar .sidebar-content {
+    padding-top: 0px;
+}
+
 div[data-testid="stExpander"] div[role="button"] p
 {
     font-size: 1.3rem;
