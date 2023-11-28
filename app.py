@@ -289,106 +289,113 @@ def kindOfActivity():
   
 
   st.subheader("Gross Domestic product by Kind of Activity")
-  table1,table1A,table2=st.columns(3)
-  table2A,table2B,table3=st.columns(3)
-  
+  section1,section2=st.columns(2)
+  section3,section4=st.columns(2)
+
+  with section1:
+      graph1,table1= st.tabs(["📈 Chart", "🗃 Data"])
+      graph1A,table1A= st.tabs(["📈 Chart", "🗃 Data"])
+  with section2:
+      graph2,table2= st.tabs(["📈 Chart", "🗃 Data"])
+      graph2A,table2A= st.tabs(["📈 Chart", "🗃 Data"])
+  with section3:
+      graph2B,table2B= st.tabs(["📈 Chart", "🗃 Data"])
+  with section4:
+      graph3,table3= st.tabs(["📈 Chart", "🗃 Data"])  
 
   with table1:
     st.subheader("Table 1")
     st.caption("Gross Domestic product by Kind of Activity at current prices ( in billion Rwf)")
-    with st.expander("Expand"):
-      # Create a multiselect widget
-      selected_columns = st.multiselect('Filter: ',df1.columns,default=["YEAR","GROSS DOMESTIC PRODUCT (GDP)","INDUSTRY","SERVICES","TAXES LESS SUBSIDIES ON PRODUCTS"])
-      # Convert the Year column to datetime format
-      df1["YEAR"] = pd.to_datetime(df1["YEAR"], format="%Y")
 
-      # Format the Year column as YYYY
-      df1["YEAR"] = df1["YEAR"].dt.strftime("%Y")
-      # Display the filtered DataFrame in Streamlit
-      st.dataframe(df1,use_container_width=True)
+    # Create a multiselect widget
+    selected_columns = st.multiselect('Filter: ',df1.columns,default=["YEAR","GROSS DOMESTIC PRODUCT (GDP)","INDUSTRY","SERVICES","TAXES LESS SUBSIDIES ON PRODUCTS"])
+    # Convert the Year column to datetime format
+    df1["YEAR"] = pd.to_datetime(df1["YEAR"], format="%Y")
+
+    # Format the Year column as YYYY
+    df1["YEAR"] = df1["YEAR"].dt.strftime("%Y")
+    # Display the filtered DataFrame in Streamlit
+    st.dataframe(df1,use_container_width=True)
   with table1A:
     st.subheader("Table 1A")
     st.caption("Gross Domestic product by Kind of Activity Shares at current prices ( percentages)")
-    with st.expander("Expand"):
-      # Create a multiselect widget
-      selected_columns2 = st.multiselect('Filter: ',df2.columns,default=["YEAR","GROSS DOMESTIC PRODUCT (GDP)","INDUSTRY","SERVICES","TAXES LESS SUBSIDIES ON PRODUCTS"], key=2)
+    
+    # Create a multiselect widget
+    selected_columns2 = st.multiselect('Filter: ',df2.columns,default=["YEAR","GROSS DOMESTIC PRODUCT (GDP)","INDUSTRY","SERVICES","TAXES LESS SUBSIDIES ON PRODUCTS"], key=2)
 
-      # Convert the Year column to datetime format
-      df2["YEAR"] = pd.to_datetime(df2["YEAR"], format="%Y")
+    # Convert the Year column to datetime format
+    df2["YEAR"] = pd.to_datetime(df2["YEAR"], format="%Y")
 
-      # Format the Year column as YYYY
-      df2["YEAR"] = df2["YEAR"].dt.strftime("%Y")
-      # Display the filtered DataFrame in Streamlit
-      st.dataframe(df2,use_container_width=True)
+    # Format the Year column as YYYY
+    df2["YEAR"] = df2["YEAR"].dt.strftime("%Y")
+    # Display the filtered DataFrame in Streamlit
+    st.dataframe(df2,use_container_width=True)
     
   with table2:
     st.subheader("Table 2")
     st.caption("Gross Domestic product by Kind of Activity at constant 2017 prices ( in billion Rwf)")
-    with st.expander("Expand"):
-      # Create a multiselect widget
-      selected_columns3 = st.multiselect('Filter: ',df3.columns,default=["YEAR","GROSS DOMESTIC PRODUCT (GDP)","INDUSTRY","SERVICES","TAXES LESS SUBSIDIES ON PRODUCTS"],key=3)
 
-       # Convert the Year column to datetime format
-      df3["YEAR"] = pd.to_datetime(df3["YEAR"], format="%Y")
+    # Create a multiselect widget
+    selected_columns3 = st.multiselect('Filter: ',df3.columns,default=["YEAR","GROSS DOMESTIC PRODUCT (GDP)","INDUSTRY","SERVICES","TAXES LESS SUBSIDIES ON PRODUCTS"],key=3)
 
-      # Format the Year column as YYYY
-      df3["YEAR"] = df3["YEAR"].dt.strftime("%Y")
-      # Display the filtered DataFrame in Streamlit
-      st.dataframe(df3,use_container_width=True)
+    # Convert the Year column to datetime format
+    df3["YEAR"] = pd.to_datetime(df3["YEAR"], format="%Y")
+
+    # Format the Year column as YYYY
+    df3["YEAR"] = df3["YEAR"].dt.strftime("%Y")
+    # Display the filtered DataFrame in Streamlit
+    st.dataframe(df3,use_container_width=True)
+    
   with table2A:
     st.subheader("Table 2A")
     st.caption("Gross Domestic product by Kind of Activity Growth rates at constant 2017 prices ( percentage change from previous year)")
-    with st.expander("Expand"):
-      # Create a multiselect widget
-      selected_columns4 = st.multiselect('Filter: ',df4.columns,default=["YEAR","GROSS DOMESTIC PRODUCT (GDP)","INDUSTRY","SERVICES","TAXES LESS SUBSIDIES ON PRODUCTS"], key=4)
+    # Create a multiselect widget
+    selected_columns4 = st.multiselect('Filter: ',df4.columns,default=["YEAR","GROSS DOMESTIC PRODUCT (GDP)","INDUSTRY","SERVICES","TAXES LESS SUBSIDIES ON PRODUCTS"], key=4)
 
-      # Convert the Year column to datetime format
-      df4["YEAR"] = pd.to_datetime(df4["YEAR"], format="%Y")
+    # Convert the Year column to datetime format
+    df4["YEAR"] = pd.to_datetime(df4["YEAR"], format="%Y")
 
-      # Format the Year column as YYYY
-      df4["YEAR"] = df4["YEAR"].dt.strftime("%Y")
-      # Display the filtered DataFrame in Streamlit
-      st.dataframe(df4,use_container_width=True)
+    # Format the Year column as YYYY
+    df4["YEAR"] = df4["YEAR"].dt.strftime("%Y")
+    # Display the filtered DataFrame in Streamlit
+    st.dataframe(df4,use_container_width=True)
     
   with table2B:
     st.subheader("Table 2B")
     st.caption("Gross Domestic product by Kind of Activity Growth rates at constant 2017 prices ( Percentage points)")
-    with st.expander("Expand"):
-      # Create a multiselect widget
-      selected_columns5 = st.multiselect('Filter: ',df5.columns,default=["YEAR","GROSS DOMESTIC PRODUCT (GDP)","INDUSTRY","SERVICES","TAXES LESS SUBSIDIES ON PRODUCTS"],key=5)
 
-      # Convert the Year column to datetime format
-      df5["YEAR"] = pd.to_datetime(df5["YEAR"], format="%Y")
+    # Create a multiselect widget
+    selected_columns5 = st.multiselect('Filter: ',df5.columns,default=["YEAR","GROSS DOMESTIC PRODUCT (GDP)","INDUSTRY","SERVICES","TAXES LESS SUBSIDIES ON PRODUCTS"],key=5)
 
-      # Format the Year column as YYYY
-      df5["YEAR"] = df5["YEAR"].dt.strftime("%Y")
-      # Display the filtered DataFrame in Streamlit
-      st.dataframe(df5,use_container_width=True)
+    # Convert the Year column to datetime format
+    df5["YEAR"] = pd.to_datetime(df5["YEAR"], format="%Y")
+
+    # Format the Year column as YYYY
+    df5["YEAR"] = df5["YEAR"].dt.strftime("%Y")
+    # Display the filtered DataFrame in Streamlit
+    st.dataframe(df5,use_container_width=True)
       
   with table3:
     st.subheader("Table 3")
     st.caption("Gross Domestic product by Kind of Activity Deflators (2017=100)")
-    with st.expander("Expand"):
-      # Create a multiselect widget
-      selected_columns6 = st.multiselect('Filter: ',df6.columns,default=["YEAR","GROSS DOMESTIC PRODUCT (GDP)","INDUSTRY","SERVICES","TAXES LESS SUBSIDIES ON PRODUCTS"],key=6)
 
-      # Convert the Year column to datetime format
-      df6["YEAR"] = pd.to_datetime(df6["YEAR"], format="%Y")
+    # Create a multiselect widget
+    selected_columns6 = st.multiselect('Filter: ',df6.columns,default=["YEAR","GROSS DOMESTIC PRODUCT (GDP)","INDUSTRY","SERVICES","TAXES LESS SUBSIDIES ON PRODUCTS"],key=6)
 
-      # Format the Year column as YYYY
-      df6["YEAR"] = df6["YEAR"].dt.strftime("%Y")
-      # Display the filtered DataFrame in Streamlit
-      st.dataframe(df6,use_container_width=True)
+    # Convert the Year column to datetime format
+    df6["YEAR"] = pd.to_datetime(df6["YEAR"], format="%Y")
+
+    # Format the Year column as YYYY
+    df6["YEAR"] = df6["YEAR"].dt.strftime("%Y")
+    # Display the filtered DataFrame in Streamlit
+    st.dataframe(df6,use_container_width=True)
     
   
-  ## Graph
-  st.subheader("GDP by Kind of Activity Charts")
+  ## Graph Functions
+ 
   column_names = df1.columns.tolist()
   column_names.remove('YEAR')
 
-  graph1,graph1A=st.columns(2)
-  graph2,graph2A=st.columns(2)
-  graph2B,graph3=st.columns(2)
   # Create a multiselect widget
   with graph1:
     selected_columns1 = st.multiselect('Filter: ',df1.columns,default=["GROSS DOMESTIC PRODUCT (GDP)","INDUSTRY","SERVICES","TAXES LESS SUBSIDIES ON PRODUCTS"],key=0)
