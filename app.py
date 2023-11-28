@@ -844,8 +844,8 @@ with st.sidebar:
 if selected == "Home":
   home_dashboard()
 elif selected == "GDP":
-  home_dashboard()
+  gdp_dashboard()
 elif selected == "CPI":
-  home_dashboard()
+  cpi_dashboard()
 # Copyright notice
 st.markdown("<div style='font-style:italic;text-align:center'>Copyright (c) 2023 Methode & Saveur</div>",unsafe_allow_html=True)
