@@ -14,6 +14,10 @@
     padding-top: 0px;
 }
 
+.streamlit-button.primary-button:active {
+    background-color: rgb(40,79,141);
+}
+
 div[data-testid="stExpander"] div[role="button"] p
 {
     font-size: 1.3rem;
@@ -25,6 +29,11 @@ div[data-testid="stExpander"] div[role="button"] p
   .e16nr0p30 {
     color:rgb(40,79,141);
   }
-/* .st-ca {
-    background-color: rgb(40,79,141);
-} */
+  div.css-vhjbnf.e1tzin5v1{
+    background-color: rgb(205, 224, 255);
+    border: 1px solid rgb(159, 181, 217);
+    border-radius: 12px;
+  }
+  div [data-testid="metric-container"]{
+    box-shadow: none !important;
+  }

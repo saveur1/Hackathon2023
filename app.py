@@ -736,7 +736,7 @@ def home_dashboard():
     df_selection = pd.read_excel("GDP.xlsx",sheet_name="macro_economic")
     df_selection = df_selection.rename(columns=lambda x: x.strip())
 
-    # gdp_per_capita = float(df_selection['GDP at current prices'][24])
+    # gdp_per_capita = df_selection['GDP at current prices'][23]
     # investment_mode = float(df_selection['Investment'].mode())
     # investment_mean = float(df_selection['Investment'].mean())
     # investment_median= float(df_selection['Investment'].median())
@@ -745,24 +745,19 @@ def home_dashboard():
 
     total1,total2,total3,total4,total5=st.columns(5,gap='large')
     with total1:
-        st.info('GDP per Capita in 2022',icon="📌")
-        st.metric(label="sum TZS",value=f"{145.8995:,.0f}")
+        st.metric(label="GDP per Capita in 2022",value=f"{145.8995:,.0f}")
 
     with total2:
-        st.info('GNP in 2022',icon="📌")
-        st.metric(label="mode TZS",value=f"{12.555:,.0f}")
+        st.metric(label="GNP in 2022",value=f"{12.555:,.0f}")
 
     with total3:
-        st.info('Nominal GDP in 2022',icon="📌")
-        st.metric(label="average TZS",value=f"{1345.0033:,.0f}")
+        st.metric(label="Nominal GDP in 2022",value=f"{1345.0033:,.0f}")
 
     with total4:
-        st.info('Real GDP in 2022',icon="📌")
-        st.metric(label="median TZS",value=f"{7451.3344:,.0f}")
+        st.metric(label="Real GDP in 2022",value=f"{7451.3344:,.0f}")
 
     with total5:
-        st.info('Total Population as in 2022',icon="📌")
-        st.metric(label="Rating",value=5,help=f""" Total Rating: {5} """)
+        st.metric(label="Total Population as in 2022",value=5,help=f""" Total Rating: {5} """)
 
     st.markdown("""---""")
 
