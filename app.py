@@ -8,7 +8,6 @@ import plotly.express as px
 import streamlit_option_menu as om
 st.set_page_config(page_title="GDP&CPI Dashboard",layout="wide",page_icon="🇷🇼")
 st.markdown("<style>div.block-container{padding-top:1rem;}</style>", unsafe_allow_html=True)
-st.title("""GDP & CPI Dashboard""")
 
 #                          GROSS DOMESTIC PRODUCT AT MACRO ECCONOMIC LEVEL
 # -------------------------------------------------------------------------------------------------------------
@@ -760,6 +759,7 @@ def weights():
      
 #SIDEBAR
 def cpi_dashboard():
+    st.title("CPI Dashboard")
     # Create the navigation bar
     tab1, tab2,tab3, tab4 = st.tabs(["Weights", "All Rwanda","Urban", "Rural"])
 
@@ -779,6 +779,7 @@ def cpi_dashboard():
     CPI_general()  
 
 def gdp_dashboard():
+    st.title("GDP Dashboard")
     # Display GDP dashboard option
         # Create the navigation bar
     tab1, tab2,tab3, = st.tabs(["Macro economic aggregates", "GDP BY Kind of activity","Expenditure on GDP"])
