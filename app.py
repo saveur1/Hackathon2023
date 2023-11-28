@@ -813,7 +813,7 @@ def home_dashboard():
 
 
 
-
+#  SIDE BAR CONFIGURATIONS
 st.sidebar.image("logo/logo2.png")
 
 st.sidebar.markdown("# Welcome Back! ~ <span style='color:rgb(40,79,141)'>Admin</span>", unsafe_allow_html=True)
