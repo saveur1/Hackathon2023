@@ -842,7 +842,7 @@ def home_dashboard():
     # Solting Year
     sorted_year=sorted(df_selection['Year'].unique(), reverse=True)
     # Configurable Year
-    year  = st.selectbox(label="GDP and CPI Summary",options=sorted_year)
+    year  = st.selectbox(label="GDP and CPI Summary",options=sorted_year,key=11)
     
     # GDP and CPI summary
     total1,total2,total3,total4,total5=st.columns(5,gap='small')
