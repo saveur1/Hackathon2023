@@ -564,8 +564,9 @@ def Rural():
   fig = px.line(df, x='YEAR', y=selected_columns, title='Unveiling Rural Consumption Dynamics in Rwanda: A Focus on CPI Trends from 2009 to 2022')
   fig.update_layout(yaxis_title="Percentage",legend=dict(yanchor="bottom", y=-1, xanchor="center", x=0.5))
   st.plotly_chart(fig,use_container_width=True)
-# ALL RWANDA
-
+  
+  
+# Other indices function
 def Other_Indices():
   # Select the worksheet you want to display
   sheet_name = 'other_indices1'
@@ -602,7 +603,20 @@ def Other_Indices():
   fig = px.bar(df, x='YEAR', y=selected_columns, title='Complementing CPI Analysis with Additional Indices: A Comprehensive Look at Rwandas Consumption Trends')
   fig.update_layout(yaxis_title="Percentage",legend=dict(yanchor="bottom", y=-1, xanchor="center", x=0.5))
   st.plotly_chart(fig,use_container_width=True)
-  
+
+def CPI_general():
+  # Select the worksheet you want to display
+  sheet_name2 = 'General indices'
+   # Read the worksheet into a Pandas DataFrame
+  dfa = pd.read_excel(excel_file, sheet_name2)
+  # Select the initial columns to be displayed
+  selected_columns=dfa.columns
+  fig = px.line(dfa, x="YEAR", y=selected_columns)
+  fig.update_layout(title="Charting Rwanda's Economic Rise: A Line Graph Perspective on GDP from 1999 to 2022",yaxis_title="in billion Rwf",legend=dict(yanchor="bottom", y=-1, xanchor="center", x=0.5))
+  st.plotly_chart(fig, use_container_width=True)
+ 
+
+#GDP 
 def ExpenditureOnGDP():
     st.subheader("Expenditure on GDP (Billion Frw)")
     df3=pd.read_excel('GDP.xlsx', sheet_name='Table4A')
@@ -723,13 +737,8 @@ def cpi_dashboard():
        Urban()
     with tab4:
        Rural()
-    # if selected=="Urban":
-    #    Urban()
-    # if selected=="Rural":
-    #    Rural()
-    # if selected=="Other_Indices":
-    #    Other_Indices()
-    
+
+    CPI_general()  
 
 def gdp_dashboard():
     # Display GDP dashboard option
