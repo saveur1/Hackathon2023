@@ -187,6 +187,7 @@ def donut_chart():
     layout = go.Layout(
         title='Percentage of GDP by Sector in 2022',
         legend=dict(yanchor="bottom", y=-0.8, xanchor="center", x=0.5),
+        margin=dict(l=0, r=0, b=0, t=40),
         annotations=[dict(text=f'Frw<br />{ "{:,}".format(df1["GDP at current prices"][23]) }<br />billion', x=0.5, y=0.5, font_size=20, showarrow=False)]
     )
 
@@ -777,9 +778,9 @@ def home_dashboard():
     st.title("GDP and CPI Dashboard")
     df_selection = pd.read_excel("GDP.xlsx",sheet_name="macro_economic")
     df_selection = df_selection.rename(columns=lambda x: x.strip())
-
+  
     # Configurable Year
-    year  = st.selectbox(label="Select GDP and CPI Year",options=df_selection["Years"])
+    year  = st.selectbox(label="GDP and CPI Summary",options=df_selection["Years"])
     
     # GDP and CPI summary
     total1,total2,total3,total4,total5=st.columns(5,gap='small')
@@ -805,6 +806,8 @@ def home_dashboard():
     with col2:
         donut_chart()
 
+    #CPI Charts
+    
     # Divider
     st.markdown("""---""")
 
