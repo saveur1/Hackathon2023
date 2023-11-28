@@ -142,31 +142,32 @@ def analyze_rwf_national_income_expenditure():
     st.plotly_chart(fig, use_container_width=True)
 def MemorandumItems():
   def population():
-    st.info("Rwanda Population Growth rate")
-    populationInMillion,populationGrowthRate=st.columns(2)
-    with populationInMillion:
-      fig = px.area(df1, x="Years", y="Total population (millions)")
-      fig.update_layout(title="Total population (millions)",yaxis_title="Population in Million",legend=dict(yanchor="bottom", y=-1, xanchor="center", x=0.5))
-      st.plotly_chart(fig, use_container_width=True)
-    with populationGrowthRate:
-      selectedColumn=df1["Population Growth rate"]*100
-      fig = px.area(df1, x="Years", y=selectedColumn)
-      fig.update_layout(title="population Growth Rate",yaxis_title="Growth Rate",legend=dict(yanchor="bottom", y=-1, xanchor="center", x=0.5))
-      st.plotly_chart(fig, use_container_width=True)  
+      st.info("Rwanda Population Growth rate")
+      populationInMillion,populationGrowthRate=st.columns(2)
+      with populationInMillion:
+        fig = px.area(df1, x="Years", y="Total population (millions)")
+        fig.update_layout(title="Total population (millions)",yaxis_title="Population in Million",legend=dict(yanchor="bottom", y=-1, xanchor="center", x=0.5))
+        st.plotly_chart(fig, use_container_width=True)
+      with populationGrowthRate:
+        selectedColumn=df1["Population Growth rate"]*100
+        fig = px.area(df1, x="Years", y=selectedColumn)
+        fig.update_layout(title="population Growth Rate",yaxis_title="Growth Rate",legend=dict(yanchor="bottom", y=-1, xanchor="center", x=0.5))
+        st.plotly_chart(fig, use_container_width=True)  
   def ExchangeRate():
-    st.info("Exchange rate: Rwf per US dollar")
-    ExchangeRwfUSD,ExchangeGrowthRate=st.columns(2)
-    with ExchangeRwfUSD:
-      fig = px.area(df1, x="Years", y="Exchange rate: Rwf per US dollar")
-      fig.update_layout(title="Exchange rate: Rwf per US dollar",yaxis_title="Rwf per US dollar",legend=dict(yanchor="bottom", y=-1, xanchor="center", x=0.5))
-      st.plotly_chart(fig, use_container_width=True)
-    with ExchangeGrowthRate:
-      selectedColumn=df1["Exchange Growth rate"]*100
-      fig = px.area(df1, x="Years", y=selectedColumn)
-      fig.update_layout(title="Exchange growth rate: Rwf per US dollar",yaxis_title="Exchange Growth Rate (Percentage)",legend=dict(yanchor="bottom", y=-1, xanchor="center", x=0.5))
-      st.plotly_chart(fig, use_container_width=True)
+      st.info("Exchange rate: Rwf per US dollar")
+      ExchangeRwfUSD,ExchangeGrowthRate=st.columns(2)
+      with ExchangeRwfUSD:
+        fig = px.area(df1, x="Years", y="Exchange rate: Rwf per US dollar")
+        fig.update_layout(title="Exchange rate: Rwf per US dollar",yaxis_title="Rwf per US dollar",legend=dict(yanchor="bottom", y=-1, xanchor="center", x=0.5))
+        st.plotly_chart(fig, use_container_width=True)
+      with ExchangeGrowthRate:
+        selectedColumn=df1["Exchange Growth rate"]*100
+        fig = px.area(df1, x="Years", y=selectedColumn)
+        fig.update_layout(title="Exchange growth rate: Rwf per US dollar",yaxis_title="Exchange Growth Rate (Percentage)",legend=dict(yanchor="bottom", y=-1, xanchor="center", x=0.5))
+        st.plotly_chart(fig, use_container_width=True)
   population()  
-  ExchangeRate()    
+  ExchangeRate()  
+
 def donut_chart():
     # Create a dataframe with the data from the image
     data = pd.DataFrame({
@@ -180,19 +181,60 @@ def donut_chart():
     })
 
     # Create the trace for the chart
-    trace = go.Pie(labels=data['Sector'], values=data['Percentage'], hole=0.5)
+    trace = go.Pie(labels=data['Sector'], values=data['Percentage'], hole=0.5,)
 
     # Create the layout for the chart
     layout = go.Layout(
-        title='Percentage of GDP by Sector',
+        title='Percentage of GDP by Sector in 2022',
         legend=dict(yanchor="bottom", y=-0.8, xanchor="center", x=0.5),
-        annotations=[dict(text='Frw '+str(df1["GDP at current prices"][23])+' billion', x=0.5, y=0.5, font_size=20, showarrow=False)]
+        annotations=[dict(text=f'Frw<br />{ "{:,}".format(df1["GDP at current prices"][23]) }<br />billion', x=0.5, y=0.5, font_size=20, showarrow=False)]
     )
 
     # Create the figure and plot it using Streamlit
     fig = go.Figure(data=[trace], layout=layout)
     st.plotly_chart(fig, use_container_width=True)
  
+
+def threeD_barchart():
+    years = [2000, 2001, 2002, 2003,
+         2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012]
+
+    fig = go.Figure()
+    fig.add_trace(go.Bar(x=years,
+                    y=[180, 236, 207, 236, 263,
+                      350, 430, 474, 526, 488, 537, 500, 439],
+                    name='GDP at Current Price',
+                    marker_color='rgb(55, 83, 109)'
+                    ))
+    fig.add_trace(go.Bar(x=years,
+                    y=[37, 43, 55, 56, 88, 105, 156, 270,
+                      299, 340, 403, 549, 499],
+                    name='GDP at Constant 2017',
+                    marker_color='rgb(26, 118, 255)'
+                    ))
+
+    fig.update_layout(
+        title='GDP at current price and GDP at constant 2017',
+        xaxis_tickfont_size=14,
+        yaxis=dict(
+            title='Rwf (Billions)',
+            titlefont_size=20,
+            tickfont_size=14,
+        ),
+        legend=dict(
+            xanchor="left",
+            yanchor="bottom",
+            x=0,
+            y=-0.4,
+            bgcolor='rgba(255, 255, 255, 0)',
+            bordercolor='rgba(255, 255, 255, 0)'
+        ),
+        barmode='group',
+        bargap=0.3, # gap between bars of adjacent location coordinates.
+        bargroupgap=0.1 # gap between bars of the same location coordinate.
+    )
+    st.plotly_chart(fig, use_container_width=True)
+
 
 def barchart_with_line():
     df2=pd.read_excel('GDP.xlsx', sheet_name='Table2A')
@@ -736,29 +778,34 @@ def home_dashboard():
     df_selection = pd.read_excel("GDP.xlsx",sheet_name="macro_economic")
     df_selection = df_selection.rename(columns=lambda x: x.strip())
 
-    # gdp_per_capita = df_selection['GDP at current prices'][23]
-    # investment_mode = float(df_selection['Investment'].mode())
-    # investment_mean = float(df_selection['Investment'].mean())
-    # investment_median= float(df_selection['Investment'].median())
-    # rating = float(df_selection['Rating'].sum())
-
-
-    total1,total2,total3,total4,total5=st.columns(5,gap='large')
+    # Configurable Year
+    year  = st.selectbox(label="Select GDP and CPI Year",options=df_selection["Years"])
+    
+    # GDP and CPI summary
+    total1,total2,total3,total4,total5=st.columns(5,gap='small')
     with total1:
-        st.metric(label="GDP per Capita in 2022",value=f"{145.8995:,.0f}")
+        st.metric(label="GDP per Capita in 2022",value=f"{145.8995:,.0f}",delta="1.2 °F")
 
     with total2:
-        st.metric(label="GNP in 2022",value=f"{12.555:,.0f}")
+        st.metric(label="GNP in 2022",value=f"{12.555:,.0f}", delta="-8%")
 
     with total3:
-        st.metric(label="Nominal GDP in 2022",value=f"{1345.0033:,.0f}")
+        st.metric(label="Nominal GDP in 2022",value=f"{1345.0033:,.0f}",delta="10%")
 
     with total4:
-        st.metric(label="Real GDP in 2022",value=f"{7451.3344:,.0f}")
+        st.metric(label="Real GDP in 2022",value=f"{7451.3344:,.0f}",delta="84 Billions")
 
     with total5:
-        st.metric(label="Total Population as in 2022",value=5,help=f""" Total Rating: {5} """)
+        st.metric(label="Total Population as in 2022",value=5,delta="100%")
+    
+    # GDP Charts
+    col1, col2 = st.columns(2)
+    with col1:
+        threeD_barchart()
+    with col2:
+        donut_chart()
 
+    # Divider
     st.markdown("""---""")
 
 
