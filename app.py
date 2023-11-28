@@ -8,9 +8,6 @@ import plotly.express as px
 import streamlit_option_menu as om
 st.set_page_config(page_title="GDP&CPI Dashboard",layout="wide",page_icon="🇷🇼")
 st.markdown("<style>div.block-container{padding-top:1rem;}</style>", unsafe_allow_html=True)
-
-st.set_page_config(page_title="GDP&CPI Dashboard",layout="wide",page_icon="🇷🇼")
-st.markdown("<style>div.block-container{padding-top:1rem;}</style>", unsafe_allow_html=True)
 st.title("""GDP & CPI Dashboard""")
 
 #                          GROSS DOMESTIC PRODUCT AT MACRO ECCONOMIC LEVEL
@@ -826,7 +823,7 @@ def home_dashboard():
         donut_chart()
 
     #CPI Charts
-    
+    CPI_general()
     # Divider
     st.markdown("""---""")
 
