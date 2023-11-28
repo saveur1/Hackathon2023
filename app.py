@@ -6,12 +6,10 @@ from matplotlib.dates import date2num
 import plotly.graph_objs as go
 import plotly.express as px
 import streamlit_option_menu as om
-st.set_page_config(page_title="GDP&CPI Dashboard",layout="wide",page_icon="🇷🇼")
-st.title("""GDP & CPI Dashboard""")
 
-# Style
-with open('style.css')as f:
-    st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html = True)
+st.set_page_config(page_title="GDP&CPI Dashboard",layout="wide",page_icon="🇷🇼")
+st.markdown("<style>div.block-container{padding-top:1rem;}</style>", unsafe_allow_html=True)
+st.title("""GDP & CPI Dashboard""")
 
 #                          GROSS DOMESTIC PRODUCT AT MACRO ECCONOMIC LEVEL
 # -------------------------------------------------------------------------------------------------------------
@@ -135,7 +133,8 @@ def analyze_rwf_national_income_expenditure():
         legend=dict(yanchor="bottom", y=-1.8, xanchor="center", x=0.5),
         xaxis=dict(title='Year'),
         yaxis=dict(title='Billion in RWF'),
-        barmode='group'
+        barmode='group',
+        height=1000
     )
     # Create the figure and plot it using Plotly
     fig = go.Figure(data=[trace1, trace2, trace3, trace4,trace5, trace6, trace7, trace8, trace9], layout=layout)
@@ -228,7 +227,6 @@ def barchart_with_line():
 
 def MacroEconomicHome():
     st.subheader(":house: Rwanda's GDP Macroeconomic Aggregates")
-    st.markdown("<style>div.block-container{padding-top:1rem;}</style>", unsafe_allow_html=True)
 
     MacroTable()
     
@@ -236,7 +234,7 @@ def MacroEconomicHome():
     st.subheader(""" 
     Gross Domestic Product (Rwf billions)
     """)
-    gdps_trends_charts,gdp_growth_charts=st.columns(2)
+    gdps_trends_charts,gdp_growth_charts=st.tabs(["📈 Chart 1", "📈 Chart 2"])
     with gdps_trends_charts:
         gdps_trends_chart()
     with gdp_growth_charts:
@@ -479,7 +477,7 @@ def all():
    st.plotly_chart(fig,use_container_width=True)
 
 
-# ALL RWANDA
+# URBAN SECTOR
 def Urban():
   # Select the worksheet you want to display
   sheet_name = 'urban1'
@@ -621,7 +619,7 @@ def ExpenditureOnGDP():
         title='Proportions of GDP and Percentage Change in GDP',
         legend=dict(yanchor="bottom", y=-1, xanchor="center", x=0.5),
         xaxis=dict(title='Year'),
-        yaxis=dict(title='in billion Rwf', range=[-5000, 19000]),
+        yaxis=dict(title='in billion Rwf', range=[-5000, 20000]),
         barmode='stack'
     )
 
@@ -697,45 +695,45 @@ def weights():
      
 #SIDEBAR
 def cpi_dashboard():
+    # Create the navigation bar
+    tab1, tab2,tab3, tab4 = st.tabs(["Weights", "All Rwanda","Urban", "Rural"])
+
+    # Style
+    with open('style.css')as f:
+        st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html = True)
     # Display CPI dashboard attributes
-    st.sidebar.header("CPI Dashboard")
-    with st.sidebar:
-       selected= om.option_menu(
-          menu_title=None,
-          options=["Weights","All Rwanda","Urban","Rural","Other_Indices"],
-          icons=["house","wallet-fill","view-stacked","three-dots","card-text"],
-          menu_icon="cast",
-          default_index = 0
-       )
-    if selected=="Weights":
+    with tab1:
        weights()
-    if selected=="All Rwanda":
+    with tab2:
       all()
-    if selected=="Urban":
+    with tab3:
        Urban()
-    if selected=="Rural":
+    with tab4:
        Rural()
-    if selected=="Other_Indices":
-       Other_Indices()
+    # if selected=="Urban":
+    #    Urban()
+    # if selected=="Rural":
+    #    Rural()
+    # if selected=="Other_Indices":
+    #    Other_Indices()
     
 
 def gdp_dashboard():
     # Display GDP dashboard option
-    with st.sidebar:
-       selected= om.option_menu(
-          menu_title=None,
-          options=["Macro economic aggregates","GDP BY Kind of activity","Expenditure on GDP"],
-          icons=["house","wallet-fill","view-stacked","three-dots","card-text"],
-          menu_icon="cast",
-          default_index = 0
-       )
-    if selected=="Macro economic aggregates":
-       MacroEconomicHome()   
-    if selected=="GDP BY Kind of activity":
-       kindOfActivity()
-    if selected=="Expenditure on GDP":
+        # Create the navigation bar
+    tab1, tab2,tab3, = st.tabs(["Macro economic aggregates", "GDP BY Kind of activity","Expenditure on GDP"])
+    # Display GDP dashboard attributes
+    with tab1:
+       MacroEconomicHome()
+    with tab2:
+      kindOfActivity()
+    with tab3:
        ExpenditureOnGDP()
 
+    # Style
+    with open('style.css')as f:
+        st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html = True)
+    # Display CPI dashboard attributes
 
 st.sidebar.image("logo/logo2.png")
 
@@ -748,5 +746,6 @@ elif dashboard_selection == "GDP":
     gdp_dashboard()
 else:
     st.sidebar.write("Please select a dashboard.")
+    
 # Copyright notice
 st.markdown("Copyright (c) 2023 methode TWIZEYIMANA & Saveur BIKORIMANA")
