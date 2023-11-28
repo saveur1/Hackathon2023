@@ -8,7 +8,12 @@ import plotly.express as px
 import streamlit_option_menu as om
 st.set_page_config(page_title="GDP&CPI Dashboard",layout="wide",page_icon="🇷🇼")
 st.markdown("<style>div.block-container{padding-top:1rem;}</style>", unsafe_allow_html=True)
-st.title("""GDP & CPI Dashboard""")
+
+
+#Styles
+with open("style.css") as t:
+    st.markdown(f"<style>{ t.read() }</style>", unsafe_allow_html= True)
+
 
 #                          GROSS DOMESTIC PRODUCT AT MACRO ECCONOMIC LEVEL
 # -------------------------------------------------------------------------------------------------------------

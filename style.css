@@ -23,19 +23,20 @@ div[data-testid="stExpander"] div[role="button"] p
     font-size: 1.3rem;
     color:#284f8d;
 }
-  .e16nr0p30 {
-    color:rgb(40,79,141);
-  }
-  div.css-j5r0tf.e1tzin5v1 {
-    background-color: rgb(205, 224, 255);
-    border: 1px solid rgb(159, 181, 217);
-    border-radius: 12px;
-    padding: 15px 5px;
-    color:rgb(1, 13, 31) !important;
-  }
-  div.css-j5r0tf.e1tzin5v1 p {
-    color:rgb(1, 13, 31) !important;
-  }
-  div [data-testid="metric-container"]{
-    box-shadow: none !important;
-  }
+.e16nr0p30 {
+color:rgb(40,79,141);
+}
+
+div.css-j5r0tf.e1tzin5v1 {
+background-color: rgb(205, 224, 255);
+border: 1px solid rgb(159, 181, 217);
+border-radius: 12px;
+padding: 15px 5px;
+color:rgb(1, 13, 31) !important;
+}
+div.css-j5r0tf.e1tzin5v1 p {
+color:rgb(1, 13, 31) !important;
+}
+div [data-testid="metric-container"]{
+box-shadow: none !important;
+}
