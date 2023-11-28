@@ -765,6 +765,7 @@ def weights():
      
 #SIDEBAR
 def cpi_dashboard():
+    st.title("CPI Dashboard")
     # Create the navigation bar
     tab1, tab2,tab3, tab4 = st.tabs(["Weights", "All Rwanda","Urban", "Rural"])
 
@@ -784,6 +785,7 @@ def cpi_dashboard():
     CPI_general()  
 
 def gdp_dashboard():
+    st.title("GDP Dashboard")
     # Display GDP dashboard option
         # Create the navigation bar
     tab1, tab2,tab3, = st.tabs(["Macro economic aggregates", "GDP BY Kind of activity","Expenditure on GDP"])
@@ -848,6 +850,9 @@ with st.sidebar:
 
 if selected == "Home":
   home_dashboard()
-
-# Copyright notice
+elif selected == "GDP":
+  gdp_dashboard()
+elif selected == "CPI":
+  cpi_dashboard()
+g# Copyright notice
 st.markdown("<div style='font-style:italic;text-align:center'>Copyright (c) 2023 Methode & Saveur</div>",unsafe_allow_html=True)
