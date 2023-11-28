@@ -1,29 +1,41 @@
 import streamlit as st
-import plotly.express as px
+import numpy as np
 import pandas as pd
+import time
+st.selectbox('Select your favorite fruit:', [('apple', 'Apple'), ('banana', 'Banana'), ('orange', 'Orange')], key='fruit')
 
-# Load the data into a Pandas DataFrame
-df = pd.DataFrame({
-    "Years": [2017, 2018, 2019, 2020, 2021, 2022],
-    "Agriculture": [10, 12, 15, 18, 22, 26],
-    "Industry": [20, 22, 25, 28, 32, 36],
-    "Services": [30, 33, 36, 39, 43, 47],
-    "GDP": [60, 67, 78, 85, 97, 111]
-})
+with st.sidebar:
+    with st.echo():
+        st.write("This code will be printed to the sidebar.")
 
-# Calculate the percentage change in GDP
-df["Percentage Change"] = df["GDP"].pct_change() * 100
+    with st.spinner("Loading..."):
+        time.sleep(1)
+    st.success("Done!")
+    
+tab1, tab2 = st.tabs(["📈 Chart", "🗃 Data"])
+data = np.random.randn(10, 1)
 
-# Create a line chart using Plotly Express
-fig = px.line(df, x="Years", y="Percentage Change", color="Industry", line_shape="linear")
+tab1.subheader("A tab with a chart")
+tab1.line_chart(data)
 
-# Update the chart layout
-fig.update_layout(
-    title="Percentage Change in GDP by Sector",
-    xaxis_title="Years",
-    yaxis_title="Percentage Change",
-    legend_title="Sector",
-)
+tab2.subheader("A tab with the data")
+tab2.write(data)
 
-# Display the chart in Streamlit
-st.plotly_chart(fig, use_container_width=True)
+st.header("Test two")
+sheet="rural1"
+# Load the Excel file containing CPI data
+data = pd.read_excel('CPI.xlsx',sheet)
+# Create a selectbox to choose the base year
+data[['Year', 'Month', 'Date']] = pd.to_datetime(data['YEAR'], format='%Y-%m-%d').dt.strftime('%Y-%m-%d').str.split('-').tolist()
+
+sorted_year=sorted(data['Year'].unique(), reverse=True)
+sorted_month=sorted(data['Month'].unique(), reverse=True)
+# Create a selectbox to choose the current year/month
+current_year = st.selectbox('Select Current Year', sorted_year)
+current_month = st.selectbox('Select Current Month', sorted_month)
+
+# Create a slider with the label "Select years" and a range of years from 1980 to 2023
+selected_years = st.slider("Select years",2009,2022, (2017,2022))
+
+# Display the selected years
+st.write(selected_years[1])
