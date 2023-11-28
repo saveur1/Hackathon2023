@@ -242,12 +242,7 @@ def MacroEconomicHome():
     st.subheader("""
     Rwanda's GDP Highlights in 2022: A Visual Representation
     """)
-
-    col1,col2 = st.columns((2))
-    with col1:
-        donut_chart()
-    with col2:
-        barchart_with_line()
+    barchart_with_line()
     
 def kindOfActivity():
   excel_file = 'GDP.xlsx'
@@ -730,7 +725,10 @@ def gdp_dashboard():
 
 def home_dashboard():
     
-    st.title("GDP and CPI Dashboard")
+  st.title("GDP and CPI Dashboard")
+  tab1,tab2=st.tabs(["GDP","CPI"])
+  # GDP SUMMARY BASED ON YEAR
+  def gdp_home():
     df_selection=df1
     df_selection = df_selection.rename(columns=lambda x: x.strip())
     df_selection[['Year', 'Month', 'Date']] = pd.to_datetime(df_selection['Years'], format='%Y-%m-%d').dt.strftime('%Y-%m-%d').str.split('-').tolist()
@@ -836,8 +834,119 @@ def home_dashboard():
     CPI_general()
     # Divider
     st.markdown("""---""")
+  # GDP SUMMARY BASED ON YEAR
+  def cpi_home():
+    df_selection=df1
+    df_selection = df_selection.rename(columns=lambda x: x.strip())
+    df_selection[['Year', 'Month', 'Date']] = pd.to_datetime(df_selection['Years'], format='%Y-%m-%d').dt.strftime('%Y-%m-%d').str.split('-').tolist()
+    # Solting Year
+    sorted_year=sorted(df_selection['Year'].unique(), reverse=True)
+    # Configurable Year
+    year  = st.selectbox(label="GDP and CPI Summary",options=sorted_year)
+    
+    # GDP and CPI summary
+    total1,total2,total3,total4,total5=st.columns(5,gap='small')
+    with total1:
+        st.metric(label=f"GDP per Capita in {year}",value=f"{145.8995:,.0f}",delta="1.2 °F")
+
+    with total2:
+        st.metric(label=f"GNP in {year}",value=f"{12.555:,.0f}", delta="-8%")
+
+    with total3:
+        st.metric(label=f"Nominal GDP in {year}",value=f"{1345.0033:,.0f}",delta="10%")
+
+    with total4:
+        st.metric(label=f"Real GDP in {year}",value=f"{7451.3344:,.0f}",delta="84 Billions")
+
+    with total5:
+        st.metric(label=f"Total Population as in {year}",value=5,delta="100%")
+    
+    # GDP Charts
+    def threeD_barchart():
+      years = [2000, 2001, 2002, 2003,
+          2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012]
+
+      fig = go.Figure()
+      fig.add_trace(go.Bar(x=years,
+                      y=[180, 236, 207, 236, 263,
+                        350, 430, 474, 526, 488, 537, 500, 439],
+                      name='GDP at Current Price',
+                      marker_color='rgb(55, 83, 109)'
+                      ))
+      fig.add_trace(go.Bar(x=years,
+                      y=[37, 43, 55, 56, 88, 105, 156, 270,
+                        299, 340, 403, 549, 499],
+                      name='GDP at Constant 2017',
+                      marker_color='rgb(26, 118, 255)'
+                      ))
+
+      fig.update_layout(
+          title='GDP at current price and GDP at constant 2017',
+          xaxis_tickfont_size=14,
+          yaxis=dict(
+              title='Rwf (Billions)',
+              titlefont_size=20,
+              tickfont_size=14,
+          ),
+          legend=dict(
+              xanchor="left",
+              yanchor="bottom",
+              x=0,
+              y=-0.4,
+              bgcolor='rgba(255, 255, 255, 0)',
+              bordercolor='rgba(255, 255, 255, 0)'
+          ),
+          barmode='group',
+          bargap=0.3, # gap between bars of adjacent location coordinates.
+          bargroupgap=0.1 # gap between bars of the same location coordinate.
+      )
+      st.plotly_chart(fig, use_container_width=True)
 
 
+      
+    def donut_chart():
+      # Create a dataframe with the data from the image
+        data = pd.DataFrame({
+            'Sector': ['Agriculture', 'Industry', 'Services','Adjustments'],
+            'Percentage': [
+                            round(df1['Agriculture'][23]*100),
+                            round(df1['Industry'][23]*100), 
+                            round(df1['Services'][23]*100),
+                            round(df1['Adjustments'][23]*100)
+                          ]
+        })
+
+        # Create the trace for the chart
+        trace = go.Pie(labels=data['Sector'], values=data['Percentage'], hole=0.5,)
+
+        # Create the layout for the chart
+        layout = go.Layout(
+            title=f'Percentage of GDP by Sector in {year}',
+            legend=dict(yanchor="bottom", y=-0.8, xanchor="center", x=0.5),
+            margin=dict(l=0, r=0, b=0, t=40),
+            annotations=[dict(text=f'Frw<br />{ "{:,}".format(df1["GDP at current prices"][23]) }<br />billion', x=0.5, y=0.5, font_size=20, showarrow=False)]
+        )
+
+        # Create the figure and plot it using Streamlit
+        fig = go.Figure(data=[trace], layout=layout)
+        st.plotly_chart(fig, use_container_width=True)
+    
+    col1, col2 = st.columns(2)
+    with col1:
+        threeD_barchart()
+    with col2:
+        donut_chart()
+
+    #CPI Charts
+    CPI_general()
+    # Divider
+    st.markdown("""---""")
+  
+  with tab1:
+    gdp_home()
+  with tab2:
+    cpi_home()
+  
 
 #  SIDE BAR CONFIGURATIONS
 st.sidebar.image("logo/logo2.png")
