@@ -44,8 +44,14 @@ def gdp_growth_chart():
     filtered_columns = st.multiselect("Filters:",selected_columns , default=initial_columns)
     for column in filtered_columns:
          df1[column] *= 100
-    fig = px.bar(df1, x="Years", y=filtered_columns)
-    fig.update_layout(title="Charting Rwanda's Economic Rise: A Line Graph Perspective on GDP Growth in Percentage from 1999 to 2022",yaxis_title="Growth rate (Percentage)",yaxis=dict(title='Percentage Change', range=[-10,30]),legend=dict(yanchor="bottom", y=-0.5, xanchor="center", x=0.5),barmode="group")
+    df1[['Year', 'Month', 'Date']] = pd.to_datetime(df1['Years'], format='%Y-%m-%d').dt.strftime('%Y-%m-%d').str.split('-').tolist()
+    fig = px.line(df1, x=df1['Year'], y=filtered_columns)
+    fig.update_layout(title="Charting Rwanda's Economic Rise: A Line Graph Perspective on GDP Growth in Percentage from 1999 to 2022",yaxis_title="Growth rate (Percentage)",yaxis=dict(title='Percentage Change', range=[-10,30]),xaxis=dict(
+        rangeslider=dict(
+            visible=True,
+            range=[df1['Year'].min(), df1['Year'].max()]
+        )
+    ),legend=dict(yanchor="bottom", y=-0.5, xanchor="center", x=0.5),barmode="group")
     st.plotly_chart(fig, use_container_width=True)
 #Calculate proportions of GDP contributed by various sectors.
 def calculate_gdp_proportions():
@@ -234,7 +240,7 @@ def MacroEconomicHome():
     st.subheader(""" 
     Gross Domestic Product (Rwf billions)
     """)
-    gdps_trends_charts,gdp_growth_charts=st.tabs(["📈 Chart 1", "📈 Chart 2"])
+    gdps_trends_charts,gdp_growth_charts=st.columns(2)
     with gdps_trends_charts:
         gdps_trends_chart()
     with gdp_growth_charts:
@@ -499,7 +505,7 @@ def Urban():
     
   with st.expander("""Urban CPI in Rwanda: 2009 to 2022 TABLE"""):  
       # Create a multiselect widget
-      selected_columns = st.multiselect('Filter: ',df.columns,default=["YEAR","GENERAL INDEX (CPI)","Food and non-alcoholic beverages","   Bread and cereals","Meat","Milk, cheese and eggs","Vegetables","Non-alcoholic beverages","Alcoholic beverages and tobacco","Clothing and footwear","Housing, water, electricity, gas and other fuel","Furnishing, household and equipment","Health"])
+      selected_columns = st.multiselect('Filter: ',df.columns,default=["YEAR","GENERAL INDEX (CPI)","Food and non-alcoholic beverages","   Bread and cereals","Meat","Milk, cheese and eggs","Vegetables","Non-alcoholic beverages","Alcoholic beverages and tobacco","Clothing and footwear","Housing, water, electricity, gas and other fuel","Furnishing, household and equipment","Health"],key=22)
 
       # Filter the DataFrame based on the selected columns
       df_filtered = df[selected_columns]
@@ -516,7 +522,7 @@ def Urban():
 
 
    # Create a multiselect widget
-  selected_columns = st.multiselect('Filter: ',df.columns,default=["GENERAL INDEX (CPI)"])
+  selected_columns = st.multiselect('Filter: ',df.columns,default=["GENERAL INDEX (CPI)"],key=23)
 
   fig = px.line(df, x='YEAR', y=selected_columns, title='Deciphering Urban Consumption Dynamics in Rwanda: A Focus on CPI Trends from 2009 to 2022')
   fig.update_layout(yaxis_title="Percentage",legend=dict(yanchor="bottom", y=-1, xanchor="center", x=0.5))
@@ -537,7 +543,7 @@ def Rural():
     
   with st.expander("""Rural CPI in Rwanda: 2009 to 2022 TABLE"""):  
       # Create a multiselect widget
-      selected_columns = st.multiselect('Filter: ',df.columns,default=["YEAR","GENERAL INDEX (CPI)","Food and non-alcoholic beverages","   Bread and cereals","Meat","Milk, cheese and eggs","Vegetables","Non-alcoholic beverages","Alcoholic beverages and tobacco","Clothing and footwear","Housing, water, electricity, gas and other fuel","Furnishing, household and equipment","Health"])
+      selected_columns = st.multiselect('Filter: ',df.columns,default=["YEAR","GENERAL INDEX (CPI)","Food and non-alcoholic beverages","   Bread and cereals","Meat","Milk, cheese and eggs","Vegetables","Non-alcoholic beverages","Alcoholic beverages and tobacco","Clothing and footwear","Housing, water, electricity, gas and other fuel","Furnishing, household and equipment","Health"],key=24)
 
       # Filter the DataFrame based on the selected columns
       df_filtered = df[selected_columns]
@@ -553,7 +559,7 @@ def Rural():
   column_names.remove('YEAR')
 
    # Create a multiselect widget
-  selected_columns = st.multiselect('Filter: ',df.columns,default=["GENERAL INDEX (CPI)"])
+  selected_columns = st.multiselect('Filter: ',df.columns,default=["GENERAL INDEX (CPI)"],key=25)
 
   fig = px.line(df, x='YEAR', y=selected_columns, title='Unveiling Rural Consumption Dynamics in Rwanda: A Focus on CPI Trends from 2009 to 2022')
   fig.update_layout(yaxis_title="Percentage",legend=dict(yanchor="bottom", y=-1, xanchor="center", x=0.5))
