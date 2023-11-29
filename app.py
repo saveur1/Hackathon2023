@@ -974,7 +974,7 @@ def home_dashboard():
     MemorandumItems()
 
     # gdp on expenditure
-    ExpenditureOnGDP()
+    # ExpenditureOnGDP()
     data = {
         "x": [1, 2, 3, 4, 5],
         "y": [3, 5, 7, 2, 1]
