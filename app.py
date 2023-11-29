@@ -877,26 +877,78 @@ def home_dashboard():
     filtered_df3 = data3[(data1['Year'] == year) & (data1['Month'] == month)]
     #selected column
     selected_column3 = "{:.2f}".format(float(filtered_df3['GENERAL INDEX (CPI)'].to_string(index=False, header=False)))
- 
+    
+      # RULAR INFLATION
+    annual_filtered = data3[(data1['Year'] == str(int(year)-1)) & (data1['Month'] == month)]
+    monthly_filtered = data3[(data1['Year'] == year) & (data1['Month'].astype(int) == int(month)-1)]
+    #selected column
+    annual_base_year = "{:.2f}".format(float(annual_filtered['GENERAL INDEX (CPI)']))
+    monthly_base= "{:.2f}".format(float(monthly_filtered['GENERAL INDEX (CPI)']))
+    annual_base_year = float(annual_base_year)
+    current_year=float(selected_column3)
+    monthly_base=float(monthly_base)
+    current_year=np.round(current_year,decimals=1)
+    annual_base_year=np.round(annual_base_year,decimals=1)
+    rular_annual_inflation_rate=(current_year-annual_base_year)/annual_base_year*100
+    rular_monthly_inflation_rate=(current_year-monthly_base)/monthly_base*100
+
+    
+      # URBAN INFLATION
+    annual_filtered = data2[(data1['Year'] == str(int(year)-1)) & (data1['Month'] == month)]
+    monthly_filtered = data2[(data1['Year'] == year) & (data1['Month'].astype(int) == int(month)-1)]
+    #selected column
+    annual_base_year = "{:.2f}".format(float(annual_filtered['GENERAL INDEX (CPI)']))
+    monthly_base= "{:.2f}".format(float(monthly_filtered['GENERAL INDEX (CPI)']))
+    annual_base_year = float(annual_base_year)
+    current_year=float(selected_column2)
+    monthly_base=float(monthly_base)
+    current_year=np.round(current_year,decimals=1)
+    annual_base_year=np.round(annual_base_year,decimals=1)
+    Urban_annual_inflation_rate=(current_year-annual_base_year)/annual_base_year*100
+    Urban_monthly_inflation_rate=(current_year-monthly_base)/monthly_base*100
+
+    
+    #GENERAL INFLATION
+    annual_filtered = data1[(data1['Year'] == str(int(year)-1)) & (data1['Month'] == month)]
+    monthly_filtered = data1[(data1['Year'] == year) & (data1['Month'].astype(int) == int(month)-1)]
+    #selected column
+    annual_base_year = float(annual_filtered['GENERAL INDEX (CPI)'])
+    monthly_base=float(monthly_filtered['GENERAL INDEX (CPI)'])
+    annual_base_year = float(annual_base_year)
+    current_year=float(selected_column1)
+    monthly_base=float(monthly_base)
+    current_year=np.round(current_year,decimals=1)
+    annual_base_year=np.round(annual_base_year,decimals=1)
+    general_annual_inflation_rate=(current_year-annual_base_year)/annual_base_year*100
+    general_monthly_inflation_rate=(current_year-monthly_base)/monthly_base*100
+    
+    #Rounding
+    general_annual_inflation_rate1=np.round(general_annual_inflation_rate,decimals=1)
+    general_monthly_inflation_rate1=np.round(general_monthly_inflation_rate,decimals=1)
+    Urban_annual_inflation_rate=np.round(Urban_annual_inflation_rate,decimals=1)
+    Urban_monthly_inflation_rate=np.round(Urban_monthly_inflation_rate,decimals=1)
+    rular_annual_inflation_rate=np.round(rular_annual_inflation_rate,decimals=1)
+    rular_monthly_inflation_rate=np.round(rular_monthly_inflation_rate,decimals=1)
+    
     # GDP and CPI summary
-    total1,total2,total3,total4,total5=st.columns(5,gap='small')
+    total1,total2,total3=st.columns(3,gap='small')
     with total1:
         st.metric(label=f" Overall Rwanda Index {month} {year}",value=selected_column1)
-        st.metric(label=f" Anually Basis {month} {year}",value="",delta="15%")
-        st.metric(label=f" Monthly Basis {month} {year}",value="",delta="15%")
+        st.metric(label=f" Anually Inflation Rate {month} {year}",value="",delta=f"{general_annual_inflation_rate1}%")
+        st.metric(label=f" Monthly Inflation Rate {month} {year}",value="",delta=f"{general_monthly_inflation_rate1}%")
     with total2:
         st.metric(label=f"Urban Index {month} {year}",value=selected_column2)
-        st.metric(label=f" Anually Basis {month} {year}",value="",delta="15%")
-        st.metric(label=f" Monthly Basis {month} {year}",value="",delta="15%")
+        st.metric(label=f" Anually Inflation Rate  {month} {year}",value="",delta=f"{Urban_annual_inflation_rate}%")
+        st.metric(label=f" Monthly Inflation Rate {month} {year}",value="",delta=f"{Urban_monthly_inflation_rate}%")
     with total3:
         st.metric(label=f"Rural Index {month} {year}",value=selected_column3)
-        st.metric(label=f" Anually Basis {month} {year}",value="",delta="15%")
-        st.metric(label=f" Monthly Basis {month} {year}",value="",delta="15%")
-    with total4:
-        st.metric(label=f"Real GDP in {month} {year}",value=f"{7451.3344:,.0f}",delta="84 Billions")
+        st.metric(label=f" Anually Inflation Rate {month} {year}",value="",delta=f"{rular_annual_inflation_rate}%")
+        st.metric(label=f" Monthly Inflation Rate {month} {year}",value="",delta=f"{rular_monthly_inflation_rate}%")
+    # with total4:
+    #     st.metric(label=f"Real GDP in {month} {year}",value=f"{7451.3344:,.0f}",delta="84 Billions")
 
-    with total5:
-        st.metric(label=f"Total Population as in {month} {year}",value=5,delta="100%")
+    # with total5:
+    #     st.metric(label=f"Total Population as in {month} {year}",value=5,delta="100%")
     
     # GDP Charts
     def threeD_barchart():
