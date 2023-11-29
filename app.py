@@ -1049,8 +1049,13 @@ def home_dashboard():
     
       # RULAR INFLATION
     annual_filtered = data3[(data1['Year'] == str(int(year)-1)) & (data1['Month'] == selected_month)]
-    monthly_filtered = data3[(data1['Year'] == year) & (data1['Month'].astype(int) == int(selected_month)-1)]
+    if selected_month=="01":
+
+      monthly_filtered = data3[(data1['Year'] == str(int(year)-1)) & (data1['Month'].astype(int) == 12)]
+    else:
+      monthly_filtered = data3[(data1['Year'] == year) & (data1['Month'].astype(int) == int(selected_month)-1)]    
     #selected column
+
     annual_base_year = "{:.2f}".format(float(annual_filtered['GENERAL INDEX (CPI)']))
     monthly_base= "{:.2f}".format(float(monthly_filtered['GENERAL INDEX (CPI)']))
     annual_base_year = float(annual_base_year)
@@ -1062,9 +1067,13 @@ def home_dashboard():
     rular_monthly_inflation_rate=(current_year-monthly_base)/monthly_base*100
 
     
-      # URBAN INFLATION
+    # URBAN INFLATION
     annual_filtered = data2[(data1['Year'] == str(int(year)-1)) & (data1['Month'] == selected_month)]
-    monthly_filtered = data2[(data1['Year'] == year) & (data1['Month'].astype(int) == int(selected_month)-1)]
+    if selected_month=="01":
+
+      monthly_filtered = data2[(data1['Year'] == str(int(year)-1)) & (data1['Month'].astype(int) == 12)]
+    else:
+      monthly_filtered = data2[(data1['Year'] == year) & (data1['Month'].astype(int) == int(selected_month)-1)]  
     #selected column
     annual_base_year = "{:.2f}".format(float(annual_filtered['GENERAL INDEX (CPI)']))
     monthly_base= "{:.2f}".format(float(monthly_filtered['GENERAL INDEX (CPI)']))
@@ -1079,7 +1088,12 @@ def home_dashboard():
     
     #GENERAL INFLATION
     annual_filtered = data1[(data1['Year'] == str(int(year)-1)) & (data1['Month'] == selected_month)]
-    monthly_filtered = data1[(data1['Year'] == year) & (data1['Month'].astype(int) == int(selected_month)-1)]
+    if selected_month=="01":
+
+      monthly_filtered = data1[(data1['Year'] == str(int(year)-1)) & (data1['Month'].astype(int) == 12)]
+    else:
+      monthly_filtered = data1[(data1['Year'] == year) & (data1['Month'].astype(int) == int(selected_month)-1)]  
+  
     #selected column
     annual_base_year = float(annual_filtered['GENERAL INDEX (CPI)'])
     monthly_base=float(monthly_filtered['GENERAL INDEX (CPI)'])
