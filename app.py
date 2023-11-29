@@ -746,37 +746,36 @@ def home_dashboard():
         st.metric(label=f"GNP in {year}",value=f"{12.555:,.0f}", delta="-8%")
 
     with total3:
-        st.metric(label=f"Nominal GDP in {year}",value=f"{1345.0033:,.0f}",delta="10%")
+        st.metric(label=f"GDP at current price in {year}",value=f"{1345.0033:,.0f}",delta="10%")
 
     with total4:
-        st.metric(label=f"Real GDP in {year}",value=f"{7451.3344:,.0f}",delta="84 Billions")
+        st.metric(label=f"GDP at constantant 2017 in {year}",value=f"{7451.3344:,.0f}",delta="84 Billions")
 
     with total5:
         st.metric(label=f"Total Population as in {year}",value=5,delta="100%")
     
     # GDP Charts
     def threeD_barchart():
-      years = df1["Years"]
+      years = df1["Years"][18:]
 
       fig = go.Figure()
       fig.add_trace(go.Bar(
                       x=years,
-                      y=df1["GDP at current prices"],
+                      y=df1["GDP at current prices"][18:],
                       name='GDP at Current Price',
                       marker_color='rgb(55, 83, 109)'
                       ))
       fig.add_trace(go.Scatter(
                       x=years,
-                      y=df1["GDP Growth rate at current prices"],
+                      y= ["{:.1f}%".format(x * 100) for x in df1["GDP Growth rate at current prices"][18:]],
                       name='Growth Rate',
                       marker_color='rgb(26, 118, 255)',
                       mode="lines",
-                      yaxis="y2",
-                      markers=True
+                      yaxis="y2"
                       ))
 
       fig.update_layout(
-          title='GDP at current price and Growth Rate',
+          title='GDP at current price from 2017 to 2022',
           xaxis_tickfont_size=14,
           xaxis=dict(title="Years"),
           yaxis=dict(
@@ -839,7 +838,7 @@ def home_dashboard():
         donut_chart()
 
     #CPI Charts
-    CPI_general()
+
     # Divider
     st.markdown("""---""")
   # GDP SUMMARY BASED ON YEAR
