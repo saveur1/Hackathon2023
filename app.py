@@ -558,8 +558,8 @@ def CPI_general():
   dfa = pd.read_excel(excel_file, sheet_name2)
   # Select the initial columns to be displayed
   selected_columns=dfa.columns
-  fig = px.line(dfa, x="YEAR", y=selected_columns)
-  fig.update_layout(title="Charting Rwanda's Economic Rise: A Line Graph Perspective on GDP from 1999 to 2022",yaxis_title="in billion Rwf",legend=dict(yanchor="bottom", y=-1, xanchor="center", x=0.5))
+  fig = px.line(dfa[8:], x="YEAR", y=selected_columns)
+  fig.update_layout(title="Charting Rwanda",yaxis_title="Index",legend=dict(yanchor="bottom", y=-1, xanchor="center", x=0.5))
   st.plotly_chart(fig, use_container_width=True)
  
 
@@ -1238,5 +1238,5 @@ elif selected == "GDP":
   gdp_dashboard()
 elif selected == "CPI":
   cpi_dashboard()
-# Copyright notices
+# Copyright notice
 st.markdown("<div style='font-style:italic;text-align:center'>Copyright (c) 2023 Methode & Saveur</div>",unsafe_allow_html=True)
