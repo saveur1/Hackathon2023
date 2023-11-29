@@ -1,3 +1,6 @@
+:root {
+    --color:rgb(255, 77, 77);
+}
 [data-testid=metric-container] {
     box-shadow: 0 0 4px #cccccc;
     padding: 10px;
