@@ -756,31 +756,39 @@ def home_dashboard():
     
     # GDP Charts
     def threeD_barchart():
-      years = [2000, 2001, 2002, 2003,
-          2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012]
+      years = df1["Years"]
 
       fig = go.Figure()
-      fig.add_trace(go.Bar(x=years,
-                      y=[180, 236, 207, 236, 263,
-                        350, 430, 474, 526, 488, 537, 500, 439],
+      fig.add_trace(go.Bar(
+                      x=years,
+                      y=df1["GDP at current prices"],
                       name='GDP at Current Price',
                       marker_color='rgb(55, 83, 109)'
                       ))
-      fig.add_trace(go.Bar(x=years,
-                      y=[37, 43, 55, 56, 88, 105, 156, 270,
-                        299, 340, 403, 549, 499],
-                      name='GDP at Constant 2017',
-                      marker_color='rgb(26, 118, 255)'
+      fig.add_trace(go.Scatter(
+                      x=years,
+                      y=df1["GDP Growth rate at current prices"],
+                      name='Growth Rate',
+                      marker_color='rgb(26, 118, 255)',
+                      mode="lines",
+                      yaxis="y2",
+                      markers=True
                       ))
 
       fig.update_layout(
-          title='GDP at current price and GDP at constant 2017',
+          title='GDP at current price and Growth Rate',
           xaxis_tickfont_size=14,
+          xaxis=dict(title="Years"),
           yaxis=dict(
               title='Rwf (Billions)',
               titlefont_size=20,
               tickfont_size=14,
           ),
+          yaxis2=dict(
+              title="Percentages(%)",
+              overlaying="y",
+              side="right"
+              ),
           legend=dict(
               xanchor="left",
               yanchor="bottom",
@@ -789,7 +797,7 @@ def home_dashboard():
               bgcolor='rgba(255, 255, 255, 0)',
               bordercolor='rgba(255, 255, 255, 0)'
           ),
-          barmode='group',
+          template="gridon",
           bargap=0.3, # gap between bars of adjacent location coordinates.
           bargroupgap=0.1 # gap between bars of the same location coordinate.
       )
