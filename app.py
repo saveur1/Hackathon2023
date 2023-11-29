@@ -707,30 +707,25 @@ def home_dashboard():
   def gdp_home():
     df_selection=df_macro
     df_selection = df_selection.rename(columns=lambda x: x.strip())
-    df_selection[['Year', 'Month', 'Date']] = pd.to_datetime(df_selection['Years'], format='%Y-%m-%d').dt.strftime('%Y-%m-%d').str.split('-').tolist()
-    # Solting Year
-    sorted_year=sorted(df_selection['Year'].unique(), reverse=True)
-    # Configurable Year
-    year  = st.selectbox(label="GDP Summary",options=sorted_year)
     
     # Gdp Summary Function
     def gdp_summary_cards():
         # GDP and CPI summary
         total1,total2,total3,total4,total5=st.columns(5,gap='small')
         with total1:
-            st.metric(label=f"GDP per Capita in {year}",value=f"{145.8995:,.0f}",delta="1.2 °F")
+            st.metric(label=f"GDP per Capita in ",value=f"{145.8995:,.0f}",delta="1.2 °F")
 
         with total2:
-            st.metric(label=f"GNP in {year}",value=f"{12.555:,.0f}", delta="-8%")
+            st.metric(label=f"GNP in",value=f"{12.555:,.0f}", delta="-8%")
 
         with total3:
-            st.metric(label=f"GDP at current price in {year}",value=f"{1345.0033:,.0f}",delta="10%")
+            st.metric(label=f"GDP at current price in",value=f"{1345.0033:,.0f}",delta="10%")
 
         with total4:
-            st.metric(label=f"GDP at constantant 2017 in {year}",value=f"{7451.3344:,.0f}",delta="84 Billions")
+            st.metric(label=f"GDP at constantant 2017 in",value=f"{7451.3344:,.0f}",delta="84 Billions")
 
         with total5:
-            st.metric(label=f"Total Population as in {year}",value=5,delta="100%")
+            st.metric(label=f"Total Population as in ",value=5,delta="100%")
     
     # GDP Charts function
     def threeD_barchart():
@@ -797,7 +792,7 @@ def home_dashboard():
 
         # Create the layout for the chart
         layout = go.Layout(
-            title=f'Percentage of GDP by Sector in {year}',
+            title=f'Percentage of GDP by Sector in',
             legend=dict(yanchor="bottom", y=-0.8, xanchor="center", x=0.5),
             margin=dict(l=0, r=0, b=0, t=40),
             annotations=[dict(text=f'Frw<br />{ "{:,}".format(df_macro["GDP at current prices"][23]) }<br />billion', x=0.5, y=0.5, font_size=20, showarrow=False)]
