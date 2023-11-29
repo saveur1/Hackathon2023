@@ -973,33 +973,6 @@ def home_dashboard():
     # gdp population
     MemorandumItems()
 
-    # gdp on expenditure
-    # ExpenditureOnGDP()
-    data = {
-        "x": [1, 2, 3, 4, 5],
-        "y": [3, 5, 7, 2, 1]
-    }
-
-    df = pd.DataFrame(data)
-    # Create the line chart
-    fig = px.line(
-        df,
-        x="x",
-        y="y",
-        markers=True,
-        title="Line Chart with Error Bars"
-    )
-
-    # Customize the chart
-    fig.update_layout(
-        yaxis_title="Y-Axis Label",
-        xaxis_title="X-Axis Label",
-        legend_title="Legend Title"
-    )
-
-    # Display the chart in Streamlit
-    st.plotly_chart(fig)
-
     # Divider
     st.markdown("""---""")
   # GDP SUMMARY BASED ON YEAR
