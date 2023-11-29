@@ -1216,5 +1216,5 @@ elif selected == "GDP":
   gdp_dashboard()
 elif selected == "CPI":
   cpi_dashboard()
-# Copyright notice
+# Copyright notices
 st.markdown("<div style='font-style:italic;text-align:center'>Copyright (c) 2023 Methode & Saveur</div>",unsafe_allow_html=True)
