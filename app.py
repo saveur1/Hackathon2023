@@ -6,7 +6,7 @@ from matplotlib.dates import date2num
 import plotly.graph_objs as go
 import plotly.express as px
 import streamlit_option_menu as om
-from plotly.subplots import make_subplots
+from bisect import bisect_left
 
 st.set_page_config(page_title="GDP&CPI Dashboard",layout="wide",page_icon="🇷🇼")
 st.markdown("<style>div.block-container{padding-top:1rem;}</style>", unsafe_allow_html=True)
@@ -669,25 +669,35 @@ def home_dashboard():
   def gdp_home():
     df_selection=df_macro
     df_selection = df_selection.rename(columns=lambda x: x.strip())
+    year = st.selectbox("End Year", options=df_selection["Years"].iloc[::-1])
     
     # Gdp Summary Function
     def gdp_summary_cards():
+        exp_years = [int(x) for x in df_macro["Years"]]
+        
+        def get_index(item, arr):
+           return bisect_left(arr, item)
+        
+        def get_value(table_column):
+           return df_macro[table_column][get_index(year, exp_years)]
+        
+        print(df_macro["GDP per head (in '000 Rwf)"][get_index(year, exp_years)])
         # GDP and CPI summary
         total1,total2,total3,total4,total5=st.columns(5,gap='small')
         with total1:
-            st.metric(label=f"GDP per Capita in ",value=f"{145.8995:,.0f}",delta="1.2 °F")
+            st.metric(label=f"GDP per Capita in { year }",value=f"""{ get_value("GDP per head (in '000 Rwf)") }""", delta=f"12%")
 
         with total2:
-            st.metric(label=f"GNP in",value=f"{12.555:,.0f}", delta="-8%")
+            st.metric(label=f"Gross National Income in { year }",value=f"{ get_value('Gross National Income') }", delta=f"12%")
 
         with total3:
-            st.metric(label=f"GDP at current price in",value=f"{1345.0033:,.0f}",delta="10%")
+            st.metric(label=f"GDP at current price in { year }",value=f"{ get_value('GDP at current prices') }",delta=f"{ get_value('GDP Growth rate at current prices')*100 }%")
 
         with total4:
-            st.metric(label=f"GDP at constantant 2017 in",value=f"{7451.3344:,.0f}",delta="84 Billions")
+            st.metric(label=f"GDP at constantant 2017 in { year }",value=f"{ get_value('GDP at constant 2017 prices')}",delta=f"{get_value('GDP Growth rate at constant 2017 prices')*100 }%")
 
         with total5:
-            st.metric(label=f"Total Population as in ",value=5,delta="100%")
+            st.metric(label=f"Total Population as in { year }",value=get_value("Total population (millions)"),delta=f"{get_value('Population Growth rate')*100 }%")
     
     # GDP Charts function
     def threeD_barchart():
