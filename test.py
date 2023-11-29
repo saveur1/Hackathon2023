@@ -39,3 +39,18 @@ selected_years = st.slider("Select years",2009,2022, (2017,2022))
 
 # Display the selected years
 st.write(selected_years[1])
+
+value = 100
+delta1 = 10
+delta2 = -5
+
+st.metric(label="Value", value=value, delta=delta1,help='Hello')
+st.metric(label="Delta 1", value=delta1, delta_color="normal")
+st.metric(label="Delta 2", value=delta2, delta_color="inverse")
+
+data = pd.DataFrame({
+    "Metric": ["Current Sales", "Previous Sales", "Growth"],
+    "Value": [1234.56, 1000, 23.46]
+})
+
+st.dataframe(data)

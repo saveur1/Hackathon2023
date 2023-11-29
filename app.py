@@ -735,7 +735,7 @@ def home_dashboard():
     # Solting Year
     sorted_year=sorted(df_selection['Year'].unique(), reverse=True)
     # Configurable Year
-    year  = st.selectbox(label="GDP and CPI Summary",options=sorted_year)
+    year  = st.selectbox(label="GDP Summary",options=sorted_year)
     
     # GDP and CPI summary
     total1,total2,total3,total4,total5=st.columns(5,gap='small')
@@ -836,30 +836,60 @@ def home_dashboard():
     st.markdown("""---""")
   # GDP SUMMARY BASED ON YEAR
   def cpi_home():
-    df_selection=df1
-    df_selection = df_selection.rename(columns=lambda x: x.strip())
-    df_selection[['Year', 'Month', 'Date']] = pd.to_datetime(df_selection['Years'], format='%Y-%m-%d').dt.strftime('%Y-%m-%d').str.split('-').tolist()
+    sheet1="rw"
+    sheet2="urban1"
+    sheet3="rural1"
+    # Load the Excel file containing CPI data
+    data1 = pd.read_excel('CPI.xlsx',sheet1)
+    data2 = pd.read_excel('CPI.xlsx',sheet2)
+    data3 = pd.read_excel('CPI.xlsx',sheet3)
+    # Create a selectbox to choose the base year
+    data1[['Year', 'Month', 'Date']] = pd.to_datetime(data1['YEAR'], format='%Y-%m-%d').dt.strftime('%Y-%m-%d').str.split('-').tolist()
     # Solting Year
-    sorted_year=sorted(df_selection['Year'].unique(), reverse=True)
+    sorted_year=sorted(data1['Year'].unique(), reverse=True)
+    sorted_month=sorted(data1['Month'].unique(), reverse=True)
     # Configurable Year
-    year  = st.selectbox(label="GDP and CPI Summary",options=sorted_year,key=11)
+    # select year configuration
+    selectYear,selectMonth=st.columns(2)
+    with selectYear:
+      year  = st.selectbox(label="Select Year",options=sorted_year,key=11)
+    with selectMonth:
+      month = st.selectbox(label="Select Month",options=sorted_month,key=12)
+
+    # Filter the data based on the selected month and date
+    filtered_df1 = data1[(data1['Year'] == year) & (data1['Month'] == month)]
+    #selected column
+    selected_column1 = "{:.2f}".format(float(filtered_df1['GENERAL INDEX (CPI)'].to_string(index=False, header=False)))
     
+        # Filter the data based on the selected month and date
+    filtered_df2 = data2[(data1['Year'] == year) & (data1['Month'] == month)]
+    #selected column
+    selected_column2 = "{:.2f}".format(float(filtered_df2['GENERAL INDEX (CPI)'].to_string(index=False, header=False)))
+    
+    # Filter the data based on the selected month and date
+    filtered_df3 = data3[(data1['Year'] == year) & (data1['Month'] == month)]
+    #selected column
+    selected_column3 = "{:.2f}".format(float(filtered_df3['GENERAL INDEX (CPI)'].to_string(index=False, header=False)))
+ 
     # GDP and CPI summary
     total1,total2,total3,total4,total5=st.columns(5,gap='small')
     with total1:
-        st.metric(label=f"GDP per Capita in {year}",value=f"{145.8995:,.0f}",delta="1.2 °F")
-
+        st.metric(label=f" Overall Rwanda Index {month} {year}",value=selected_column1)
+        st.metric(label=f" Anually Basis {month} {year}",value="",delta="15%")
+        st.metric(label=f" Monthly Basis {month} {year}",value="",delta="15%")
     with total2:
-        st.metric(label=f"GNP in {year}",value=f"{12.555:,.0f}", delta="-8%")
-
+        st.metric(label=f"Urban Index {month} {year}",value=selected_column2)
+        st.metric(label=f" Anually Basis {month} {year}",value="",delta="15%")
+        st.metric(label=f" Monthly Basis {month} {year}",value="",delta="15%")
     with total3:
-        st.metric(label=f"Nominal GDP in {year}",value=f"{1345.0033:,.0f}",delta="10%")
-
+        st.metric(label=f"Rural Index {month} {year}",value=selected_column3)
+        st.metric(label=f" Anually Basis {month} {year}",value="",delta="15%")
+        st.metric(label=f" Monthly Basis {month} {year}",value="",delta="15%")
     with total4:
-        st.metric(label=f"Real GDP in {year}",value=f"{7451.3344:,.0f}",delta="84 Billions")
+        st.metric(label=f"Real GDP in {month} {year}",value=f"{7451.3344:,.0f}",delta="84 Billions")
 
     with total5:
-        st.metric(label=f"Total Population as in {year}",value=5,delta="100%")
+        st.metric(label=f"Total Population as in {month} {year}",value=5,delta="100%")
     
     # GDP Charts
     def threeD_barchart():
