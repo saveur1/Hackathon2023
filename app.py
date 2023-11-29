@@ -1092,7 +1092,7 @@ def home_dashboard():
     rular_monthly_inflation_rate=np.round(rular_monthly_inflation_rate,decimals=1)
     
     # GDP and CPI summary
-    total1,total2,total3=st.columns(3,gap='small')
+    total1,total2,total3=st.columns(3,gap='large')
     with total1:
         st.metric(label=f" Overall Rwanda Index {month} {year}",value=selected_column1)
         st.metric(label=f" Anually Inflation Rate {month} {year}",value="",delta=f"{general_annual_inflation_rate1}%")
