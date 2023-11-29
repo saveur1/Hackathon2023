@@ -1013,35 +1013,43 @@ def home_dashboard():
     data3 = pd.read_excel('CPI.xlsx',sheet3)
     # Create a selectbox to choose the base year
     data1[['Year', 'Month', 'Date']] = pd.to_datetime(data1['YEAR'], format='%Y-%m-%d').dt.strftime('%Y-%m-%d').str.split('-').tolist()
+    
     # Solting Year
     sorted_year=sorted(data1['Year'].unique(), reverse=True)
     sorted_month=sorted(data1['Month'].unique(), reverse=True)
+    
+  
     # Configurable Year
     # select year configuration
     selectYear,selectMonth=st.columns(2)
     with selectYear:
       year  = st.selectbox(label="Select Year",options=sorted_year,key=11)
     with selectMonth:
-      month = st.selectbox(label="Select Month",options=sorted_month,key=12)
-
-    # Filter the data based on the selected month and date
-    filtered_df_macro = data1[(data1['Year'] == year) & (data1['Month'] == month)]
+      # Filter data based on selected year
+      filtered_df = data1[data1['Year'] == year]
+      # Extract unique months for the selected year
+      unique_months = filtered_df['Month'].unique()
+      
+      # Create a selectbox for month selection
+      selected_month = st.selectbox('Select Month:', options=unique_months)
+      # Filter the data based on the selected month and date
+    filtered_df_macro = data1[(data1['Year'] == year) & (data1['Month'] == selected_month)]
     #selected column
-    selected_column1 = "{:.2f}".format(float(filtered_df_macro['GENERAL INDEX (CPI)'].to_string(index=False, header=False)))
+    selected_column1 =filtered_df_macro['GENERAL INDEX (CPI)'].to_string(index=False, header=False)
     
         # Filter the data based on the selected month and date
-    filtered_df2 = data2[(data1['Year'] == year) & (data1['Month'] == month)]
+    filtered_df2 = data2[(data1['Year'] == year) & (data1['Month'] == selected_month)]
     #selected column
-    selected_column2 = "{:.2f}".format(float(filtered_df2['GENERAL INDEX (CPI)'].to_string(index=False, header=False)))
+    selected_column2 =filtered_df2['GENERAL INDEX (CPI)'].to_string(index=False, header=False)
     
     # Filter the data based on the selected month and date
-    filtered_df3 = data3[(data1['Year'] == year) & (data1['Month'] == month)]
+    filtered_df3 = data3[(data1['Year'] == year) & (data1['Month'] == selected_month)]
     #selected column
-    selected_column3 = "{:.2f}".format(float(filtered_df3['GENERAL INDEX (CPI)'].to_string(index=False, header=False)))
+    selected_column3 =filtered_df3['GENERAL INDEX (CPI)'].to_string(index=False, header=False)
     
       # RULAR INFLATION
-    annual_filtered = data3[(data1['Year'] == str(int(year)-1)) & (data1['Month'] == month)]
-    monthly_filtered = data3[(data1['Year'] == year) & (data1['Month'].astype(int) == int(month)-1)]
+    annual_filtered = data3[(data1['Year'] == str(int(year)-1)) & (data1['Month'] == selected_month)]
+    monthly_filtered = data3[(data1['Year'] == year) & (data1['Month'].astype(int) == int(selected_month)-1)]
     #selected column
     annual_base_year = "{:.2f}".format(float(annual_filtered['GENERAL INDEX (CPI)']))
     monthly_base= "{:.2f}".format(float(monthly_filtered['GENERAL INDEX (CPI)']))
@@ -1055,8 +1063,8 @@ def home_dashboard():
 
     
       # URBAN INFLATION
-    annual_filtered = data2[(data1['Year'] == str(int(year)-1)) & (data1['Month'] == month)]
-    monthly_filtered = data2[(data1['Year'] == year) & (data1['Month'].astype(int) == int(month)-1)]
+    annual_filtered = data2[(data1['Year'] == str(int(year)-1)) & (data1['Month'] == selected_month)]
+    monthly_filtered = data2[(data1['Year'] == year) & (data1['Month'].astype(int) == int(selected_month)-1)]
     #selected column
     annual_base_year = "{:.2f}".format(float(annual_filtered['GENERAL INDEX (CPI)']))
     monthly_base= "{:.2f}".format(float(monthly_filtered['GENERAL INDEX (CPI)']))
@@ -1070,8 +1078,8 @@ def home_dashboard():
 
     
     #GENERAL INFLATION
-    annual_filtered = data1[(data1['Year'] == str(int(year)-1)) & (data1['Month'] == month)]
-    monthly_filtered = data1[(data1['Year'] == year) & (data1['Month'].astype(int) == int(month)-1)]
+    annual_filtered = data1[(data1['Year'] == str(int(year)-1)) & (data1['Month'] == selected_month)]
+    monthly_filtered = data1[(data1['Year'] == year) & (data1['Month'].astype(int) == int(selected_month)-1)]
     #selected column
     annual_base_year = float(annual_filtered['GENERAL INDEX (CPI)'])
     monthly_base=float(monthly_filtered['GENERAL INDEX (CPI)'])
@@ -1090,21 +1098,21 @@ def home_dashboard():
     Urban_monthly_inflation_rate=np.round(Urban_monthly_inflation_rate,decimals=1)
     rular_annual_inflation_rate=np.round(rular_annual_inflation_rate,decimals=1)
     rular_monthly_inflation_rate=np.round(rular_monthly_inflation_rate,decimals=1)
-    
+  
     # GDP and CPI summary
     total1,total2,total3=st.columns(3,gap='large')
     with total1:
-        st.metric(label=f" Overall Rwanda Index {month} {year}",value=selected_column1)
-        st.metric(label=f" Anually Inflation Rate {month} {year}",value="",delta=f"{general_annual_inflation_rate1}%")
-        st.metric(label=f" Monthly Inflation Rate {month} {year}",value="",delta=f"{general_monthly_inflation_rate1}%")
+        st.metric(label=f" Overall Rwanda Index {selected_month} {year}",value=selected_column1)
+        st.metric(label=f" Anually Inflation Rate {selected_month} {year}",value="",delta=f"{general_annual_inflation_rate1}%")
+        st.metric(label=f" Monthly Inflation Rate {selected_month} {year}",value="",delta=f"{general_monthly_inflation_rate1}%")
     with total2:
-        st.metric(label=f"Urban Index {month} {year}",value=selected_column2)
-        st.metric(label=f" Anually Inflation Rate  {month} {year}",value="",delta=f"{Urban_annual_inflation_rate}%")
-        st.metric(label=f" Monthly Inflation Rate {month} {year}",value="",delta=f"{Urban_monthly_inflation_rate}%")
+        st.metric(label=f"Urban Index {selected_month} {year}",value=selected_column2)
+        st.metric(label=f" Anually Inflation Rate  {selected_month} {year}",value="",delta=f"{Urban_annual_inflation_rate}%")
+        st.metric(label=f" Monthly Inflation Rate {selected_month} {year}",value="",delta=f"{Urban_monthly_inflation_rate}%")
     with total3:
-        st.metric(label=f"Rural Index {month} {year}",value=selected_column3)
-        st.metric(label=f" Anually Inflation Rate {month} {year}",value="",delta=f"{rular_annual_inflation_rate}%")
-        st.metric(label=f" Monthly Inflation Rate {month} {year}",value="",delta=f"{rular_monthly_inflation_rate}%")
+        st.metric(label=f"Rural Index {selected_month} {year}",value=selected_column3)
+        st.metric(label=f" Anually Inflation Rate {selected_month} {year}",value="",delta=f"{rular_annual_inflation_rate}%")
+        st.metric(label=f" Monthly Inflation Rate {selected_month} {year}",value="",delta=f"{rular_monthly_inflation_rate}%")
     # with total4:
     #     st.metric(label=f"Real GDP in {month} {year}",value=f"{7451.3344:,.0f}",delta="84 Billions")
 
