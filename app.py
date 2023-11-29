@@ -6,7 +6,7 @@ from matplotlib.dates import date2num
 import plotly.graph_objs as go
 import plotly.express as px
 import streamlit_option_menu as om
-from plotly.subplots import make_subplots
+from bisect import bisect_left
 
 st.set_page_config(page_title="GDP&CPI Dashboard",layout="wide",page_icon="🇷🇼")
 st.markdown("<style>div.block-container{padding-top:1rem;}</style>", unsafe_allow_html=True)
@@ -23,10 +23,9 @@ with open("style.css") as t:
 df_macro=pd.read_excel('GDP.xlsx', sheet_name='macro_economic')
 df_macro = df_macro.rename(columns=lambda x: x.strip())
 
-df3=pd.read_excel('GDP.xlsx', sheet_name='Table4A')
-df3 = df3.rename(columns=lambda x: x.strip())
+expenditure_cp = pd.read_excel('GDP.xlsx', sheet_name='expenditure_cp')
+expenditure_cp = expenditure_cp.rename(columns=lambda x: x.strip())
 
-print(df3["Years"])
 #Macro Economic Table
 def MacroTable():
     with st.expander("Rwanda's GDP Macroeconomic Aggregates: A Historical Perspective from 1999 to 2022 Table"):
@@ -570,44 +569,7 @@ def CPI_general():
             ]))
                     ))
   st.plotly_chart(fig, use_container_width=True)
- 
-
-#GDP 
-def ExpenditureOnGDP():
-    st.subheader("Expenditure on GDP (Billion Frw)")
-    print(df3["Gross capital formation"][8:])
-   # Create a dataframe with the data from the image
-    data = pd.DataFrame({
-        'Year': df3["Years"][8:],
-        'Gross capital formation': df3["Gross capital formation"][8:],
-        'Exports G&S': df3["Exports of goods & services"][8:],
-        'Households': df3["Households and NGOs"][8:],
-        'Government':df3["Government"][8:],
-        'Imports G&S': df3["Imports of goods & services"][8:],
-        'GDP': df3["Gross Domestic Product"][8:]
-    })
-
-    # Create the traces for the chart
-    trace1 = go.Bar(x=data['Year'], y=data['Gross capital formation'], name='Gross capital formation', marker=dict(color='blue'))
-    trace2 = go.Bar(x=data['Year'], y=data['Exports G&S'], name='Exports G&S', marker=dict(color='orange'))
-    trace3 = go.Bar(x=data['Year'], y=data['Households'], name='Households', marker=dict(color='green'))
-    trace4 = go.Bar(x=data['Year'], y=data['Government'], name='Government', marker=dict(color='red'))
-    trace5 = go.Bar(x=data['Year'], y=data['Imports G&S'], name='Imports G&S', marker=dict(color='yellow'))
-    trace6 = go.Scatter(x=data['Year'], y=data['GDP'], name='GDP', line=dict(color='black'))
-
-    # Create the layout for the chart
-    layout = go.Layout(
-        title='Proportions of GDP and Percentage Change in GDP',
-        legend=dict(yanchor="bottom", y=-1, xanchor="center", x=0.5),
-        xaxis=dict(title='Year'),
-        yaxis=dict(title='in billion Rwf', range=[-5000, 20000]),
-        barmode='stack'
-    )
-
-    # Create the figure and plot it using Plotly
-    fig = go.Figure(data=[trace1, trace2, trace3, trace4, trace5, trace6], layout=layout)
-    st.plotly_chart(fig, use_container_width=True)
-     
+      
 def weights():
       tablew1,tablew2=st.columns(2)
       tablew3,tablew4=st.columns(2)
@@ -716,25 +678,35 @@ def home_dashboard():
   def gdp_home():
     df_selection=df_macro
     df_selection = df_selection.rename(columns=lambda x: x.strip())
+    year = st.selectbox("End Year", options=df_selection["Years"].iloc[::-1])
     
     # Gdp Summary Function
     def gdp_summary_cards():
+        exp_years = [int(x) for x in df_macro["Years"]]
+        
+        def get_index(item, arr):
+           return bisect_left(arr, item)
+        
+        def get_value(table_column):
+           return df_macro[table_column][get_index(year, exp_years)]
+        
+        print(df_macro["GDP per head (in '000 Rwf)"][get_index(year, exp_years)])
         # GDP and CPI summary
         total1,total2,total3,total4,total5=st.columns(5,gap='small')
         with total1:
-            st.metric(label=f"GDP per Capita in ",value=f"{145.8995:,.0f}",delta="1.2 °F")
+            st.metric(label=f"GDP per Capita in { year }",value=f"""{ get_value("GDP per head (in '000 Rwf)") }""", delta=f"12%")
 
         with total2:
-            st.metric(label=f"GNP in",value=f"{12.555:,.0f}", delta="-8%")
+            st.metric(label=f"Gross National Income in { year }",value=f"{ get_value('Gross National Income') }", delta=f"12%")
 
         with total3:
-            st.metric(label=f"GDP at current price in",value=f"{1345.0033:,.0f}",delta="10%")
+            st.metric(label=f"GDP at current price in { year }",value=f"{ get_value('GDP at current prices') }",delta=f"{ get_value('GDP Growth rate at current prices')*100 }%")
 
         with total4:
-            st.metric(label=f"GDP at constantant 2017 in",value=f"{7451.3344:,.0f}",delta="84 Billions")
+            st.metric(label=f"GDP at constantant 2017 in { year }",value=f"{ get_value('GDP at constant 2017 prices')}",delta=f"{get_value('GDP Growth rate at constant 2017 prices')*100 }%")
 
         with total5:
-            st.metric(label=f"Total Population as in ",value=5,delta="100%")
+            st.metric(label=f"Total Population as in { year }",value=get_value("Total population (millions)"),delta=f"{get_value('Population Growth rate')*100 }%")
     
     # GDP Charts function
     def threeD_barchart():
@@ -968,6 +940,39 @@ def home_dashboard():
         population_growth_illustration()  
         ExchangeRate()
     
+    def ExpenditureOnGDP():
+    # Create a dataframe with the data from the image
+      data = pd.DataFrame({
+          'Year': expenditure_cp["Years"][8:],
+          'Gross capital formation': expenditure_cp["Gross capital formation"][8:],
+          'Exports G&S': expenditure_cp["Exports of goods & services"][8:],
+          'Households': expenditure_cp["Households and NGOs"][8:],
+          'Government':expenditure_cp["Government"][8:],
+          'Imports G&S': expenditure_cp["Imports of goods & services"][8:],
+          'GDP': expenditure_cp["Gross Domestic Product"][8:]
+      })
+
+      # Create the traces for the chart
+      trace1 = go.Bar(x=data['Year'], y=data['Gross capital formation'], name='Gross capital formation', marker=dict(color='green'))
+      trace2 = go.Bar(x=data['Year'], y=data['Exports G&S'], name='Exports G&S', marker=dict(color='orange'))
+      trace3 = go.Bar(x=data['Year'], y=data['Households'], name='Households', marker=dict(color='rgb(40,79,141)'))
+      trace4 = go.Bar(x=data['Year'], y=data['Government'], name='Government', marker=dict(color='yellow'))
+      trace5 = go.Bar(x=data['Year'], y=data['Imports G&S'], name='Imports G&S', marker=dict(color='red'))
+      trace6 = go.Scatter(x=data['Year'], y=data['GDP'], name='GDP', line=dict(color='black'))
+
+      # Create the layout for the chart
+      layout = go.Layout(
+          title='Proportions of GDP and Percentage Change in GDP',
+          legend=dict(yanchor="bottom", y=-1, xanchor="center", x=0.5),
+          xaxis=dict(title='Year'),
+          yaxis=dict(title='in billion Rwf', range=[-5000, 20000]),
+          barmode='stack'
+      )
+
+      # Create the figure and plot it using Plotly
+      fig = go.Figure(data=[trace1, trace2, trace3, trace4, trace5, trace6], layout=layout)
+      st.plotly_chart(fig, use_container_width=True)
+
     # GDP Summary
     gdp_summary_cards()
 
@@ -977,6 +982,11 @@ def home_dashboard():
         threeD_barchart()
     with col2:
         donut_chart()
+    # gdp inflation
+    st.markdown(""" 
+      ##### <div style='margin-top:20px'>GDP Information For Inflation</div>
+    """,unsafe_allow_html=True )
+    ExpenditureOnGDP()
 
     # gdp inflation
     st.markdown(""" 
@@ -986,33 +996,6 @@ def home_dashboard():
 
     # gdp population
     MemorandumItems()
-
-    # gdp on expenditure
-    # ExpenditureOnGDP()
-    data = {
-        "x": [1, 2, 3, 4, 5],
-        "y": [3, 5, 7, 2, 1]
-    }
-
-    df = pd.DataFrame(data)
-    # Create the line chart
-    fig = px.line(
-        df,
-        x="x",
-        y="y",
-        markers=True,
-        title="Line Chart with Error Bars"
-    )
-
-    # Customize the chart
-    fig.update_layout(
-        yaxis_title="Y-Axis Label",
-        xaxis_title="X-Axis Label",
-        legend_title="Legend Title"
-    )
-
-    # Display the chart in Streamlit
-    st.plotly_chart(fig)
 
     # Divider
     st.markdown("""---""")
