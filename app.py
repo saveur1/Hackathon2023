@@ -402,7 +402,7 @@ def Rural():
         df_filtered['YEAR'] = df_filtered['YEAR'].dt.date
         # Display the filtered DataFrame in 
         st.dataframe(df_filtered)
-  
+
     column_names = df.columns.tolist()
     column_names.remove('YEAR')
 
@@ -548,8 +548,8 @@ def Other_Indices():
 
     # Organize the charts into two columns
     col1, col2 = st.columns(2)
-    col1.plotly_chart(fig1)
-    col2.plotly_chart(fig2)
+    col1.plotly_chart(fig1,use_container_width=True)
+    col2.plotly_chart(fig2,use_container_width=True)
 
 #Dashboards
 def cpi_dashboard():
@@ -584,15 +584,15 @@ def gdp_dashboard():
             fig = go.Figure()
 
             fig.add_trace(go.Bar(
-                  x=x,
-                  y=current_bf["Export crops"][8:],
-                  marker=dict(
-                      color='rgba(255, 255, 0,0.6)',
-                      line=dict(
-                          color='rgba(255, 255, 0,1.0)',
-                          width=2),
-                  ),
-                  name='Export crops',
+                x=x,
+                y=current_bf["Export crops"][8:],
+                marker=dict(
+                    color='rgba(255, 255, 0,0.6)',
+                    line=dict(
+                        color='rgba(255, 255, 0,1.0)',
+                        width=2),
+                ),
+                name='Export crops',
             ))
             fig.add_trace(go.Bar(
                 x=x,
@@ -606,37 +606,37 @@ def gdp_dashboard():
                 name='Food crops',
             ))
             fig.add_trace(go.Bar(
-                  x=x,
-                  y=current_bf["Livestock & livestock products"][8:],
-                  marker=dict(
-                      color='rgba(255, 166, 0,0.6)',
-                      line=dict(
-                          color='rgba(255, 166, 1.0)',
-                          width=2),
-                  ),
-                  name='Livestock & livestock products',
+                x=x,
+                y=current_bf["Livestock & livestock products"][8:],
+                marker=dict(
+                    color='rgba(255, 166, 0,0.6)',
+                    line=dict(
+                        color='rgba(255, 166, 1.0)',
+                        width=2),
+                ),
+                name='Livestock & livestock products',
             ))
             fig.add_trace(go.Bar(
-                  x=x,
-                  y=current_bf["Fishing"][8:],
-                  marker=dict(
-                      color='rgba(255, 77, 77,0.6)',
-                      line=dict(
-                          color='rgba(255, 77, 77,1.0)',
-                          width=2),
-                  ),
-                  name='Fishing',
+                x=x,
+                y=current_bf["Fishing"][8:],
+                marker=dict(
+                    color='rgba(255, 77, 77,0.6)',
+                    line=dict(
+                        color='rgba(255, 77, 77,1.0)',
+                        width=2),
+                ),
+                name='Fishing',
             ))
             fig.add_trace(go.Bar(
-                  x=x,
-                  y=current_bf["Forestry"][8:],
-                  marker=dict(
-                      color='rgba(50, 171, 96, 0.6)',
-                      line=dict(
-                          color='rgba(50, 171, 96, 1.0)',
-                          width=2),
-                  ),
-                  name='Forestry',
+                x=x,
+                y=current_bf["Forestry"][8:],
+                marker=dict(
+                    color='rgba(50, 171, 96, 0.6)',
+                    line=dict(
+                        color='rgba(50, 171, 96, 1.0)',
+                        width=2),
+                ),
+                name='Forestry',
             ))
 
             fig.update_layout(
@@ -659,7 +659,7 @@ def gdp_dashboard():
                 paper_bgcolor='rgb(248, 248, 255)',
                 plot_bgcolor='rgb(248, 248, 255)',
                 barmode = "stack"
-              )
+            )
 
             st.plotly_chart(fig, use_container_width=True)
         def current_price_gdp():
@@ -713,7 +713,7 @@ def gdp_dashboard():
                                         x=xd,
                                         text="{:,}".format(yd) + 'B',
                                         font=dict(family='Arial', size=12,
-                                                  color='rgb(50, 171, 96)'),
+                                                color='rgb(50, 171, 96)'),
                                         showarrow=False))
 
             fig.update_layout(annotations=annotations)
@@ -726,15 +726,15 @@ def gdp_dashboard():
             fig = go.Figure()
 
             fig.add_trace(go.Bar(
-                  x=x,
-                  y=current_bf["Mining & quarrying"][8:],
-                  marker=dict(
-                      color='rgba(255, 255, 0,0.6)',
-                      line=dict(
-                          color='rgba(255, 255, 0,1.0)',
-                          width=2),
-                  ),
-                  name='Mining & quarrying',
+                x=x,
+                y=current_bf["Mining & quarrying"][8:],
+                marker=dict(
+                    color='rgba(255, 255, 0,0.6)',
+                    line=dict(
+                        color='rgba(255, 255, 0,1.0)',
+                        width=2),
+                ),
+                name='Mining & quarrying',
             ))
             fig.add_trace(go.Bar(
                 x=x,
@@ -748,37 +748,37 @@ def gdp_dashboard():
                 name='Total Manufacturing',
             ))
             fig.add_trace(go.Bar(
-                  x=x,
-                  y=current_bf["Electricity"][8:],
-                  marker=dict(
-                      color='rgba(255, 166, 0,0.6)',
-                      line=dict(
-                          color='rgba(255, 166, 1.0)',
-                          width=2),
-                  ),
-                  name='Electricity',
+                x=x,
+                y=current_bf["Electricity"][8:],
+                marker=dict(
+                    color='rgba(255, 166, 0,0.6)',
+                    line=dict(
+                        color='rgba(255, 166, 1.0)',
+                        width=2),
+                ),
+                name='Electricity',
             ))
             fig.add_trace(go.Bar(
-                  x=x,
-                  y=current_bf["Water & waste management"][8:],
-                  marker=dict(
-                      color='rgba(255, 77, 77,0.6)',
-                      line=dict(
-                          color='rgba(255, 77, 77,1.0)',
-                          width=2),
-                  ),
-                  name='Water & waste management',
+                x=x,
+                y=current_bf["Water & waste management"][8:],
+                marker=dict(
+                    color='rgba(255, 77, 77,0.6)',
+                    line=dict(
+                        color='rgba(255, 77, 77,1.0)',
+                        width=2),
+                ),
+                name='Water & waste management',
             ))
             fig.add_trace(go.Bar(
-                  x=x,
-                  y=current_bf["Construction"][8:],
-                  marker=dict(
-                      color='rgba(50, 171, 96, 0.6)',
-                      line=dict(
-                          color='rgba(50, 171, 96, 1.0)',
-                          width=2),
-                  ),
-                  name='Construction',
+                x=x,
+                y=current_bf["Construction"][8:],
+                marker=dict(
+                    color='rgba(50, 171, 96, 0.6)',
+                    line=dict(
+                        color='rgba(50, 171, 96, 1.0)',
+                        width=2),
+                ),
+                name='Construction',
             ))
 
             fig.update_layout(
@@ -801,7 +801,7 @@ def gdp_dashboard():
                 paper_bgcolor='rgb(248, 248, 255)',
                 plot_bgcolor='rgb(248, 248, 255)',
                 barmode = "stack"
-              )
+            )
 
             st.plotly_chart(fig, use_container_width=True)      
         def services_chart():
@@ -811,15 +811,15 @@ def gdp_dashboard():
             fig = go.Figure()
 
             fig.add_trace(go.Bar(
-                  x=x,
-                  y=current_bf["TRADE &TRANSPORT"][8:],
-                  marker=dict(
-                      color='rgba(255, 166, 0,0.6)',
-                      line=dict(
-                          color='rgba(255, 166, 0,1.0)',
-                          width=2),
-                  ),
-                  name='Trade and Transport',
+                x=x,
+                y=current_bf["TRADE &TRANSPORT"][8:],
+                marker=dict(
+                    color='rgba(255, 166, 0,0.6)',
+                    line=dict(
+                        color='rgba(255, 166, 0,1.0)',
+                        width=2),
+                ),
+                name='Trade and Transport',
             ))
             fig.add_trace(go.Bar(
                 x=x,
