@@ -26,6 +26,9 @@ df_macro = df_macro.rename(columns=lambda x: x.strip())
 expenditure_cp = pd.read_excel('GDP.xlsx', sheet_name='expenditure_cp')
 expenditure_cp = expenditure_cp.rename(columns=lambda x: x.strip())
 
+current_bf = pd.read_excel('GDP.xlsx', sheet_name='current_bf')
+current_bf = current_bf.rename(columns=lambda x: x.strip())
+
 #Macro Economic Table
 def MacroTable():
     with st.expander("Rwanda's GDP Macroeconomic Aggregates: A Historical Perspective from 1999 to 2022 Table"):
@@ -53,12 +56,12 @@ def gdp_growth_chart():
     filtered_columns = st.multiselect("Filters:",selected_columns , default=initial_columns)
     for column in filtered_columns:
          df_macro[column] *= 100
-    df_macro[['Year', 'Month', 'Date']] = pd.to_datetime(df_macro['Years'], format='%Y-%m-%d').dt.strftime('%Y-%m-%d').str.split('-').tolist()
-    fig = px.line(df_macro, x=df_macro['Year'], y=filtered_columns)
+    # df_macro[['Year', 'Month', 'Date']] = pd.to_datetime(df_macro['Years'], format='%Y-%m-%d').dt.strftime('%Y-%m-%d').str.split('-').tolist()
+    fig = px.line(df_macro, x=df_macro['Years'], y=filtered_columns)
     fig.update_layout(title="Charting Rwanda's Economic Rise: A Line Graph Perspective on GDP Growth in Percentage from 1999 to 2022",yaxis_title="Growth rate (Percentage)",yaxis=dict(title='Percentage Change', range=[-10,30]),xaxis=dict(
         rangeslider=dict(
             visible=True,
-            range=[df_macro['Year'].min(), df_macro['Year'].max()]
+            range=[df_macro['Years'].min(), df_macro['Years'].max()]
         )
     ),legend=dict(yanchor="bottom", y=-0.5, xanchor="center", x=0.5),barmode="group")
     st.plotly_chart(fig, use_container_width=True)
@@ -186,41 +189,7 @@ def barchart_with_line():
     # Create the figure and plot it using Streamlit
     fig = go.Figure(data=[trace1, trace2, trace3,trace4], layout=layout)
     st.plotly_chart(fig, use_container_width=True)
-
-def MacroEconomicHome():
-    st.subheader(":house: Rwanda's GDP Macroeconomic Aggregates")
-
-    MacroTable()
-    
-    # GDPs Trending Chart
-    st.subheader(""" 
-    Gross Domestic Product (Rwf billions)
-    """)
-    gdps_trends_charts,gdp_growth_charts=st.columns(2)
-    with gdps_trends_charts:
-        gdps_trends_chart()
-    with gdp_growth_charts:
-        gdp_growth_chart()
-        
-    st.subheader(""" 
-    Proportions of GDP
-    """)
-    Calculate_gdp_proportions,Analyze_capital_formation_resource_balance=st.columns(2)
-    with Calculate_gdp_proportions:
-      calculate_gdp_proportions()
-    with Analyze_capital_formation_resource_balance:
-      analyze_capital_formation_resource_balance()
-    ValueAddedBy()    
-    st.subheader("""National income and expenditure (Rwf billions)""")
-    analyze_rwf_national_income_expenditure()
-    st.subheader(""" Memorandum items""")
-    
-    
-    st.subheader("""
-    Rwanda's GDP Highlights in 2022: A Visual Representation
-    """)
-    barchart_with_line()
-    
+   
 def kindOfActivity():
   excel_file = 'GDP.xlsx'
   # Select the worksheet you want to display
@@ -627,7 +596,7 @@ def weights():
             fig11.update_layout(yaxis_title="Weights",legend=dict(yanchor="bottom", y=1, xanchor="right", x=0.5))
             st.plotly_chart(fig11,use_container_width=True)
      
-#SIDEBAR
+#DASHBOARDS
 def cpi_dashboard():
     st.title("CPI Dashboard")
     # Create the navigation bar
@@ -649,17 +618,102 @@ def cpi_dashboard():
     CPI_general()  
 
 def gdp_dashboard():
+    def economic_activities():
+        def current_price_gdp():
+            y_cp = current_bf["GROSS DOMESTIC PRODUCT (GDP)"][8:]
+
+            x = current_bf["Years"][8:]
+
+
+            # Creating Figure Handle
+            fig = go.Figure()
+
+            fig.add_trace(go.Scatter(
+                x=x, 
+                y=y_cp,
+                mode='lines+markers',
+                line_color='rgb(40,79,141)',
+                name='GDP at Current Price',
+            ))
+
+            fig.update_layout(
+                title='GDP at Current Price from 2007 to 2022',
+                yaxis=dict(
+                    title="GDP in Billions",
+                    showgrid=False,
+                    showline=False,
+                    showticklabels=True,
+                    domain=[0, 0.85],
+                ),
+                xaxis=dict(
+                    title="Years",
+                    showline=False,
+                    showticklabels=True,
+                    showgrid=True,
+                ),
+                legend=dict(x=0.029, y=1.038, font_size=10),
+                margin=dict(l=100, r=20, t=70, b=70),
+                paper_bgcolor='rgb(248, 248, 255)',
+                plot_bgcolor='rgb(248, 248, 255)',
+                height = 450
+            )
+
+            annotations = []
+
+            y_tp = np.round(y_cp, decimals=2)
+
+            # Adding labels
+            for yd, xd in zip( y_tp, x ):
+                # labeling the Bar Population (Millions)
+                annotations.append(dict(xref='x1', 
+                                        yref='y1',
+                                        y=yd + 500, 
+                                        x=xd,
+                                        text="{:,}".format(yd) + 'B',
+                                        font=dict(family='Arial', size=12,
+                                                  color='rgb(50, 171, 96)'),
+                                        showarrow=False))
+
+            fig.update_layout(annotations=annotations)
+
+            st.plotly_chart(fig, use_container_width=True)
+        
+        # GDP Aggregate
+        current_price_gdp()
+
+        gdps_trends_charts, gdp_growth_charts=st.columns(2)
+        with gdps_trends_charts:
+            gdps_trends_chart()
+        with gdp_growth_charts:
+            gdp_growth_chart()
+            
+        st.subheader(""" 
+        Proportions of GDP
+        """)
+        Calculate_gdp_proportions, Analyze_capital_formation_resource_balance = st.columns(2)
+        with Calculate_gdp_proportions:
+          calculate_gdp_proportions()
+        with Analyze_capital_formation_resource_balance:
+          analyze_capital_formation_resource_balance()
+        ValueAddedBy()    
+        st.subheader("""National income and expenditure (Rwf billions)""")
+        analyze_rwf_national_income_expenditure()
+        st.subheader(""" Memorandum items""")
+        
+        
+        st.subheader("""
+        Rwanda's GDP Highlights in 2022: A Visual Representation
+        """)
+        barchart_with_line()
+    
     st.title("GDP Dashboard")
     # Display GDP dashboard option
-        # Create the navigation bar
-    tab1, tab2,tab3, = st.tabs(["Macro economic aggregates", "GDP BY Kind of activity","Expenditure on GDP"])
+    tab1, tab2 = st.tabs(["Economic Activities","Expenditure on GDP"])
     # Display GDP dashboard attributes
     with tab1:
-       MacroEconomicHome()
+       economic_activities()
     with tab2:
       kindOfActivity()
-    with tab3:
-       ExpenditureOnGDP()
 
 def home_dashboard():
     
