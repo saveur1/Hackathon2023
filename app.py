@@ -2511,8 +2511,6 @@ def home_dashboard():
     data1[['Year', 'Month']] = pd.to_datetime(data1['YEAR'], format='%Y-%m').dt.strftime('%Y-%m').str.split('-').tolist()
     # Filter unique months based on the selected year
 
-    # Create dropdown for selecting month
-
     # Solting Year
     sorted_year=sorted(data1['Year'].unique(), reverse=True)
     sorted_month=sorted(data1['Month'].unique(), reverse=True)
