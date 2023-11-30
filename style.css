@@ -1,5 +1,7 @@
 :root {
     --color:rgb(255, 77, 77);
+    --color2:rgb(255, 166, 0);
+    --color3:rgb(255, 255, 0);
 }
 [data-testid=metric-container] {
     box-shadow: 0 0 4px #cccccc;

@@ -29,42 +29,15 @@ expenditure_cp = expenditure_cp.rename(columns=lambda x: x.strip())
 current_bf = pd.read_excel('GDP.xlsx', sheet_name='current_bf')
 current_bf = current_bf.rename(columns=lambda x: x.strip())
 
+current_perc = pd.read_excel('GDP.xlsx', sheet_name='current_perc')
+current_perc = current_perc.rename(columns=lambda x: x.strip())
+
 #Macro Economic Table
 def MacroTable():
     with st.expander("Rwanda's GDP Macroeconomic Aggregates: A Historical Perspective from 1999 to 2022 Table"):
         showData = st.multiselect('Filter: ', df_macro.columns, default=[
                             "Years", "GDP at current prices", "GDP Growth rate at current prices", "Population Growth rate","Exchange Growth rate", "Implicit GDP deflator", "Implicit GDP deflator Growth rate", "GDP per head (in '000 Rwf)", "GDP per head (in current US dollars)"])
         st.dataframe(df_macro[showData],use_container_width=True)
-
-def gdps_trends_chart():
-    # Select the initial columns to be displayed
-    initial_columns = ["GDP at current prices", "GDP at constant 2017 prices"]
-    selected_columns= ['GDP at current prices','GDP at constant 2017 prices','Implicit GDP deflator', "GDP per head (in '000 Rwf)",'GDP per head (in current US dollars)','Gross Domestic Product at current prices']
-    # Disable other columns except the initial columns
-    filtered_columns = st.multiselect("Filters:",selected_columns , default=initial_columns)
-    fig = px.line(df_macro, x="Years", y=filtered_columns)
-    fig.update_layout(title="Charting Rwanda's Economic Rise: A Line Graph Perspective on GDP from 1999 to 2022",yaxis_title="in billion Rwf",legend=dict(yanchor="bottom", y=-1, xanchor="center", x=0.5))
-    st.plotly_chart(fig, use_container_width=True)
-
-def gdp_growth_chart():
-    # Select the initial columns to be displayed
-    initial_columns = ['GDP Growth rate at current prices','GDP Growth rate at constant 2017 prices','Implicit GDP deflator Growth rate']
-    selected_columns= ['GDP Growth rate at current prices','GDP Growth rate at constant 2017 prices','Implicit GDP deflator Growth rate']
-    #st.text(df_macro.columns)
-    # Disable other columns except the initial columns
-    disabled_columns = list(set(df_macro.columns) - set(initial_columns))
-    filtered_columns = st.multiselect("Filters:",selected_columns , default=initial_columns)
-    for column in filtered_columns:
-         df_macro[column] *= 100
-    # df_macro[['Year', 'Month', 'Date']] = pd.to_datetime(df_macro['Years'], format='%Y-%m-%d').dt.strftime('%Y-%m-%d').str.split('-').tolist()
-    fig = px.line(df_macro, x=df_macro['Years'], y=filtered_columns)
-    fig.update_layout(title="Charting Rwanda's Economic Rise: A Line Graph Perspective on GDP Growth in Percentage from 1999 to 2022",yaxis_title="Growth rate (Percentage)",yaxis=dict(title='Percentage Change', range=[-10,30]),xaxis=dict(
-        rangeslider=dict(
-            visible=True,
-            range=[df_macro['Years'].min(), df_macro['Years'].max()]
-        )
-    ),legend=dict(yanchor="bottom", y=-0.5, xanchor="center", x=0.5),barmode="group")
-    st.plotly_chart(fig, use_container_width=True)
 #Calculate proportions of GDP contributed by various sectors.
 def calculate_gdp_proportions():
     # Select the initial columns to be displayed
@@ -628,6 +601,91 @@ def cpi_dashboard():
 
 def gdp_dashboard():
     def economic_activities():
+        def agriculture_chart():
+            x = current_bf["Years"][8:]
+
+            # Creating two subplots
+            fig = go.Figure()
+
+            fig.add_trace(go.Bar(
+                  x=x,
+                  y=current_bf["Export crops"][8:],
+                  marker=dict(
+                      color='rgba(255, 255, 0,0.6)',
+                      line=dict(
+                          color='rgba(255, 255, 0,1.0)',
+                          width=2),
+                  ),
+                  name='Export crops',
+            ))
+            fig.add_trace(go.Bar(
+                x=x,
+                y=current_bf["Food crops"][8:],
+                marker=dict(
+                    color='rgba(40,79,141,0.6)',
+                    line=dict(
+                        color='rgba(40,79,141,1.0)',
+                        width=2),
+                ),
+                name='Food crops',
+            ))
+            fig.add_trace(go.Bar(
+                  x=x,
+                  y=current_bf["Livestock & livestock products"][8:],
+                  marker=dict(
+                      color='rgba(255, 166, 0,0.6)',
+                      line=dict(
+                          color='rgba(255, 166, 1.0)',
+                          width=2),
+                  ),
+                  name='Livestock & livestock products',
+            ))
+            fig.add_trace(go.Bar(
+                  x=x,
+                  y=current_bf["Fishing"][8:],
+                  marker=dict(
+                      color='rgba(255, 77, 77,0.6)',
+                      line=dict(
+                          color='rgba(255, 77, 77,1.0)',
+                          width=2),
+                  ),
+                  name='Fishing',
+            ))
+            fig.add_trace(go.Bar(
+                  x=x,
+                  y=current_bf["Forestry"][8:],
+                  marker=dict(
+                      color='rgba(50, 171, 96, 0.6)',
+                      line=dict(
+                          color='rgba(50, 171, 96, 1.0)',
+                          width=2),
+                  ),
+                  name='Forestry',
+            ))
+
+            fig.update_layout(
+                title='AGRICULTURE, FORESTRY & FISHING from 2007 to 2022',
+                yaxis=dict(
+                    title="Agriculture Value in Billions",
+                    showgrid=False,
+                    showline=False,
+                    showticklabels=True,
+                    domain=[0, 0.85],
+                ),
+                xaxis=dict(
+                    title="Years",
+                    showline=False,
+                    showticklabels=True,
+                    showgrid=True,
+                ),
+                legend=dict(x=0.029, y=1.038, font_size=10),
+                margin=dict(l=100, r=20, t=70, b=70),
+                paper_bgcolor='rgb(248, 248, 255)',
+                plot_bgcolor='rgb(248, 248, 255)',
+                barmode = "stack"
+              )
+
+            st.plotly_chart(fig, use_container_width=True)
         def current_price_gdp():
             y_cp = current_bf["GROSS DOMESTIC PRODUCT (GDP)"][8:]
 
@@ -636,7 +694,6 @@ def gdp_dashboard():
 
             # Creating Figure Handle
             fig = go.Figure()
-
             fig.add_trace(go.Scatter(
                 x=x, 
                 y=y_cp,
@@ -686,16 +743,279 @@ def gdp_dashboard():
             fig.update_layout(annotations=annotations)
 
             st.plotly_chart(fig, use_container_width=True)
-        
+        def industry_chart():
+            x = current_bf["Years"][8:]
+
+            # Creating two subplots
+            fig = go.Figure()
+
+            fig.add_trace(go.Bar(
+                  x=x,
+                  y=current_bf["Mining & quarrying"][8:],
+                  marker=dict(
+                      color='rgba(255, 255, 0,0.6)',
+                      line=dict(
+                          color='rgba(255, 255, 0,1.0)',
+                          width=2),
+                  ),
+                  name='Mining & quarrying',
+            ))
+            fig.add_trace(go.Bar(
+                x=x,
+                y=current_bf["TOTAL MANUFACTURING"][8:],
+                marker=dict(
+                    color='rgba(40,79,141,0.6)',
+                    line=dict(
+                        color='rgba(40,79,141,1.0)',
+                        width=2),
+                ),
+                name='Total Manufacturing',
+            ))
+            fig.add_trace(go.Bar(
+                  x=x,
+                  y=current_bf["Electricity"][8:],
+                  marker=dict(
+                      color='rgba(255, 166, 0,0.6)',
+                      line=dict(
+                          color='rgba(255, 166, 1.0)',
+                          width=2),
+                  ),
+                  name='Electricity',
+            ))
+            fig.add_trace(go.Bar(
+                  x=x,
+                  y=current_bf["Water & waste management"][8:],
+                  marker=dict(
+                      color='rgba(255, 77, 77,0.6)',
+                      line=dict(
+                          color='rgba(255, 77, 77,1.0)',
+                          width=2),
+                  ),
+                  name='Water & waste management',
+            ))
+            fig.add_trace(go.Bar(
+                  x=x,
+                  y=current_bf["Construction"][8:],
+                  marker=dict(
+                      color='rgba(50, 171, 96, 0.6)',
+                      line=dict(
+                          color='rgba(50, 171, 96, 1.0)',
+                          width=2),
+                  ),
+                  name='Construction',
+            ))
+
+            fig.update_layout(
+                title='INDUSTRY from 2007 to 2022',
+                yaxis=dict(
+                    title="Industry Value in Billions",
+                    showgrid=False,
+                    showline=False,
+                    showticklabels=True,
+                    domain=[0, 0.85],
+                ),
+                xaxis=dict(
+                    title="Years",
+                    showline=False,
+                    showticklabels=True,
+                    showgrid=True,
+                ),
+                legend=dict(x=0.029, y=1.038, font_size=10),
+                margin=dict(l=100, r=20, t=70, b=70),
+                paper_bgcolor='rgb(248, 248, 255)',
+                plot_bgcolor='rgb(248, 248, 255)',
+                barmode = "stack"
+              )
+
+            st.plotly_chart(fig, use_container_width=True)      
+        def services_chart():
+            x = current_bf["Years"][8:]
+
+            # Creating two subplots
+            fig = go.Figure()
+
+            fig.add_trace(go.Bar(
+                  x=x,
+                  y=current_bf["TRADE &TRANSPORT"][8:],
+                  marker=dict(
+                      color='rgba(255, 166, 0,0.6)',
+                      line=dict(
+                          color='rgba(255, 166, 0,1.0)',
+                          width=2),
+                  ),
+                  name='Trade and Transport',
+            ))
+            fig.add_trace(go.Bar(
+                x=x,
+                y=current_bf["OTHER SERVICES"][8:],
+                marker=dict(
+                    color='rgba(40,79,141,0.6)',
+                    line=dict(
+                        color='rgba(40,79,141,1.0)',
+                        width=2),
+                ),
+                name='Other Services',
+            ))
+
+            fig.update_layout(
+                title='SERVICES from 2007 to 2022',
+                yaxis=dict(
+                    title="Services Value in Billions",
+                    showgrid=False,
+                    showline=False,
+                    showticklabels=True,
+                    domain=[0, 0.85],
+                ),
+                xaxis=dict(
+                    title="Years",
+                    showline=False,
+                    showticklabels=True,
+                    showgrid=True,
+                ),
+                legend=dict(x=0.029, y=1.038, font_size=10),
+                margin=dict(l=100, r=20, t=70, b=70),
+                paper_bgcolor='rgb(248, 248, 255)',
+                plot_bgcolor='rgb(248, 248, 255)',
+                barmode = "stack"
+              )
+
+            st.plotly_chart(fig, use_container_width=True)       
+        def taxes_chart():
+            x = current_bf["Years"][8:]
+
+            # Creating Figure
+            fig = go.Figure()
+
+            fig.add_trace(go.Bar(
+                x=x,
+                y=current_bf["TAXES LESS SUBSIDIES ON PRODUCTS"][8:],
+                marker=dict(
+                    color='rgba(40,79,141,0.6)',
+                    line=dict(
+                        color='rgba(40,79,141,1.0)',
+                        width=2),
+                ),
+                name='Taxes',
+            ))
+
+            fig.update_layout(
+                title='TAXES LESS SUBSIDIES ON PRODUCTS from 2007 to 2022',
+                yaxis=dict(
+                    title="Taxes Value in Billions",
+                    showgrid=False,
+                    showline=False,
+                    showticklabels=True,
+                    domain=[0, 0.85],
+                ),
+                xaxis=dict(
+                    title="Years",
+                    showline=False,
+                    showticklabels=True,
+                    showgrid=True,
+                ),
+                legend=dict(x=0.029, y=1.038, font_size=10),
+                margin=dict(l=100, r=20, t=70, b=70),
+                paper_bgcolor='rgb(248, 248, 255)',
+                plot_bgcolor='rgb(248, 248, 255)',
+              )
+
+            st.plotly_chart(fig, use_container_width=True)
+        def percent_eco_change_chart():
+            x = current_perc["Years"][8:]
+
+            # Creating Figure
+            fig = go.Figure()
+
+            fig.add_trace(go.Bar(
+                x=x,
+                y=[x*100 for x in current_perc["AGRICULTURE, FORESTRY & FISHING"][8:]],
+                marker=dict(
+                    color='rgba(50, 171, 96, 0.6)',
+                    line=dict(
+                        color='rgba(50, 171, 96, 1.0)',
+                        width=2),
+                ),
+                name='Agriculture, Forestry and Fishing',
+            ))
+            fig.add_trace(go.Bar(
+                x=x,
+                y=[x*100 for x in current_perc["INDUSTRY"][8:]],
+                marker=dict(
+                    color='rgba(255, 77, 77,0.6)',
+                    line=dict(
+                        color='rgba(255, 77, 77,1.0)',
+                        width=2),
+                ),
+                name='Industry',
+            ))
+            fig.add_trace(go.Bar(
+                x=x,
+                y=[x*100 for x in current_perc["SERVICES"][8:]],
+                marker=dict(
+                    color='rgba(40,79,141,0.6)',
+                    line=dict(
+                        color='rgba(40,79,141,1.0)',
+                        width=2),
+                ),
+                name='Services',
+            ))
+            fig.add_trace(go.Bar(
+                x=x,
+                y=[x*100 for x in current_perc["TAXES LESS SUBSIDIES ON PRODUCTS"][8:]],
+                marker=dict(
+                    color='rgba(255, 166, 0,0.6)',
+                    line=dict(
+                        color='rgba(255, 166, 0,1.0)',
+                        width=2),
+                ),
+                name='Taxes',
+            ))
+
+            fig.update_layout(
+                title='TAXES LESS SUBSIDIES ON PRODUCTS from 2007 to 2022',
+                yaxis=dict(
+                    title="Taxes Value in Billions",
+                    showgrid=False,
+                    showline=False,
+                    showticklabels=True,
+                    range=[0,100],
+                    domain=[0, 0.8],
+                ),
+                xaxis=dict(
+                    title="Years",
+                    showline=False,
+                    showticklabels=True,
+                    showgrid=True,
+                ),
+                legend=dict(x=0.029, y=1.038, font_size=10),
+                margin=dict(l=100, r=20, t=70, b=70),
+                paper_bgcolor='rgb(248, 248, 255)',
+                plot_bgcolor='rgb(248, 248, 255)',
+              )
+
+            st.plotly_chart(fig, use_container_width=True)
         # GDP Aggregate
         current_price_gdp()
+        
+        # Industry and Agriculture
+        agriculture, industry=st.columns(2)
+        with agriculture:
+            agriculture_chart()
+        with industry:
+            industry_chart()
 
-        gdps_trends_charts, gdp_growth_charts=st.columns(2)
-        with gdps_trends_charts:
-            gdps_trends_chart()
-        with gdp_growth_charts:
-            gdp_growth_chart()
+        # Services and Taxes
+        services, taxes=st.columns(2)
+        with services:
+            services_chart()
+        with taxes:
+            taxes_chart()
             
+        st.subheader(""" 
+        Percentage Contribution to GDP
+        """)
+        percent_eco_change_chart()
+
         st.subheader(""" 
         Proportions of GDP
         """)
@@ -1038,7 +1358,7 @@ def home_dashboard():
         donut_chart()
     # gdp inflation
     st.markdown(""" 
-      ##### <div style='margin-top:20px'>GDP Information For Inflation</div>
+      ##### <div style='margin-top:20px'>GDP By Expenditure</div>
     """,unsafe_allow_html=True )
     ExpenditureOnGDP()
 
