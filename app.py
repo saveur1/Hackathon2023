@@ -154,16 +154,16 @@ def analyze_rwf_national_income_expenditure():
     fig = go.Figure(data=[trace1, trace2, trace3, trace4,trace5, trace6, trace7, trace8, trace9], layout=layout)
     st.plotly_chart(fig, use_container_width=True)  
 
-def ExpenditureOnGDP():
+def ExpenditureOnGDP(data_df, data_title,data_range=[-5000, 20000],y_title=""):
 # Create a dataframe with the data from the image
     data = pd.DataFrame({
-        'Year': expenditure_cp["Years"][8:],
-        'Imports G&S': [-int(x) for x in expenditure_cp["Imports of goods & services"][8:]],
-        'Gross capital formation': expenditure_cp["Gross capital formation"][8:],
-        'Exports G&S': expenditure_cp["Exports of goods & services"][8:],
-        'Households': expenditure_cp["Households and NGOs"][8:],
-        'Government':expenditure_cp["Government"][8:],
-        'GDP': expenditure_cp["Gross Domestic Product"][8:]
+        'Year': data_df["Years"][8:],
+        'Imports G&S': [-int(x) for x in data_df["Imports of goods & services"][8:]],
+        'Gross capital formation': data_df["Gross capital formation"][8:],
+        'Exports G&S': data_df["Exports of goods & services"][8:],
+        'Households': data_df["Households and NGOs"][8:],
+        'Government':data_df["Government"][8:],
+        'GDP': data_df["Gross Domestic Product"][8:]
     })
 
     # Create the traces for the chart
@@ -176,13 +176,13 @@ def ExpenditureOnGDP():
 
     # Create the layout for the chart
     layout = go.Layout(
-        title='Proportions of GDP and Percentage Change in GDP',
+        title=data_title,
         yaxis=dict(
-            title="In Billions Rwf",
+            title= y_title,
             showgrid=False,
             showline=False,
             showticklabels=True,
-            range=[-5000, 20000],
+            range=data_range,
             domain=[0, 0.8],
         ),
         xaxis=dict(
@@ -441,7 +441,7 @@ def other_indices2():
     col1.plotly_chart(fig1)
     col2.plotly_chart(fig2)
 
-#SIDEBAR
+#Dashboards
 def cpi_dashboard():
     st.title("CPI Dashboard")
     # Create the navigation bar
@@ -1904,9 +1904,117 @@ def gdp_dashboard():
               )
 
             st.plotly_chart(fig, use_container_width=True)
-        
+        def expenditures_growth_rates(data_df, data_title):
+            x = data_df["Years"][8:]
+
+            # Creating Figure
+            fig = go.Figure()
+
+            fig.add_trace(go.Bar(
+                x=x,
+                y=[x*100 for x in data_df["Total final consumption expenditure"][8:]],
+                marker=dict(
+                    color='green',
+                ),
+                name='Total final consumption expenditure',
+            ))
+            fig.add_trace(go.Bar(
+                x=x,
+                y=[x*100 for x in data_df["Gross capital formation"][8:]],
+                marker=dict(
+                    color='orange'
+                ),
+                name='Gross capital formation',
+            ))
+            fig.add_trace(go.Bar(
+                x=x,
+                y=[x*100 for x in data_df["Exports of goods & services"][8:]],
+                marker=dict(
+                    color='rgba(40,79,141,1)'
+                ),
+                name='Exports of goods & services',
+            ))
+            fig.add_trace(go.Bar(
+                x=x,
+                y=[x*100 for x in data_df["Imports of goods & services"][8:]],
+                marker=dict(
+                    color='rgb(255, 77, 77)'
+                ),
+                name='Imports of goods & services',
+            ))
+            fig.add_trace(go.Scatter(
+                x=x,
+                y=[x*100 for x in data_df["Gross Domestic Product"][8:]],
+                marker=dict(
+                    color='rgb(5, 1, 21)'
+                ),
+                name='Gross Domestic Product',
+            ))
+
+            fig.update_layout(
+                title=data_title,
+                yaxis=dict(
+                    title="Percentages(%)",
+                    showgrid=False,
+                    showline=False,
+                    showticklabels=True,
+                    range=[-20,50],
+                    domain=[0, 0.8],
+                ),
+                xaxis=dict(
+                    title="Years",
+                    showline=False,
+                    showticklabels=True,
+                    showgrid=True,
+                ),
+                legend=dict(x=0.029, y=1.038, font_size=10),
+                margin=dict(l=100, r=20, t=70, b=70),
+                paper_bgcolor='rgb(248, 248, 255)',
+                plot_bgcolor='rgb(248, 248, 255)',
+              )
+
+            st.plotly_chart(fig, use_container_width=True)
+        def gdp_deflators_chart(data_df,data_title,column="Gross Domestic Product"):
+            y_cp = data_df[column][8:]
+
+            x = data_df["Years"][8:]
+
+
+            # Creating Figure Handle
+            fig = go.Figure()
+            fig.add_trace(go.Scatter(
+                x=x, 
+                y=y_cp,
+                mode='lines+markers',
+                line_color='rgb(40,79,141)',
+                name='GDP Deflator',
+            ))
+
+            fig.update_layout(
+                title = data_title,
+                yaxis=dict(
+                    title="GDP in Billions",
+                    showgrid=False,
+                    showline=False,
+                    showticklabels=True,
+                    domain=[0, 0.85],
+                ),
+                xaxis=dict(
+                    title="Years",
+                    showline=False,
+                    showticklabels=True,
+                    showgrid=True,
+                ),
+                legend=dict(x=0.029, y=1.038, font_size=10),
+                margin=dict(l=100, r=20, t=70, b=70),
+                paper_bgcolor='rgb(248, 248, 255)',
+                plot_bgcolor='rgb(248, 248, 255)',
+                height = 450
+            )
+
+            st.plotly_chart(fig, use_container_width=True)
         # GDP Aggregate
-        ExpenditureOnGDP()
+        ExpenditureOnGDP(expenditure_cp, "Proportions of GDP and Percentage Change in GDP")
         
         # Expenditure and Capital Formation
         expenditure, capital=st.columns(2)
@@ -1931,6 +2039,7 @@ def gdp_dashboard():
         st.markdown(""" 
         #### <div style="margin-top:20px">GDP at Constant 2017 Price from 2007 to 2022</div>
         """,unsafe_allow_html=True)
+        ExpenditureOnGDP(expenditure_c2017, "Proportions of GDP and Percentage Change in GDP")
 
         # Expenditure and Capital Formation
         expenditure, capital=st.columns(2)
@@ -1942,15 +2051,35 @@ def gdp_dashboard():
         # Exports and Imports
         export_gs, import_gs=st.columns(2)
         with export_gs:
-            exportgs_chart(expenditure_cp, "Exports of goods & services from 2007 to 2022")
+            exportgs_chart(expenditure_c2017, "Exports of goods & services from 2007 to 2022")
         with import_gs:
-            importgs_chart(expenditure_cp, "Imports of goods & services from 2007 to 2022")
+            importgs_chart(expenditure_c2017, "Imports of goods & services from 2007 to 2022")
             
         st.markdown(""" 
-        ###### Percentage Contribution of Sectors to GDP
+        ###### Growth rates of Expenditures from 2007 to 2022
         """,unsafe_allow_html=True)
-        percent_eco_change_chart(expenditure_cpper,"Percentatage Value of Expenditures from 2007 to 2022")
+        expenditures_growth_rates(expenditure_c2017per,"Growth Rates of Expenditures from 2007 to 2022")
 
+
+        st.markdown(""" 
+        #### <div style="margin-top:20px">GDP Deflators at 2017 = 100 from 2007 to 2022</div>
+        """,unsafe_allow_html=True)
+        # GDP Aggregate
+        ExpenditureOnGDP(expenditure_deflator, "GDP Deflators and Deflators on Expenditures",[0,500])
+        
+        # Expenditure and Capital Formation
+        expenditure, capital=st.columns(2)
+        with expenditure:
+            gdp_deflators_chart(expenditure_deflator,"Total final consumption Deflator from 2007 to 2022","Total final consumption expenditure")
+        with capital:
+            gdp_deflators_chart(expenditure_deflator,"Capital formation Deflators from 2007 to 2022","Gross capital formation")
+
+        # Exports and Imports
+        export_gs, import_gs=st.columns(2)
+        with export_gs:
+            gdp_deflators_chart(expenditure_deflator, "Exports of goods & services from 2007 to 2022","Exports of goods & services")
+        with import_gs:
+            gdp_deflators_chart(expenditure_deflator, "Imports of goods & services from 2007 to 2022","Imports of goods & services")
     st.title("GDP Dashboard")
     # Display GDP dashboard option
     tab1, tab2 = st.tabs(["Economic Activities","Expenditure on GDP"])
@@ -1966,9 +2095,14 @@ def home_dashboard():
   tab1,tab2=st.tabs(["GDP","CPI"])
   # GDP SUMMARY BASED ON YEAR
   def gdp_home():
+    
+    st.markdown("""
+#### <div style="margin-top:20px">GDP Summary</div>
+""",unsafe_allow_html=True)
+    
     df_selection=df_macro
     df_selection = df_selection.rename(columns=lambda x: x.strip())
-    year = st.selectbox("End Year", options=df_selection["Years"].iloc[::-1])
+    year = st.selectbox("Select Year", options=df_selection["Years"][2:].iloc[::-1])
     
     # Gdp Summary Function
     def gdp_summary_cards():
@@ -1980,23 +2114,22 @@ def home_dashboard():
         def get_value(table_column):
            return df_macro[table_column][get_index(year, exp_years)]
         
-        print(df_macro["GDP per head (in '000 Rwf)"][get_index(year, exp_years)])
         # GDP and CPI summary
-        total1,total2,total3,total4,total5=st.columns(5,gap='small')
+        total1,total2,total3,total4,total5=st.columns(5, gap='small')
         with total1:
-            st.metric(label=f"GDP per Capita in { year }",value=f"""{ get_value("GDP per head (in '000 Rwf)") }""", delta=f"12%")
+            st.metric(label=f"GDP per Capita in { year }",value=f"""{ "{:,}".format(get_value("GDP per head (in '000 Rwf)")) }k""", delta=f"""{ '{:,}'.format(int(get_value("GDP per head (in '000 Rwf)")) -  df_macro["GDP per head (in '000 Rwf)"][int(get_index(year, exp_years))-1]) }k Rwf""")
 
         with total2:
-            st.metric(label=f"Gross National Income in { year }",value=f"{ get_value('Gross National Income') }", delta=f"12%")
+            st.metric(label=f"Gross National Income in { year }",value=f"{ '{:,}'.format(get_value('Gross National Income')) }B", delta=f"""{ '{:,}'.format(int(get_value("Gross National Income")) -  df_macro["Gross National Income"][int(get_index(year, exp_years))-1]) }B Rwf""")
 
         with total3:
-            st.metric(label=f"GDP at current price in { year }",value=f"{ get_value('GDP at current prices') }",delta=f"{ get_value('GDP Growth rate at current prices')*100 }%")
+            st.metric(label=f"GDP at current price in { year }",value=f"{ '{:,}'.format(get_value('GDP at current prices')) }B",delta=f"{ np.round(get_value('GDP Growth rate at current prices')*100,decimals=2) }%")
 
         with total4:
-            st.metric(label=f"GDP at constantant 2017 in { year }",value=f"{ get_value('GDP at constant 2017 prices')}",delta=f"{get_value('GDP Growth rate at constant 2017 prices')*100 }%")
+            st.metric(label=f"GDP at constantant 2017 in { year }",value=f"{ '{:,}'.format(get_value('GDP at constant 2017 prices'))}B",delta=f"{ np.round(get_value('GDP Growth rate at constant 2017 prices')*100,decimals=2) }%")
 
         with total5:
-            st.metric(label=f"Total Population as in { year }",value=get_value("Total population (millions)"),delta=f"{get_value('Population Growth rate')*100 }%")
+            st.metric(label=f"Total Population as in { year }",value='{:,}'.format(get_value("Total population (millions)"))+"M", delta=f"{ np.round(get_value('Population Growth rate')*100,decimals=2) }%")
     
     # GDP Charts function
     def threeD_barchart():
@@ -2013,7 +2146,7 @@ def home_dashboard():
                       y= ["{:.1f}%".format(x * 100) for x in df_macro["GDP Growth rate at current prices"][8:]],
                       name='Growth Rate',
                       marker_color='rgb(255, 77, 77)',
-                      mode="lines",
+                      mode="lines+markers",
                       yaxis="y2"
                       ))
 
@@ -2243,7 +2376,7 @@ def home_dashboard():
     st.markdown(""" 
       ##### <div style='margin-top:20px'>GDP By Expenditure</div>
     """,unsafe_allow_html=True )
-    ExpenditureOnGDP()
+    ExpenditureOnGDP(expenditure_cp, "Proportions of GDP and Percentage Change in GDP")
 
     # gdp inflation
     st.markdown(""" 
@@ -2469,7 +2602,7 @@ st.sidebar.markdown("# Welcome Back! ~ <span style='color:rgb(40,79,141)'>Admin<
 with st.sidebar:
   selected = om.option_menu(
     menu_title="",
-    options=["Home","GDP","CPI","Welcome to the Future"],
+    options=["Home","GDP","CPI"],
     icons=["house","wallet-fill","view-stacked"],
     default_index=0
   )
