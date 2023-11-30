@@ -38,8 +38,10 @@ constant_2017 = constant_2017.rename(columns=lambda x: x.strip())
 constant_2017_perc = pd.read_excel('GDP.xlsx', sheet_name='constant_2017_perc')
 constant_2017_perc = constant_2017_perc.rename(columns=lambda x: x.strip())
 
-constant_2017_perc = pd.read_excel('GDP.xlsx', sheet_name='constant_2017_perc')
-constant_2017_perc = constant_2017_perc.rename(columns=lambda x: x.strip())
+deflators_gdp = pd.read_excel('GDP.xlsx', sheet_name='deflators_gdp')
+constant_gdp = deflators_gdp.rename(columns=lambda x: x.strip())
+
+
 #Macro Economic Table
 def MacroTable():
     with st.expander("Rwanda's GDP Macroeconomic Aggregates: A Historical Perspective from 1999 to 2022 Table"):
@@ -138,176 +140,7 @@ def analyze_rwf_national_income_expenditure():
     # Create the figure and plot it using Plotly
     fig = go.Figure(data=[trace1, trace2, trace3, trace4,trace5, trace6, trace7, trace8, trace9], layout=layout)
     st.plotly_chart(fig, use_container_width=True)  
-  
-def kindOfActivity():
-  excel_file = 'GDP.xlsx'
-  # Select the worksheet you want to display
-  table1 = 'TABLE1'
-  table1a= 'TABLE1A'
-  table2= "TABLE2"
-  table2a= "TABLE2AA"
-  table2b= "TABLE2B"
-  table3 = "TABLE3"
 
-  # Read the worksheet into a Pandas DataFrame
-  df_macro = pd.read_excel(excel_file, table1)
-  df2 = pd.read_excel(excel_file, table1a)
-  df3 = pd.read_excel(excel_file, table2)
-  df4 = pd.read_excel(excel_file, table2a)
-  df5 = pd.read_excel(excel_file, table2b)
-  df6 = pd.read_excel(excel_file, table3)
-  #df2 = df2.apply(lambda x: x * 100)
-  #df4 = df4.apply(lambda x: x * 100)
-  df2 = df2.apply(lambda x: x * 100 if x.name != 'YEAR' else x)
-  df4 = df4.apply(lambda x: x * 100 if x.name != 'YEAR' else x)
-  
-
-  st.subheader("Gross Domestic product by Kind of Activity")
-  section1,section2=st.columns(2)
-  section3,section4=st.columns(2)
-
-  with section1:
-      graph1,table1= st.tabs(["📈 Chart", "🗃 Data"])
-      graph1A,table1A= st.tabs(["📈 Chart", "🗃 Data"])
-  with section2:
-      graph2,table2= st.tabs(["📈 Chart", "🗃 Data"])
-      graph2A,table2A= st.tabs(["📈 Chart", "🗃 Data"])
-  with section3:
-      graph2B,table2B= st.tabs(["📈 Chart", "🗃 Data"])
-  with section4:
-      graph3,table3= st.tabs(["📈 Chart", "🗃 Data"])  
-
-  with table1:
-    st.subheader("Table 1")
-    st.caption("Gross Domestic product by Kind of Activity at current prices ( in billion Rwf)")
-
-    # Create a multiselect widget
-    selected_columns = st.multiselect('Filter: ',df_macro.columns,default=["YEAR","GROSS DOMESTIC PRODUCT (GDP)","INDUSTRY","SERVICES","TAXES LESS SUBSIDIES ON PRODUCTS"])
-    # Convert the Year column to datetime format
-    df_macro["YEAR"] = pd.to_datetime(df_macro["YEAR"], format="%Y")
-
-    # Format the Year column as YYYY
-    df_macro["YEAR"] = df_macro["YEAR"].dt.strftime("%Y")
-    # Display the filtered DataFrame in Streamlit
-    st.dataframe(df_macro,use_container_width=True)
-  with table1A:
-    st.subheader("Table 1A")
-    st.caption("Gross Domestic product by Kind of Activity Shares at current prices ( percentages)")
-    
-    # Create a multiselect widget
-    selected_columns2 = st.multiselect('Filter: ',df2.columns,default=["YEAR","GROSS DOMESTIC PRODUCT (GDP)","INDUSTRY","SERVICES","TAXES LESS SUBSIDIES ON PRODUCTS"], key=2)
-
-    # Convert the Year column to datetime format
-    df2["YEAR"] = pd.to_datetime(df2["YEAR"], format="%Y")
-
-    # Format the Year column as YYYY
-    df2["YEAR"] = df2["YEAR"].dt.strftime("%Y")
-    # Display the filtered DataFrame in Streamlit
-    st.dataframe(df2,use_container_width=True)
-    
-  with table2:
-    st.subheader("Table 2")
-    st.caption("Gross Domestic product by Kind of Activity at constant 2017 prices ( in billion Rwf)")
-
-    # Create a multiselect widget
-    selected_columns3 = st.multiselect('Filter: ',df3.columns,default=["YEAR","GROSS DOMESTIC PRODUCT (GDP)","INDUSTRY","SERVICES","TAXES LESS SUBSIDIES ON PRODUCTS"],key=3)
-
-    # Convert the Year column to datetime format
-    df3["YEAR"] = pd.to_datetime(df3["YEAR"], format="%Y")
-
-    # Format the Year column as YYYY
-    df3["YEAR"] = df3["YEAR"].dt.strftime("%Y")
-    # Display the filtered DataFrame in Streamlit
-    st.dataframe(df3,use_container_width=True)
-    
-  with table2A:
-    st.subheader("Table 2A")
-    st.caption("Gross Domestic product by Kind of Activity Growth rates at constant 2017 prices ( percentage change from previous year)")
-    # Create a multiselect widget
-    selected_columns4 = st.multiselect('Filter: ',df4.columns,default=["YEAR","GROSS DOMESTIC PRODUCT (GDP)","INDUSTRY","SERVICES","TAXES LESS SUBSIDIES ON PRODUCTS"], key=4)
-
-    # Convert the Year column to datetime format
-    df4["YEAR"] = pd.to_datetime(df4["YEAR"], format="%Y")
-
-    # Format the Year column as YYYY
-    df4["YEAR"] = df4["YEAR"].dt.strftime("%Y")
-    # Display the filtered DataFrame in Streamlit
-    st.dataframe(df4,use_container_width=True)
-    
-  with table2B:
-    st.subheader("Table 2B")
-    st.caption("Gross Domestic product by Kind of Activity Growth rates at constant 2017 prices ( Percentage points)")
-
-    # Create a multiselect widget
-    selected_columns5 = st.multiselect('Filter: ',df5.columns,default=["YEAR","GROSS DOMESTIC PRODUCT (GDP)","INDUSTRY","SERVICES","TAXES LESS SUBSIDIES ON PRODUCTS"],key=5)
-
-    # Convert the Year column to datetime format
-    df5["YEAR"] = pd.to_datetime(df5["YEAR"], format="%Y")
-
-    # Format the Year column as YYYY
-    df5["YEAR"] = df5["YEAR"].dt.strftime("%Y")
-    # Display the filtered DataFrame in Streamlit
-    st.dataframe(df5,use_container_width=True)
-      
-  with table3:
-    st.subheader("Table 3")
-    st.caption("Gross Domestic product by Kind of Activity Deflators (2017=100)")
-
-    # Create a multiselect widget
-    selected_columns6 = st.multiselect('Filter: ',df6.columns,default=["YEAR","GROSS DOMESTIC PRODUCT (GDP)","INDUSTRY","SERVICES","TAXES LESS SUBSIDIES ON PRODUCTS"],key=6)
-
-    # Convert the Year column to datetime format
-    df6["YEAR"] = pd.to_datetime(df6["YEAR"], format="%Y")
-
-    # Format the Year column as YYYY
-    df6["YEAR"] = df6["YEAR"].dt.strftime("%Y")
-    # Display the filtered DataFrame in Streamlit
-    st.dataframe(df6,use_container_width=True)
-    
-  
-  ## Graph Functions
- 
-  column_names = df_macro.columns.tolist()
-  column_names.remove('YEAR')
-
-  # Create a multiselect widget
-  with graph1:
-    selected_columns1 = st.multiselect('Filter: ',df_macro.columns,default=["GROSS DOMESTIC PRODUCT (GDP)","INDUSTRY","SERVICES","TAXES LESS SUBSIDIES ON PRODUCTS"],key=0)
-    
-    fig= px.line(df_macro, x='YEAR', y=selected_columns1, title='GDP by Kind of Activity at current prices ( in billion Rwf)')
-    fig.update_layout(yaxis_title="Rwf in billion",legend=dict(yanchor="bottom", y=-1, xanchor="center", x=0.5))
-    graph1.plotly_chart(fig,use_container_width=True)
-  
-  with graph1A:
-    selected_columns2 = st.multiselect('Filter: ',df2.columns,default=["GROSS DOMESTIC PRODUCT (GDP)","INDUSTRY","SERVICES","TAXES LESS SUBSIDIES ON PRODUCTS"],key=11)
-    
-    fig= px.line(df2, x='YEAR', y=selected_columns2, title='GDP by Kind of Activity Shares at current prices ( percentages)')
-    fig.update_layout(yaxis_title="Percentage",legend=dict(yanchor="bottom", y=-1, xanchor="center", x=0.5))
-    graph1A.plotly_chart(fig,use_container_width=True)
-    
-  with graph2:
-    selected_columns3 = st.multiselect('Filter: ',df3.columns,default=["GROSS DOMESTIC PRODUCT (GDP)","INDUSTRY","SERVICES","TAXES LESS SUBSIDIES ON PRODUCTS"],key=12)
-    fig2 = px.line(df3, x='YEAR', y=selected_columns3, title='GDP by Kind of Activity at constant 2017 prices(in billion Rwf) ')
-    fig2.update_layout(yaxis_title="in billion Rwf",legend=dict(yanchor="bottom", y=-1, xanchor="center", x=0.5))
-    graph2.plotly_chart(fig2,use_container_width=True)
-    
-  with graph2A:
-    selected_columns4 = st.multiselect('Filter: ',df4.columns,default=["GROSS DOMESTIC PRODUCT (GDP)"],key=13)
-    fig2 = px.bar(df4, x='YEAR', y=selected_columns4, title='GDP by Kind of Activity Growth rates at constant 2017 prices ( percentage change from previous year)')
-    fig2.update_layout(yaxis_title="Percentage",legend=dict(yanchor="bottom", y=-1, xanchor="center", x=0.5))
-    graph2A.plotly_chart(fig2,use_container_width=True)
-    
-  with graph2B:
-    selected_columns5 = st.multiselect('Filter: ',df5.columns,default=["GROSS DOMESTIC PRODUCT (GDP)"],key=14)
-    fig2 = px.bar(df5, x='YEAR', y=selected_columns5, title='GDP by Kind of Activity Growth rates at constant 2017 prices ( Percentage points)')
-    fig2.update_layout(yaxis_title="Percentage",legend=dict(yanchor="bottom", y=-1, xanchor="center", x=0.5))
-    graph2B.plotly_chart(fig2,use_container_width=True)
-    
-  with graph3:
-    selected_columns6 = st.multiselect('Filter: ',df6.columns,default=["GROSS DOMESTIC PRODUCT (GDP)"],key=15)
-    fig2 = px.bar(df6, x='YEAR', y=selected_columns6, title='GDP by Kind of Activity Deflators (2017=100)')
-    fig2.update_layout(yaxis_title="Percentage",legend=dict(yanchor="bottom", y=-1, xanchor="center", x=0.5))
-    graph3.plotly_chart(fig2,use_container_width=True)
 
 #                                       CONSUMER PRICE INDEX
 # -------------------------------------------------------------------------------------------------------------
@@ -1000,7 +833,7 @@ def gdp_dashboard():
 
 
         st.markdown(""" 
-        #### <div style="margin-top:20px">GDP at constant 2017 prices from 2007 to 2022</div>
+        #### <div style="margin-top:40px">GDP at constant 2017 prices from 2007 to 2022</div>
         """,unsafe_allow_html=True)
                 
         def agriculture_constant_chart():
@@ -1385,7 +1218,7 @@ def gdp_dashboard():
             ))
 
             fig.update_layout(
-                title='TAXES LESS SUBSIDIES ON PRODUCTS from 2007 to 2022',
+                title='GDP growth rate at constant 2017 prices from 2007 to 2022',
                 yaxis=dict(
                     title="Taxes Value in Billions",
                     showgrid=False,
@@ -1433,18 +1266,18 @@ def gdp_dashboard():
 
 
         st.markdown(""" 
-        #### <div style="margin-top:20px">GDP Deflators [2017=100] prices from 2007 to 2022</div>
+        #### <div style="margin-top:40px">GDP Deflators [2017=100] prices from 2007 to 2022</div>
         """,unsafe_allow_html=True)
                 
         def agriculture_deflators_chart():
-            x = constant_2017["Years"][8:]
+            x = deflators_gdp["Years"][8:]
 
             # Creating two subplots
             fig = go.Figure()
 
             fig.add_trace(go.Bar(
                   x=x,
-                  y=constant_2017["Export crops"][8:],
+                  y=deflators_gdp["Export crops"][8:],
                   marker=dict(
                       color='rgba(255, 255, 0,0.6)',
                       line=dict(
@@ -1455,7 +1288,7 @@ def gdp_dashboard():
             ))
             fig.add_trace(go.Bar(
                 x=x,
-                y=constant_2017["Food crops"][8:],
+                y=deflators_gdp["Food crops"][8:],
                 marker=dict(
                     color='rgba(40,79,141,0.6)',
                     line=dict(
@@ -1466,7 +1299,7 @@ def gdp_dashboard():
             ))
             fig.add_trace(go.Bar(
                   x=x,
-                  y=constant_2017["Livestock & livestock products"][8:],
+                  y=deflators_gdp["Livestock & livestock products"][8:],
                   marker=dict(
                       color='rgba(255, 166, 0,0.6)',
                       line=dict(
@@ -1477,7 +1310,7 @@ def gdp_dashboard():
             ))
             fig.add_trace(go.Bar(
                   x=x,
-                  y=constant_2017["Fishing"][8:],
+                  y=deflators_gdp["Fishing"][8:],
                   marker=dict(
                       color='rgba(255, 77, 77,0.6)',
                       line=dict(
@@ -1488,7 +1321,7 @@ def gdp_dashboard():
             ))
             fig.add_trace(go.Bar(
                   x=x,
-                  y=constant_2017["Forestry"][8:],
+                  y=deflators_gdp["Forestry"][8:],
                   marker=dict(
                       color='rgba(50, 171, 96, 0.6)',
                       line=dict(
@@ -1501,7 +1334,7 @@ def gdp_dashboard():
             fig.update_layout(
                 title='AGRICULTURE, FORESTRY & FISHING from 2007 to 2022',
                 yaxis=dict(
-                    title="Agriculture Value in Billions",
+                    title="Agriculture Deflators",
                     showgrid=False,
                     showline=False,
                     showticklabels=True,
@@ -1522,9 +1355,9 @@ def gdp_dashboard():
 
             st.plotly_chart(fig, use_container_width=True)
         def deflators_price_2017_gdp():
-            y_cp = constant_2017["GROSS DOMESTIC PRODUCT (GDP)"][8:]
+            y_cp = deflators_gdp["GROSS DOMESTIC PRODUCT (GDP)"][8:]
 
-            x = constant_2017["Years"][8:]
+            x = deflators_gdp["Years"][8:]
 
 
             # Creating Figure Handle
@@ -1538,12 +1371,13 @@ def gdp_dashboard():
             ))
 
             fig.update_layout(
-                title='GDP at Constant 2017 Prices from 2007 to 2022',
+                title='GDP Deflators at [2017 = 100] from 2007 to 2022',
                 yaxis=dict(
-                    title="GDP in Billions",
+                    title="GDP Deflators",
                     showgrid=False,
                     showline=False,
                     showticklabels=True,
+                    range=[0,int(deflators_gdp["GROSS DOMESTIC PRODUCT (GDP)"].max())+20],
                     domain=[0, 0.85],
                 ),
                 xaxis=dict(
@@ -1568,9 +1402,9 @@ def gdp_dashboard():
                 # labeling the Bar Population (Millions)
                 annotations.append(dict(xref='x1', 
                                         yref='y1',
-                                        y=yd + 500, 
+                                        y=yd + 10, 
                                         x=xd,
-                                        text="{:,}".format(yd) + 'B',
+                                        text="{:,}".format(yd),
                                         font=dict(family='Arial', size=12,
                                                   color='rgb(50, 171, 96)'),
                                         showarrow=False))
@@ -1579,14 +1413,14 @@ def gdp_dashboard():
 
             st.plotly_chart(fig, use_container_width=True)
         def industry_deflators_chart():
-            x = constant_2017["Years"][8:]
+            x = deflators_gdp["Years"][8:]
 
             # Creating two subplots
             fig = go.Figure()
 
             fig.add_trace(go.Bar(
                   x=x,
-                  y=constant_2017["Mining & quarrying"][8:],
+                  y=deflators_gdp["Mining & quarrying"][8:],
                   marker=dict(
                       color='rgba(255, 255, 0,0.6)',
                       line=dict(
@@ -1597,7 +1431,7 @@ def gdp_dashboard():
             ))
             fig.add_trace(go.Bar(
                 x=x,
-                y=constant_2017["TOTAL MANUFACTURING"][8:],
+                y=deflators_gdp["TOTAL MANUFACTURING"][8:],
                 marker=dict(
                     color='rgba(40,79,141,0.6)',
                     line=dict(
@@ -1608,7 +1442,7 @@ def gdp_dashboard():
             ))
             fig.add_trace(go.Bar(
                   x=x,
-                  y=constant_2017["Electricity"][8:],
+                  y=deflators_gdp["Electricity"][8:],
                   marker=dict(
                       color='rgba(255, 166, 0,0.6)',
                       line=dict(
@@ -1619,7 +1453,7 @@ def gdp_dashboard():
             ))
             fig.add_trace(go.Bar(
                   x=x,
-                  y=constant_2017["Water & waste management"][8:],
+                  y=deflators_gdp["Water & waste management"][8:],
                   marker=dict(
                       color='rgba(255, 77, 77,0.6)',
                       line=dict(
@@ -1630,7 +1464,7 @@ def gdp_dashboard():
             ))
             fig.add_trace(go.Bar(
                   x=x,
-                  y=constant_2017["Construction"][8:],
+                  y=deflators_gdp["Construction"][8:],
                   marker=dict(
                       color='rgba(50, 171, 96, 0.6)',
                       line=dict(
@@ -1641,9 +1475,9 @@ def gdp_dashboard():
             ))
 
             fig.update_layout(
-                title='INDUSTRY from 2007 to 2022',
+                title='INDUSTRY Deflators from 2007 to 2022',
                 yaxis=dict(
-                    title="Industry Value in Billions",
+                    title="Industry Deflators",
                     showgrid=False,
                     showline=False,
                     showticklabels=True,
@@ -1664,14 +1498,14 @@ def gdp_dashboard():
 
             st.plotly_chart(fig, use_container_width=True)      
         def services_deflators_chart():
-            x = constant_2017["Years"][8:]
+            x = deflators_gdp["Years"][8:]
 
             # Creating two subplots
             fig = go.Figure()
 
             fig.add_trace(go.Bar(
                   x=x,
-                  y=constant_2017["TRADE &TRANSPORT"][8:],
+                  y=deflators_gdp["TRADE &TRANSPORT"][8:],
                   marker=dict(
                       color='rgba(255, 166, 0,0.6)',
                       line=dict(
@@ -1682,7 +1516,7 @@ def gdp_dashboard():
             ))
             fig.add_trace(go.Bar(
                 x=x,
-                y=constant_2017["OTHER SERVICES"][8:],
+                y=deflators_gdp["OTHER SERVICES"][8:],
                 marker=dict(
                     color='rgba(40,79,141,0.6)',
                     line=dict(
@@ -1693,9 +1527,9 @@ def gdp_dashboard():
             ))
 
             fig.update_layout(
-                title='SERVICES from 2007 to 2022',
+                title='SERVICES Deflators from 2007 to 2022',
                 yaxis=dict(
-                    title="Services Value in Billions",
+                    title="Services Deflators",
                     showgrid=False,
                     showline=False,
                     showticklabels=True,
@@ -1716,14 +1550,14 @@ def gdp_dashboard():
 
             st.plotly_chart(fig, use_container_width=True)       
         def taxes_deflators_chart():
-            x = constant_2017["Years"][8:]
+            x = deflators_gdp["Years"][8:]
 
             # Creating Figure
             fig = go.Figure()
 
             fig.add_trace(go.Bar(
                 x=x,
-                y=constant_2017["TAXES LESS SUBSIDIES ON PRODUCTS"][8:],
+                y=deflators_gdp["TAXES LESS SUBSIDIES ON PRODUCTS"][8:],
                 marker=dict(
                     color='rgba(40,79,141,0.6)',
                     line=dict(
@@ -1736,7 +1570,7 @@ def gdp_dashboard():
             fig.update_layout(
                 title='TAXES LESS SUBSIDIES ON PRODUCTS from 2007 to 2022',
                 yaxis=dict(
-                    title="Taxes Value in Billions",
+                    title="Taxes Deflators",
                     showgrid=False,
                     showline=False,
                     showticklabels=True,
@@ -1754,93 +1588,7 @@ def gdp_dashboard():
                 plot_bgcolor='rgb(248, 248, 255)',
               )
 
-            st.plotly_chart(fig, use_container_width=True)
-        def percent_eco_change_deflators_chart():
-            x = constant_2017_perc["Years"][8:]
-
-            # Creating Figure
-            fig = go.Figure()
-
-            fig.add_trace(go.Bar(
-                x=x,
-                y=[x*100 for x in constant_2017_perc["AGRICULTURE, FORESTRY & FISHING"][8:]],
-                marker=dict(
-                    color='rgba(50, 171, 96, 0.6)',
-                    line=dict(
-                        color='rgba(50, 171, 96, 1.0)',
-                        width=2),
-                ),
-                name='Agriculture, Forestry and Fishing',
-            ))
-            fig.add_trace(go.Bar(
-                x=x,
-                y=[x*100 for x in constant_2017_perc["INDUSTRY"][8:]],
-                marker=dict(
-                    color='rgba(255, 77, 77,0.6)',
-                    line=dict(
-                        color='rgba(255, 77, 77,1.0)',
-                        width=2),
-                ),
-                name='Industry',
-            ))
-            fig.add_trace(go.Bar(
-                x=x,
-                y=[x*100 for x in constant_2017_perc["SERVICES"][8:]],
-                marker=dict(
-                    color='rgba(40,79,141,0.6)',
-                    line=dict(
-                        color='rgba(40,79,141,1.0)',
-                        width=2),
-                ),
-                name='Services',
-            ))
-            fig.add_trace(go.Bar(
-                x=x,
-                y=[x*100 for x in constant_2017_perc["TAXES LESS SUBSIDIES ON PRODUCTS"][8:]],
-                marker=dict(
-                    color='rgba(255, 166, 0,0.6)',
-                    line=dict(
-                        color='rgba(255, 166, 0,1.0)',
-                        width=2),
-                ),
-                name='Taxes',
-            ))
-            fig.add_trace(go.Line(
-                x=x,
-                y=[x*100 for x in constant_2017_perc["GROSS DOMESTIC PRODUCT (GDP)"][8:]],
-                marker=dict(
-                    color='rgb(5, 1, 21)',
-                    line=dict(
-                        color='rgb(5, 1, 21)',
-                        width=2),
-                ),
-                name='Gross Domestic Product',
-            ))
-
-            fig.update_layout(
-                title='TAXES LESS SUBSIDIES ON PRODUCTS from 2007 to 2022',
-                yaxis=dict(
-                    title="Taxes Value in Billions",
-                    showgrid=False,
-                    showline=False,
-                    showticklabels=True,
-                    range=[-5,30],
-                    domain=[0, 0.8],
-                ),
-                xaxis=dict(
-                    title="Years",
-                    showline=False,
-                    showticklabels=True,
-                    showgrid=True,
-                ),
-                legend=dict(x=0.029, y=1.038, font_size=10),
-                margin=dict(l=100, r=20, t=70, b=70),
-                paper_bgcolor='rgb(248, 248, 255)',
-                plot_bgcolor='rgb(248, 248, 255)',
-              )
-
-            st.plotly_chart(fig, use_container_width=True)
-        
+            st.plotly_chart(fig, use_container_width=True)  
         # GDP Aggregate
         deflators_price_2017_gdp()
         
@@ -1857,12 +1605,175 @@ def gdp_dashboard():
             services_deflators_chart()
         with taxes:
             taxes_deflators_chart()
+    def expenditure_on_gdp():
+        excel_file = 'GDP.xlsx'
+        # Select the worksheet you want to display
+        table1 = 'current_bf'
+        table1a= 'current_perc'
+        table2= "constant_2017"
+        table2a= "constant_2017_perc"
+        table2b= "TABLE2B"
+        table3 = "deflators_gdp"
+
+        # Read the worksheet into a Pandas DataFrame
+        df_macro = pd.read_excel(excel_file, table1)
+        df2 = pd.read_excel(excel_file, table1a)
+        df3 = pd.read_excel(excel_file, table2)
+        df4 = pd.read_excel(excel_file, table2a)
+        df5 = pd.read_excel(excel_file, table2b)
+        df6 = pd.read_excel(excel_file, table3)
+        #df2 = df2.apply(lambda x: x * 100)
+        #df4 = df4.apply(lambda x: x * 100)
+        df2 = df2.apply(lambda x: x * 100 if x.name != 'YEAR' else x)
+        df4 = df4.apply(lambda x: x * 100 if x.name != 'YEAR' else x)
+        
+
+        st.subheader("Gross Domestic product by Kind of Activity")
+        section1,section2=st.columns(2)
+        section3,section4=st.columns(2)
+
+        with section1:
+            graph1,table1= st.tabs(["📈 Chart", "🗃 Data"])
+            graph1A,table1A= st.tabs(["📈 Chart", "🗃 Data"])
+        with section2:
+            graph2,table2= st.tabs(["📈 Chart", "🗃 Data"])
+            graph2A,table2A= st.tabs(["📈 Chart", "🗃 Data"])
+        with section3:
+            graph2B,table2B= st.tabs(["📈 Chart", "🗃 Data"])
+        with section4:
+            graph3,table3= st.tabs(["📈 Chart", "🗃 Data"])  
+
+        with table1:
+            st.subheader("Table 1")
+            st.caption("Gross Domestic product by Kind of Activity at current prices ( in billion Rwf)")
+
+            # Create a multiselect widget
+            selected_columns = st.multiselect('Filter: ',df_macro.columns,default=["YEAR","GROSS DOMESTIC PRODUCT (GDP)","INDUSTRY","SERVICES","TAXES LESS SUBSIDIES ON PRODUCTS"])
+            # Convert the Year column to datetime format
+            df_macro["YEAR"] = pd.to_datetime(df_macro["YEAR"], format="%Y")
+
+            # Format the Year column as YYYY
+            df_macro["YEAR"] = df_macro["YEAR"].dt.strftime("%Y")
+            # Display the filtered DataFrame in Streamlit
+            st.dataframe(df_macro,use_container_width=True)
+        with table1A:
+            st.subheader("Table 1A")
+            st.caption("Gross Domestic product by Kind of Activity Shares at current prices ( percentages)")
             
-        st.markdown(""" 
-        ###### GDP Growth rates at constant 2017 prices
-        """,unsafe_allow_html=True)
-        percent_eco_change_deflators_chart()
-    
+            # Create a multiselect widget
+            selected_columns2 = st.multiselect('Filter: ',df2.columns,default=["YEAR","GROSS DOMESTIC PRODUCT (GDP)","INDUSTRY","SERVICES","TAXES LESS SUBSIDIES ON PRODUCTS"], key=2)
+
+            # Convert the Year column to datetime format
+            df2["YEAR"] = pd.to_datetime(df2["YEAR"], format="%Y")
+
+            # Format the Year column as YYYY
+            df2["YEAR"] = df2["YEAR"].dt.strftime("%Y")
+            # Display the filtered DataFrame in Streamlit
+            st.dataframe(df2,use_container_width=True)
+            
+        with table2:
+            st.subheader("Table 2")
+            st.caption("Gross Domestic product by Kind of Activity at constant 2017 prices ( in billion Rwf)")
+
+            # Create a multiselect widget
+            selected_columns3 = st.multiselect('Filter: ',df3.columns,default=["YEAR","GROSS DOMESTIC PRODUCT (GDP)","INDUSTRY","SERVICES","TAXES LESS SUBSIDIES ON PRODUCTS"],key=3)
+
+            # Convert the Year column to datetime format
+            df3["YEAR"] = pd.to_datetime(df3["YEAR"], format="%Y")
+
+            # Format the Year column as YYYY
+            df3["YEAR"] = df3["YEAR"].dt.strftime("%Y")
+            # Display the filtered DataFrame in Streamlit
+            st.dataframe(df3,use_container_width=True)
+            
+        with table2A:
+            st.subheader("Table 2A")
+            st.caption("Gross Domestic product by Kind of Activity Growth rates at constant 2017 prices ( percentage change from previous year)")
+            # Create a multiselect widget
+            selected_columns4 = st.multiselect('Filter: ',df4.columns,default=["YEAR","GROSS DOMESTIC PRODUCT (GDP)","INDUSTRY","SERVICES","TAXES LESS SUBSIDIES ON PRODUCTS"], key=4)
+
+            # Convert the Year column to datetime format
+            df4["YEAR"] = pd.to_datetime(df4["YEAR"], format="%Y")
+
+            # Format the Year column as YYYY
+            df4["YEAR"] = df4["YEAR"].dt.strftime("%Y")
+            # Display the filtered DataFrame in Streamlit
+            st.dataframe(df4,use_container_width=True)
+            
+        with table2B:
+            st.subheader("Table 2B")
+            st.caption("Gross Domestic product by Kind of Activity Growth rates at constant 2017 prices ( Percentage points)")
+
+            # Create a multiselect widget
+            selected_columns5 = st.multiselect('Filter: ',df5.columns,default=["YEAR","GROSS DOMESTIC PRODUCT (GDP)","INDUSTRY","SERVICES","TAXES LESS SUBSIDIES ON PRODUCTS"],key=5)
+
+            # Convert the Year column to datetime format
+            df5["YEAR"] = pd.to_datetime(df5["YEAR"], format="%Y")
+
+            # Format the Year column as YYYY
+            df5["YEAR"] = df5["YEAR"].dt.strftime("%Y")
+            # Display the filtered DataFrame in Streamlit
+            st.dataframe(df5,use_container_width=True)
+            
+        with table3:
+            st.subheader("Table 3")
+            st.caption("Gross Domestic product by Kind of Activity Deflators (2017=100)")
+
+            # Create a multiselect widget
+            selected_columns6 = st.multiselect('Filter: ',df6.columns,default=["YEAR","GROSS DOMESTIC PRODUCT (GDP)","INDUSTRY","SERVICES","TAXES LESS SUBSIDIES ON PRODUCTS"],key=6)
+
+            # Convert the Year column to datetime format
+            df6["YEAR"] = pd.to_datetime(df6["YEAR"], format="%Y")
+
+            # Format the Year column as YYYY
+            df6["YEAR"] = df6["YEAR"].dt.strftime("%Y")
+            # Display the filtered DataFrame in Streamlit
+            st.dataframe(df6,use_container_width=True)
+            
+        
+        ## Graph Functions
+        
+        column_names = df_macro.columns.tolist()
+        column_names.remove('YEAR')
+
+        # Create a multiselect widget
+        with graph1:
+            selected_columns1 = st.multiselect('Filter: ',df_macro.columns,default=["GROSS DOMESTIC PRODUCT (GDP)","INDUSTRY","SERVICES","TAXES LESS SUBSIDIES ON PRODUCTS"],key=0)
+            
+            fig= px.line(df_macro, x='YEAR', y=selected_columns1, title='GDP by Kind of Activity at current prices ( in billion Rwf)')
+            fig.update_layout(yaxis_title="Rwf in billion",legend=dict(yanchor="bottom", y=-1, xanchor="center", x=0.5))
+            graph1.plotly_chart(fig,use_container_width=True)
+        
+        with graph1A:
+            selected_columns2 = st.multiselect('Filter: ',df2.columns,default=["GROSS DOMESTIC PRODUCT (GDP)","INDUSTRY","SERVICES","TAXES LESS SUBSIDIES ON PRODUCTS"],key=11)
+            
+            fig= px.line(df2, x='YEAR', y=selected_columns2, title='GDP by Kind of Activity Shares at current prices ( percentages)')
+            fig.update_layout(yaxis_title="Percentage",legend=dict(yanchor="bottom", y=-1, xanchor="center", x=0.5))
+            graph1A.plotly_chart(fig,use_container_width=True)
+            
+        with graph2:
+            selected_columns3 = st.multiselect('Filter: ',df3.columns,default=["GROSS DOMESTIC PRODUCT (GDP)","INDUSTRY","SERVICES","TAXES LESS SUBSIDIES ON PRODUCTS"],key=12)
+            fig2 = px.line(df3, x='YEAR', y=selected_columns3, title='GDP by Kind of Activity at constant 2017 prices(in billion Rwf) ')
+            fig2.update_layout(yaxis_title="in billion Rwf",legend=dict(yanchor="bottom", y=-1, xanchor="center", x=0.5))
+            graph2.plotly_chart(fig2,use_container_width=True)
+            
+        with graph2A:
+            selected_columns4 = st.multiselect('Filter: ',df4.columns,default=["GROSS DOMESTIC PRODUCT (GDP)"],key=13)
+            fig2 = px.bar(df4, x='YEAR', y=selected_columns4, title='GDP by Kind of Activity Growth rates at constant 2017 prices ( percentage change from previous year)')
+            fig2.update_layout(yaxis_title="Percentage",legend=dict(yanchor="bottom", y=-1, xanchor="center", x=0.5))
+            graph2A.plotly_chart(fig2,use_container_width=True)
+            
+        with graph2B:
+            selected_columns5 = st.multiselect('Filter: ',df5.columns,default=["GROSS DOMESTIC PRODUCT (GDP)"],key=14)
+            fig2 = px.bar(df5, x='YEAR', y=selected_columns5, title='GDP by Kind of Activity Growth rates at constant 2017 prices ( Percentage points)')
+            fig2.update_layout(yaxis_title="Percentage",legend=dict(yanchor="bottom", y=-1, xanchor="center", x=0.5))
+            graph2B.plotly_chart(fig2,use_container_width=True)
+            
+        with graph3:
+            selected_columns6 = st.multiselect('Filter: ',df6.columns,default=["GROSS DOMESTIC PRODUCT (GDP)"],key=15)
+            fig2 = px.bar(df6, x='YEAR', y=selected_columns6, title='GDP by Kind of Activity Deflators (2017=100)')
+            fig2.update_layout(yaxis_title="Percentage",legend=dict(yanchor="bottom", y=-1, xanchor="center", x=0.5))
+            graph3.plotly_chart(fig2,use_container_width=True)
     st.title("GDP Dashboard")
     # Display GDP dashboard option
     tab1, tab2 = st.tabs(["Economic Activities","Expenditure on GDP"])
@@ -1870,7 +1781,7 @@ def gdp_dashboard():
     with tab1:
        economic_activities()
     with tab2:
-      kindOfActivity()
+      expenditure_on_gdp()
 
 def home_dashboard():
     
