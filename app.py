@@ -212,7 +212,7 @@ def all():
     st.subheader("Rwanda's CPI from 2009 to 2023")
     st.info("Base: 2014; Reference: February 2014=100")
     # Select the worksheet you want to display
-    sheet_name = 'rw'
+    sheet_name = 'all rwanda'
     
     # Read the worksheet into a Pandas DataFrame
     df = pd.read_excel(excel_file, sheet_name)
@@ -293,7 +293,7 @@ def all():
 # URBAN SECTOR
 def Urban():
     # Select the worksheet you want to display
-    sheet_name = 'urban1'
+    sheet_name = 'urban area'
 
     # Read the worksheet into a Pandas DataFrame
     df = pd.read_excel(excel_file, sheet_name)
@@ -319,7 +319,6 @@ def Urban():
     column_names = df.columns.tolist()
     column_names.remove('YEAR')
 
-    sheet_name = 'urban1'
     df = pd.read_excel(excel_file, sheet_name=sheet_name)
     df[['Year', 'Month']] = pd.to_datetime(df['YEAR'], format='%Y-%m').dt.strftime('%Y-%m').str.split('-').tolist()
 
@@ -380,7 +379,7 @@ def Urban():
 # ALL RWANDA
 def Rural():
     # Select the worksheet you want to display
-    sheet_name = 'rural1'
+    sheet_name = 'rural area'
 
     # Read the worksheet into a Pandas DataFrame
     df = pd.read_excel(excel_file, sheet_name)
@@ -465,7 +464,7 @@ def Rural():
 # Other indices function
 def Other_Indices():
     # Select the worksheet you want to display
-    sheet_name = 'other_indices1'
+    sheet_name = 'other indices'
 
     # Read the worksheet into a Pandas DataFrame
     df = pd.read_excel(excel_file, sheet_name)
@@ -2501,9 +2500,9 @@ def home_dashboard():
     st.markdown("""---""")
   # GDP SUMMARY BASED ON YEAR
   def cpi_home():
-    sheet1="rw"
-    sheet2="urban1"
-    sheet3="rural1"
+    sheet1="all rwanda"
+    sheet2="urban area"
+    sheet3="rural area"
     # Load the Excel file containing CPI data
     data1 = pd.read_excel('CPI.xlsx',sheet1)
     data2 = pd.read_excel('CPI.xlsx',sheet2)
@@ -2678,7 +2677,7 @@ def home_dashboard():
     general_indices() 
     def other_indicesHome():
   
-        sheet_name = 'other_indices1'
+        sheet_name = 'other indices'
         df = pd.read_excel(excel_file, sheet_name=sheet_name)
 
         # Assuming you have columns for the specified indices, update the column names accordingly
