@@ -3,6 +3,7 @@
     --color2:rgb(255, 166, 0);
     --color3:rgb(255, 255, 0);
     --line_color:rgb(5, 1, 21);
+    --color4:rgb(0, 128, 0);
 }
 [data-testid=metric-container] {
     box-shadow: 0 0 4px #cccccc;
