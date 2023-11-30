@@ -7,6 +7,7 @@ import plotly.graph_objs as go
 import plotly.express as px
 import streamlit_option_menu as om
 from bisect import bisect_left
+from datetime import datetime, timedelta
 
 st.set_page_config(page_title="GDP&CPI Dashboard",layout="wide",page_icon="🇷🇼")
 st.markdown("<style>div.block-container{padding-top:1rem;}</style>", unsafe_allow_html=True)
@@ -323,14 +324,14 @@ weight3 = pd.read_excel(excel_file, rural_Weights)
 weight4 = pd.read_excel(excel_file, otherIndices_Weights)
 # ALL RWANDA
 def all():
-   st.subheader("Rwanda's CPI from 2009 to 2022")
+   st.subheader("Rwanda's CPI from 2009 to 2023")
    st.info("Base: 2014; Reference: February 2014=100")
    # Select the worksheet you want to display
    sheet_name = 'rw'
    
    # Read the worksheet into a Pandas DataFrame
    df = pd.read_excel(excel_file, sheet_name)
-   with st.expander("""Rwanda's CPI from 2009 to 2022 TABLE"""):  
+   with st.expander("""Rwanda's CPI from 2009 to 2023 TABLE"""):  
       # Create a multiselect widget
       selected_columns = st.multiselect('Filter: ',df.columns,default=["YEAR","GENERAL INDEX (CPI)","Food and non-alcoholic beverages","   Bread and cereals","Meat","Milk, cheese and eggs","Vegetables","Non-alcoholic beverages","Alcoholic beverages and tobacco","Clothing and footwear","Housing, water, electricity, gas and other fuel","Furnishing, household and equipment","Health"])
 
@@ -351,7 +352,7 @@ def all():
    # Create a multiselect widget
    selected_columns = st.multiselect('Filter: ',df.columns,default=["GENERAL INDEX (CPI)"])
 
-   fig = px.line(df, x='YEAR', y=selected_columns, title='Tracking Rwandas Inflationary Landscape: CPI Analysis from 2009 to 2022')
+   fig = px.line(df, x='YEAR', y=selected_columns, title='Tracking Rwandas Inflationary Landscape: CPI Analysis from 2009 to 2023')
    fig.update_layout(yaxis_title="Percentage",legend=dict(yanchor="bottom", y=-1, xanchor="center", x=0.5))
    st.plotly_chart(fig,use_container_width=True)
 
@@ -365,10 +366,10 @@ def Urban():
   df = pd.read_excel(excel_file, sheet_name)
 
 
-  st.subheader("Urban CPI in Rwanda: 2009 to 2022")
+  st.subheader("Urban CPI in Rwanda: 2009 to 2023")
   st.info("Base: 2014; Reference: February 2014=100")
     
-  with st.expander("""Urban CPI in Rwanda: 2009 to 2022 TABLE"""):  
+  with st.expander("""Urban CPI in Rwanda: 2009 to 2023 TABLE"""):  
       # Create a multiselect widget
       selected_columns = st.multiselect('Filter: ',df.columns,default=["YEAR","GENERAL INDEX (CPI)","Food and non-alcoholic beverages","   Bread and cereals","Meat","Milk, cheese and eggs","Vegetables","Non-alcoholic beverages","Alcoholic beverages and tobacco","Clothing and footwear","Housing, water, electricity, gas and other fuel","Furnishing, household and equipment","Health"],key=22)
 
@@ -385,11 +386,11 @@ def Urban():
   column_names = df.columns.tolist()
   column_names.remove('YEAR')
 
-
+ 
    # Create a multiselect widget
   selected_columns = st.multiselect('Filter: ',df.columns,default=["GENERAL INDEX (CPI)"],key=23)
 
-  fig = px.line(df, x='YEAR', y=selected_columns, title='Deciphering Urban Consumption Dynamics in Rwanda: A Focus on CPI Trends from 2009 to 2022')
+  fig = px.line(df, x='YEAR', y=selected_columns, title='Deciphering Urban Consumption Dynamics in Rwanda: A Focus on CPI Trends from 2009 to 2023')
   fig.update_layout(yaxis_title="Index",legend=dict(yanchor="bottom", y=-1, xanchor="center", x=0.5))
   st.plotly_chart(fig,use_container_width=True)
 
@@ -402,10 +403,10 @@ def Rural():
   df = pd.read_excel(excel_file, sheet_name)
 
 
-  st.subheader("Rural CPI in Rwanda: 2009 to 2022)")
+  st.subheader("Rural CPI in Rwanda: 2009 to 2023)")
   st.info("Base: 2014; Reference: February 2014=100")
     
-  with st.expander("""Rural CPI in Rwanda: 2009 to 2022 TABLE"""):  
+  with st.expander("""Rural CPI in Rwanda: 2009 to 2023 TABLE"""):  
       # Create a multiselect widget
       selected_columns = st.multiselect('Filter: ',df.columns,default=["YEAR","GENERAL INDEX (CPI)","Food and non-alcoholic beverages","   Bread and cereals","Meat","Milk, cheese and eggs","Vegetables","Non-alcoholic beverages","Alcoholic beverages and tobacco","Clothing and footwear","Housing, water, electricity, gas and other fuel","Furnishing, household and equipment","Health"],key=24)
 
@@ -425,7 +426,7 @@ def Rural():
    # Create a multiselect widget
   selected_columns = st.multiselect('Filter: ',df.columns,default=["GENERAL INDEX (CPI)"],key=25)
 
-  fig = px.line(df, x='YEAR', y=selected_columns, title='Unveiling Rural Consumption Dynamics in Rwanda: A Focus on CPI Trends from 2009 to 2022')
+  fig = px.line(df, x='YEAR', y=selected_columns, title='Unveiling Rural Consumption Dynamics in Rwanda: A Focus on CPI Trends from 2009 to 2023')
   fig.update_layout(yaxis_title="Index",legend=dict(yanchor="bottom", y=-1, xanchor="center", x=0.5))
   st.plotly_chart(fig,use_container_width=True)
   
@@ -439,12 +440,12 @@ def Other_Indices():
   df = pd.read_excel(excel_file, sheet_name)
 
 
-  st.subheader("Other indices CPI in Rwanda: 2009 to 2022, Urban only")
+  st.subheader("Other indices CPI in Rwanda: 2009 to 2023, Urban only")
   st.info("Base: 2014; Reference: February 2014=100")
     
   
 
-  with st.expander("""Other indices CPI in Rwanda: 2009 to 2022 TABLE"""):  
+  with st.expander("""Other indices CPI in Rwanda: 2009 to 2023 TABLE"""):  
      # Create a multiselect widget
       selected_columns = st.multiselect('Filter: ',df.columns,default=["YEAR","Local Goods Index","Local Food and non-alcoholic beverages","Local Housing, water, electricity, gas and other fuels","Local Transport","Imported Goods Index","Imported Food and non-alcoholic beverages","Imported Furnishing, household equipment","Imported Transport","Fresh Products(1) index","Energy index","General Index excluding fresh Products and energy(2)"])
       # Filter the DataFrame based on the selected columns
@@ -476,24 +477,78 @@ def CPI_general():
   selected_columns=dfa.columns
   
   fig = px.line(dfa[8:], x="YEAR", y=selected_columns)
-  fig.update_layout(title="Rwanda's inflation year on year",yaxis_title="Index",legend=dict(yanchor="bottom", y=-0.7, xanchor="center", x=0.5),
-                        xaxis=dict(
-        rangeselector=dict(
-            buttons=list([
-                dict(count=2, label='2Y', step='year',),
-                dict(count=4, label='4Y', step='year'),
-                dict(count=7, label='7Y', step='year'),
-                dict(step='all')
-            ]))
-        
-                  ),
-                         height=1000 
+  fig.update_layout(title="Rwanda's inflation year on year",
+                    yaxis_title="Index",
+                    legend=dict(yanchor="bottom", y=-0.7, 
+                     xanchor="center", x=0.5),
+                    height=1000
   )
   # Set the y-axis range
              
   fig.layout.paper_bgcolor = '#F0F0F0'  # Light gray                     )
   st.plotly_chart(fig, use_container_width=True)
-      
+def other_indices2():
+    sheet_name = 'other_indices1'
+    df = pd.read_excel(excel_file, sheet_name=sheet_name)
+    df[['Year', 'Month']] = pd.to_datetime(df['YEAR'], format='%Y-%m').dt.strftime('%Y-%m').str.split('-').tolist()
+
+    # Assuming you have columns for the specified indices, update the column names accordingly
+    imported_goods_column = 'Imported Goods Index'
+    local_goods_column = 'Local Goods Index'
+    fresh_products_column = 'Fresh Products index'
+    energy_column = 'Energy index'
+    general_excluding_fresh_energy_column = 'General Index excluding fresh Products and energy'
+
+    # Convert 'Year' column to integer
+    df['Year'] = df['Year'].astype(int)
+
+    # Set the default slider value to start at the year 2017
+    default_start_year = 2017
+    x_axis_range = st.slider('Select Year Range', min_value=int(df['Year'].min()), max_value=int(df['Year'].max()), 
+                            value=(default_start_year, int(df['Year'].max())))
+
+    # Filter the DataFrame based on the selected range
+    filtered_df = df[(df['Year'] >= x_axis_range[0]) & (df['Year'] <= x_axis_range[1])]
+
+    # Create the first line chart comparing Imported Goods and Local Goods
+    fig1 = go.Figure()
+
+    fig1.add_trace(go.Scatter(x=filtered_df['Year'].astype(str) + '-' + filtered_df['Month'], y=filtered_df[imported_goods_column],
+                            mode='lines', name='Imported Goods Index', line=dict(color='red', width=2), marker=dict(size=6)))
+
+    fig1.add_trace(go.Scatter(x=filtered_df['Year'].astype(str) + '-' + filtered_df['Month'], y=filtered_df[local_goods_column],
+                            mode='lines', name='Local Goods Index', line=dict(color='blue', width=2), marker=dict(size=6)))
+
+    # Update layout for the first chart
+    fig1.update_layout(title='Comparison of Imported Goods vs Local Goods',
+                    xaxis_title='Year-Month',
+                    yaxis_title='CPI Index',
+                    legend=dict(x=0, y=1, traceorder='normal'))
+
+    # Create the second line chart comparing Fresh Products Index, Energy Index, and General Index excluding Fresh Products and Energy
+    fig2 = go.Figure()
+
+    fig2.add_trace(go.Scatter(x=filtered_df['Year'].astype(str) + '-' + filtered_df['Month'], y=filtered_df[fresh_products_column],
+                            mode='lines', name='Fresh Products Index', line=dict(color='green', width=2), marker=dict(size=6)))
+
+    fig2.add_trace(go.Scatter(x=filtered_df['Year'].astype(str) + '-' + filtered_df['Month'], y=filtered_df[energy_column],
+                            mode='lines', name='Energy Index', line=dict(color='orange', width=2), marker=dict(size=6)))
+
+    fig2.add_trace(go.Scatter(x=filtered_df['Year'].astype(str) + '-' + filtered_df['Month'], 
+                            y=filtered_df[general_excluding_fresh_energy_column],
+                            mode='lines', name='General Index excluding Fresh Products and Energy',
+                            line=dict(color='purple', width=2), marker=dict(size=6)))
+
+    # Update layout for the second chart
+    fig2.update_layout(title='Comparison of Fresh Products, Energy, and General Index (excluding Fresh Products and Energy)',
+                    xaxis_title='Year-Month',
+                    yaxis_title='CPI Index',
+                    legend=dict(x=0, y=1, traceorder='normal'))
+
+    # Organize the charts into two columns
+    col1, col2 = st.columns(2)
+    col1.plotly_chart(fig1)
+    col2.plotly_chart(fig2)
 
 #SIDEBAR
 def cpi_dashboard():
@@ -514,7 +569,7 @@ def cpi_dashboard():
        Rural()
 
     CPI_general()  
-
+    other_indices2()
 def gdp_dashboard():
     def economic_activities():
         st.markdown(""" 
@@ -2151,48 +2206,53 @@ def home_dashboard():
     data2 = pd.read_excel('CPI.xlsx',sheet2)
     data3 = pd.read_excel('CPI.xlsx',sheet3)
     # Create a selectbox to choose the base year
-    data1[['Year', 'Month', 'Date']] = pd.to_datetime(data1['YEAR'], format='%Y-%m-%d').dt.strftime('%Y-%m-%d').str.split('-').tolist()
-    
+    data1[['Year', 'Month']] = pd.to_datetime(data1['YEAR'], format='%Y-%m').dt.strftime('%Y-%m').str.split('-').tolist()
+    # Filter unique months based on the selected year
+
+    # Create dropdown for selecting month
+
     # Solting Year
     sorted_year=sorted(data1['Year'].unique(), reverse=True)
     sorted_month=sorted(data1['Month'].unique(), reverse=True)
     
-  
+    st.info("Base: 2014; Reference: February 2014=100")
     # Configurable Year
     # select year configuration
     selectYear,selectMonth=st.columns(2)
     with selectYear:
-      year  = st.selectbox(label="Select Year",options=sorted_year,key=11)
+       selected_year = st.selectbox('Select Year', sorted(data1['Year'].unique(), reverse=True))
     with selectMonth:
+      available_months = sorted(data1[data1['Year'] == selected_year]['Month'].unique(), key=lambda x: datetime.strptime(x, "%m").month, reverse=True)
+      selected_month = st.selectbox('Select Month', available_months, format_func=lambda x: datetime.strptime(str(x), "%m").strftime("%B"))
+      
       # Filter data based on selected year
-      filtered_df = data1[data1['Year'] == year]
+      filtered_df = data1[data1['Year'] == selected_year]
       # Extract unique months for the selected year
       unique_months = filtered_df['Month'].unique()
       
       # Create a selectbox for month selection
-      selected_month = st.selectbox('Select Month:', options=unique_months)
       # Filter the data based on the selected month and date
-    filtered_df_macro = data1[(data1['Year'] == year) & (data1['Month'] == selected_month)]
+    filtered_df_macro = data1[(data1['Year'] == selected_year) & (data1['Month'] == selected_month)]
     #selected column
     selected_column1 =filtered_df_macro['GENERAL INDEX (CPI)'].to_string(index=False, header=False)
     
         # Filter the data based on the selected month and date
-    filtered_df2 = data2[(data1['Year'] == year) & (data1['Month'] == selected_month)]
+    filtered_df2 = data2[(data1['Year'] == selected_year) & (data1['Month'] == selected_month)]
     #selected column
     selected_column2 =filtered_df2['GENERAL INDEX (CPI)'].to_string(index=False, header=False)
     
     # Filter the data based on the selected month and date
-    filtered_df3 = data3[(data1['Year'] == year) & (data1['Month'] == selected_month)]
+    filtered_df3 = data3[(data1['Year'] == selected_year) & (data1['Month'] == selected_month)]
     #selected column
     selected_column3 =filtered_df3['GENERAL INDEX (CPI)'].to_string(index=False, header=False)
     
       # RULAR INFLATION
-    annual_filtered = data3[(data1['Year'] == str(int(year)-1)) & (data1['Month'] == selected_month)]
+    annual_filtered = data3[(data1['Year'] == str(int(selected_year)-1)) & (data1['Month'] == selected_month)]
     if selected_month=="01":
 
-      monthly_filtered = data3[(data1['Year'] == str(int(year)-1)) & (data1['Month'].astype(int) == 12)]
+      monthly_filtered = data3[(data1['Year'] == str(int(selected_year)-1)) & (data1['Month'].astype(int) == 12)]
     else:
-      monthly_filtered = data3[(data1['Year'] == year) & (data1['Month'].astype(int) == int(selected_month)-1)]    
+      monthly_filtered = data3[(data1['Year'] == selected_year) & (data1['Month'].astype(int) == int(selected_month)-1)]    
     #selected column
 
     annual_base_year = "{:.2f}".format(float(annual_filtered['GENERAL INDEX (CPI)']))
@@ -2207,12 +2267,12 @@ def home_dashboard():
 
     
     # URBAN INFLATION
-    annual_filtered = data2[(data1['Year'] == str(int(year)-1)) & (data1['Month'] == selected_month)]
+    annual_filtered = data2[(data1['Year'] == str(int(selected_year)-1)) & (data1['Month'] == selected_month)]
     if selected_month=="01":
 
-      monthly_filtered = data2[(data1['Year'] == str(int(year)-1)) & (data1['Month'].astype(int) == 12)]
+      monthly_filtered = data2[(data1['Year'] == str(int(selected_year)-1)) & (data1['Month'].astype(int) == 12)]
     else:
-      monthly_filtered = data2[(data1['Year'] == year) & (data1['Month'].astype(int) == int(selected_month)-1)]  
+      monthly_filtered = data2[(data1['Year'] == selected_year) & (data1['Month'].astype(int) == int(selected_month)-1)]  
     #selected column
     annual_base_year = "{:.2f}".format(float(annual_filtered['GENERAL INDEX (CPI)']))
     monthly_base= "{:.2f}".format(float(monthly_filtered['GENERAL INDEX (CPI)']))
@@ -2226,12 +2286,12 @@ def home_dashboard():
 
     
     #GENERAL INFLATION
-    annual_filtered = data1[(data1['Year'] == str(int(year)-1)) & (data1['Month'] == selected_month)]
+    annual_filtered = data1[(data1['Year'] == str(int(selected_year)-1)) & (data1['Month'] == selected_month)]
     if selected_month=="01":
 
-      monthly_filtered = data1[(data1['Year'] == str(int(year)-1)) & (data1['Month'].astype(int) == 12)]
+      monthly_filtered = data1[(data1['Year'] == str(int(selected_year)-1)) & (data1['Month'].astype(int) == 12)]
     else:
-      monthly_filtered = data1[(data1['Year'] == year) & (data1['Month'].astype(int) == int(selected_month)-1)]  
+      monthly_filtered = data1[(data1['Year'] == selected_year) & (data1['Month'].astype(int) == int(selected_month)-1)]  
   
     #selected column
     annual_base_year = float(annual_filtered['GENERAL INDEX (CPI)'])
@@ -2255,90 +2315,84 @@ def home_dashboard():
     # GDP and CPI summary
     total1,total2,total3=st.columns(3,gap='large')
     with total1:
-        st.metric(label=f" Overall Rwanda Index {selected_month} {year}",value=selected_column1)
-        st.metric(label=f" Anually Inflation Rate {selected_month} {year}",value="",delta=f"{general_annual_inflation_rate1}%")
-        st.metric(label=f" Monthly Inflation Rate {selected_month} {year}",value="",delta=f"{general_monthly_inflation_rate1}%")
+        st.metric(label=f" Overall Rwanda Index {selected_month} {selected_year}",value=selected_column1)
+        st.metric(label=f" Anually Inflation Rate {selected_month} {selected_year}",value="",delta=f"{general_annual_inflation_rate1}%")
+        st.metric(label=f" Monthly Inflation Rate {selected_month} {selected_year}",value="",delta=f"{general_monthly_inflation_rate1}%")
     with total2:
-        st.metric(label=f"Urban Index {selected_month} {year}",value=selected_column2)
-        st.metric(label=f" Anually Inflation Rate  {selected_month} {year}",value="",delta=f"{Urban_annual_inflation_rate}%")
-        st.metric(label=f" Monthly Inflation Rate {selected_month} {year}",value="",delta=f"{Urban_monthly_inflation_rate}%")
+        st.metric(label=f"Urban Index {selected_month} {selected_year}",value=selected_column2)
+        st.metric(label=f" Anually Inflation Rate  {selected_month} {selected_year}",value="",delta=f"{Urban_annual_inflation_rate}%")
+        st.metric(label=f" Monthly Inflation Rate {selected_month} {selected_year}",value="",delta=f"{Urban_monthly_inflation_rate}%")
     with total3:
-        st.metric(label=f"Rural Index {selected_month} {year}",value=selected_column3)
-        st.metric(label=f" Anually Inflation Rate {selected_month} {year}",value="",delta=f"{rular_annual_inflation_rate}%")
-        st.metric(label=f" Monthly Inflation Rate {selected_month} {year}",value="",delta=f"{rular_monthly_inflation_rate}%")
-    # with total4:
-    #     st.metric(label=f"Real GDP in {month} {year}",value=f"{7451.3344:,.0f}",delta="84 Billions")
+        st.metric(label=f"Rural Index {selected_month} {selected_year}",value=selected_column3)
+        st.metric(label=f" Anually Inflation Rate {selected_month} {selected_year}",value="",delta=f"{rular_annual_inflation_rate}%")
+        st.metric(label=f" Monthly Inflation Rate {selected_month} {selected_year}",value="",delta=f"{rular_monthly_inflation_rate}%")
 
-    # with total5:
-    #     st.metric(label=f"Total Population as in {month} {year}",value=5,delta="100%")
-    
-    # GDP Charts
-    def categories():
-     # Read the Excel file into a Pandas DataFrame
-      df = pd.read_excel(excel_file, "urban1")
-
-      # Convert the 'Year' column to datetime format
-      df['YEAR'] = pd.to_datetime(df['YEAR'])
-
-      # Get the last year from the data
-      last_year = df['YEAR'].dt.year.max()
-      st.write(last_year)
-      # Filter data based on the last year
-      filtered_df = df[df['YEAR'].dt.year == last_year]
-      # Calculate the annual CPI for each category
-      def calculate_annual_inflation(category):
-          annual_cpi = []
-          for year in filtered_df['YEAR'].dt.year.unique():
-              year_data = filtered_df[filtered_df['YEAR'].dt.year == year][category]
-              # Assuming monthly data, calculate the average CPI for the year
-              average_cpi = np.mean(year_data)
-
-              # Calculate annual inflation rate using the formula
-              if year != filtered_df['YEAR'].dt.year.unique()[0]:
-                  previous_year_data = filtered_df[filtered_df['YEAR'].dt.year == year - 1][category]
-                  previous_average_cpi = np.mean(previous_year_data)
-
-                  inflation_rate = (average_cpi - previous_average_cpi) / previous_average_cpi * 100
-                  annual_cpi.append(inflation_rate)
-
-          return annual_cpi
-
-      # Calculate annual inflation rates for all categories
-      category_columns = filtered_df.columns[1:]
-      annual_inflation_rates = {}
-      for category in category_columns:
-          annual_inflation_rates[category] = calculate_annual_inflation(category)
-
-      # Display the annual inflation rates in a table
-      st.header('Annual Inflation Rates')
-      st.table(annual_inflation_rates)
-
+    def other_indicesHome():
   
-            
-      allw,urbanw=st.columns(2)
-      with allw:
-        fig=go.Figure()
-        fig.add_trace(go.Bar(
-            orientation='h',        
-            
-        )
-          )
-        fig.update_layout(
-            title='Overall Consumption in Rwanda'
-        )
-        st.plotly_chart(fig,use_container_width=True)
-      with urbanw:
-            fig11 = px.bar(weight2, 
-                            y='Categories', 
-                            x='Weights',
-                            orientation="h", 
-                            title='Consumption Trends in Urban Rwanda'
-                            )
-            fig11.update_layout(yaxis_title="Weights",legend=dict(yanchor="bottom", y=1, xanchor="right", x=0.5))
-            st.plotly_chart(fig11,use_container_width=True)
-    categories()
-    #CPI Charts
-    CPI_general()
+        sheet_name = 'other_indices1'
+        df = pd.read_excel(excel_file, sheet_name=sheet_name)
+
+        # Assuming you have columns for the specified indices, update the column names accordingly
+        imported_goods_column = 'Imported Goods Index'
+        local_goods_column = 'Local Goods Index'
+        fresh_products_column = 'Fresh Products index'
+        energy_column = 'Energy index'
+        general_excluding_fresh_energy_column = 'General Index excluding fresh Products and energy'
+
+        # Convert 'Year' column to integer
+        data1['Year'] = data1['Year'].astype(int)
+
+        # Create dropdown for selecting year
+
+        # Create a date column combining 'Year' and 'Month'
+        df['Date'] = pd.to_datetime(data1['Year'].astype(str) + '-' + data1['Month'].astype(str), format='%Y-%m')
+        st.write(selected_month)
+        # Create a one-year range from the selected month and year
+        end_date = datetime(int(selected_year), int(selected_month), 1)
+        start_date = end_date - timedelta(days=365)
+        filtered_df = df[(df['Date'] >= start_date) & (df['Date'] <= end_date)]
+
+        # Create the first line chart comparing Imported Goods and Local Goods
+        fig1 = go.Figure()
+
+        fig1.add_trace(go.Scatter(x=filtered_df['Date'], y=filtered_df[imported_goods_column],
+                                mode='lines', name='Imported Goods Index', line=dict(color='red', width=2), marker=dict(size=6)))
+
+        fig1.add_trace(go.Scatter(x=filtered_df['Date'], y=filtered_df[local_goods_column],
+                                mode='lines', name='Local Goods Index', line=dict(color='blue', width=2), marker=dict(size=6)))
+
+        # Update layout for the first chart
+        fig1.update_layout(title='Comparison of Imported Goods vs Local Goods',
+                        xaxis_title='Year-Month',
+                        yaxis_title='CPI Index',
+                        legend=dict(x=0, y=1, traceorder='normal'))
+
+        # Create the second line chart comparing Fresh Products Index, Energy Index, and General Index excluding Fresh Products and Energy
+        fig2 = go.Figure()
+
+        fig2.add_trace(go.Scatter(x=filtered_df['Date'], y=filtered_df[fresh_products_column],
+                                mode='lines', name='Fresh Products Index', line=dict(color='green', width=2), marker=dict(size=6)))
+
+        fig2.add_trace(go.Scatter(x=filtered_df['Date'], y=filtered_df[energy_column],
+                                mode='lines', name='Energy Index', line=dict(color='orange', width=2), marker=dict(size=6)))
+
+        fig2.add_trace(go.Scatter(x=filtered_df['Date'], 
+                                y=filtered_df[general_excluding_fresh_energy_column],
+                                mode='lines', name='General Index excluding Fresh Products and Energy',
+                                line=dict(color='purple', width=2), marker=dict(size=6)))
+
+        # Update layout for the second chart
+        fig2.update_layout(title='Comparison of Fresh Products, Energy, and General Index (excluding Fresh Products and Energy)',
+                        xaxis_title='Year-Month',
+                        yaxis_title='CPI Index',
+                        legend=dict(x=0, y=1.1, traceorder='normal'))
+
+        # Organize the charts into two columns
+        col1, col2 = st.columns(2)
+        col1.plotly_chart(fig1)
+        col2.plotly_chart(fig2)
+
+    other_indicesHome()
     # Divider
     st.markdown("""---""")
   

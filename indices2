@@ -1,0 +1,6 @@
+import pandas as pd
+import streamlit as st
+import plotly.graph_objects as go
+
+# Set the page layout to wide
+st.set_page_config(layout="wide")
