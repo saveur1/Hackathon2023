@@ -151,7 +151,6 @@ allRwanda_Weights= 'allRwanda_Weights'
 urban_Weights= 'urban_Weights'
 rural_Weights= 'rural_Weights'
 otherIndices_Weights= 'otherIndices_Weights'
-weight1 = pd.read_excel(excel_file, allRwanda_Weights)
 weight2 = pd.read_excel(excel_file, urban_Weights)
 weight3 = pd.read_excel(excel_file, rural_Weights)
 weight4 = pd.read_excel(excel_file, otherIndices_Weights)
@@ -308,97 +307,38 @@ def CPI_general():
   dfa = pd.read_excel(excel_file, sheet_name2)
   # Select the initial columns to be displayed
   selected_columns=dfa.columns
+  
   fig = px.line(dfa[8:], x="YEAR", y=selected_columns)
-  fig.update_layout(title="Rwanda's inflation year on year from 2000",yaxis_title="Index",legend=dict(yanchor="bottom", y=-1, xanchor="center", x=0.5),
+  fig.update_layout(title="Rwanda's inflation year on year",yaxis_title="Index",legend=dict(yanchor="bottom", y=-0.7, xanchor="center", x=0.5),
                         xaxis=dict(
         rangeselector=dict(
             buttons=list([
-                dict(count=1, label='1Y', step='year'),
-                dict(count=2, label='4Y', step='year'),
+                dict(count=2, label='2Y', step='year',),
+                dict(count=4, label='4Y', step='year'),
                 dict(count=7, label='7Y', step='year'),
                 dict(step='all')
             ]))
-                    ))
+        
+                  ),
+                         height=1000 
+  )
+  # Set the y-axis range
+             
+  fig.layout.paper_bgcolor = '#F0F0F0'  # Light gray                     )
   st.plotly_chart(fig, use_container_width=True)
       
-def weights():
-      tablew1,tablew2=st.columns(2)
-      tablew3,tablew4=st.columns(2)
-      with tablew1:
-            st.subheader("Overall Consumption in Rwanda Table")
-            st.caption("Overall Consumption in Rwanda")
-            with st.expander("""Expand"""): 
-                  st.dataframe(weight1)
-                  
-      with tablew2:
-            st.subheader("Consumption Trends in Urban Rwanda Table")
-            st.caption("Consumption Trends in Urban Rwanda")
-            with st.expander("""Expand"""): 
-                  st.dataframe(weight2)
-                  
-      with tablew3:
-            st.subheader("Consumption Pattern in Rural Rwanda Table")
-            st.caption("Consumption Pattern in Rural Rwanda")
-            with st.expander("""Expand"""): 
-                  st.dataframe(weight3)
-                  
-      with tablew4:
-            st.subheader("Consumption Analysis Based on Other Indices Table")
-            st.caption("Consumption Analysis Based on Other Indices")
-            with st.expander("""Expand"""): 
-                  st.dataframe(weight4)
-      allw,urbanw=st.columns(2)
-      rularw,otherw=st.columns(2)
-      with allw:
-            fig11 = px.bar(weight1, 
-                            x='Categories', 
-                            y='Weights',
-                            orientation="v", 
-                            title='Overall Consumption in Rwanda'
-                            )
-            fig11.update_layout(yaxis_title="Weights",legend=dict(yanchor="bottom", y=1, xanchor="right", x=0.5))
-            st.plotly_chart(fig11,use_container_width=True)
-      with urbanw:
-            fig11 = px.bar(weight2, 
-                            x='Categories', 
-                            y='Weights',
-                            orientation="v", 
-                            title='Consumption Trends in Urban Rwanda'
-                            )
-            fig11.update_layout(yaxis_title="Weights",legend=dict(yanchor="bottom", y=1, xanchor="right", x=0.5))
-            st.plotly_chart(fig11,use_container_width=True)
-            
-      with rularw:
-            fig11 = px.bar(weight3, 
-                            x='Categories', 
-                            y='Weights',
-                            orientation="v", 
-                            title='Consumption Pattern in Rural Rwanda'
-                            )
-            fig11.update_layout(yaxis_title="Weights",legend=dict(yanchor="bottom", y=1, xanchor="right", x=0.5))
-            st.plotly_chart(fig11,use_container_width=True)
-      with otherw:
-            fig11 = px.bar(weight4, 
-                            x='Categories', 
-                            y='Weights',
-                            orientation="v", 
-                            title='Consumption Analysis Based on Other Indices'
-                            )
-            fig11.update_layout(yaxis_title="Weights",legend=dict(yanchor="bottom", y=1, xanchor="right", x=0.5))
-            st.plotly_chart(fig11,use_container_width=True)
-     
-#DASHBOARDS
+
+#SIDEBAR
 def cpi_dashboard():
     st.title("CPI Dashboard")
     # Create the navigation bar
-    tab1, tab2,tab3, tab4 = st.tabs(["Weights", "All Rwanda","Urban", "Rural"])
+    tab2,tab3, tab4 = st.tabs(["All Rwanda","Urban", "Rural"])
 
     # Style
     with open('style.css')as f:
         st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html = True)
     # Display CPI dashboard attributes
-    with tab1:
-       weights()
+
     with tab2:
       all()
     with tab3:
@@ -2244,81 +2184,70 @@ def home_dashboard():
     #     st.metric(label=f"Total Population as in {month} {year}",value=5,delta="100%")
     
     # GDP Charts
-    def threeD_barchart():
-      years = [2000, 2001, 2002, 2003,
-          2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012]
+    def categories():
+     # Read the Excel file into a Pandas DataFrame
+      df = pd.read_excel(excel_file, "urban1")
 
-      fig = go.Figure()
-      fig.add_trace(go.Bar(x=years,
-                      y=[180, 236, 207, 236, 263,
-                        350, 430, 474, 526, 488, 537, 500, 439],
-                      name='GDP at Current Price',
-                      marker_color='rgb(55, 83, 109)'
-                      ))
-      fig.add_trace(go.Bar(x=years,
-                      y=[37, 43, 55, 56, 88, 105, 156, 270,
-                        299, 340, 403, 549, 499],
-                      name='GDP at Constant 2017',
-                      marker_color='rgb(26, 118, 255)'
-                      ))
+      # Convert the 'Year' column to datetime format
+      df['YEAR'] = pd.to_datetime(df['YEAR'])
 
-      fig.update_layout(
-          title='GDP at current price and GDP at constant 2017',
-          xaxis_tickfont_size=14,
-          yaxis=dict(
-              title='Rwf (Billions)',
-              titlefont_size=20,
-              tickfont_size=14,
-          ),
-          legend=dict(
-              xanchor="left",
-              yanchor="bottom",
-              x=0,
-              y=-0.4,
-              bgcolor='rgba(255, 255, 255, 0)',
-              bordercolor='rgba(255, 255, 255, 0)'
-          ),
-          barmode='group',
-          bargap=0.3, # gap between bars of adjacent location coordinates.
-          bargroupgap=0.1 # gap between bars of the same location coordinate.
-      )
-      st.plotly_chart(fig, use_container_width=True)
+      # Get the last year from the data
+      last_year = df['YEAR'].dt.year.max()
+      st.write(last_year)
+      # Filter data based on the last year
+      filtered_df = df[df['YEAR'].dt.year == last_year]
+      # Calculate the annual CPI for each category
+      def calculate_annual_inflation(category):
+          annual_cpi = []
+          for year in filtered_df['YEAR'].dt.year.unique():
+              year_data = filtered_df[filtered_df['YEAR'].dt.year == year][category]
+              # Assuming monthly data, calculate the average CPI for the year
+              average_cpi = np.mean(year_data)
 
+              # Calculate annual inflation rate using the formula
+              if year != filtered_df['YEAR'].dt.year.unique()[0]:
+                  previous_year_data = filtered_df[filtered_df['YEAR'].dt.year == year - 1][category]
+                  previous_average_cpi = np.mean(previous_year_data)
 
-      
-    def donut_chart():
-      # Create a dataframe with the data from the image
-        data = pd.DataFrame({
-            'Sector': ['Agriculture', 'Industry', 'Services','Adjustments'],
-            'Percentage': [
-                            round(df_macro['Agriculture'][23]*100),
-                            round(df_macro['Industry'][23]*100), 
-                            round(df_macro['Services'][23]*100),
-                            round(df_macro['Adjustments'][23]*100)
-                          ]
-        })
+                  inflation_rate = (average_cpi - previous_average_cpi) / previous_average_cpi * 100
+                  annual_cpi.append(inflation_rate)
 
-        # Create the trace for the chart
-        trace = go.Pie(labels=data['Sector'], values=data['Percentage'], hole=0.5,)
+          return annual_cpi
 
-        # Create the layout for the chart
-        layout = go.Layout(
-            title=f'Percentage of GDP by Sector in {year}',
-            legend=dict(yanchor="bottom", y=-0.8, xanchor="center", x=0.5),
-            margin=dict(l=0, r=0, b=0, t=40),
-            annotations=[dict(text=f'Frw<br />{ "{:,}".format(df_macro["GDP at current prices"][23]) }<br />billion', x=0.5, y=0.5, font_size=20, showarrow=False)]
+      # Calculate annual inflation rates for all categories
+      category_columns = filtered_df.columns[1:]
+      annual_inflation_rates = {}
+      for category in category_columns:
+          annual_inflation_rates[category] = calculate_annual_inflation(category)
+
+      # Display the annual inflation rates in a table
+      st.header('Annual Inflation Rates')
+      st.table(annual_inflation_rates)
+
+  
+            
+      allw,urbanw=st.columns(2)
+      with allw:
+        fig=go.Figure()
+        fig.add_trace(go.Bar(
+            orientation='h',        
+            
         )
-
-        # Create the figure and plot it using Streamlit
-        fig = go.Figure(data=[trace], layout=layout)
-        st.plotly_chart(fig, use_container_width=True)
-       
-    col1, col2 = st.columns(2)
-    with col1:
-        threeD_barchart()
-    with col2:
-        donut_chart()
-
+          )
+        fig.update_layout(
+            title='Overall Consumption in Rwanda'
+        )
+        st.plotly_chart(fig,use_container_width=True)
+      with urbanw:
+            fig11 = px.bar(weight2, 
+                            y='Categories', 
+                            x='Weights',
+                            orientation="h", 
+                            title='Consumption Trends in Urban Rwanda'
+                            )
+            fig11.update_layout(yaxis_title="Weights",legend=dict(yanchor="bottom", y=1, xanchor="right", x=0.5))
+            st.plotly_chart(fig11,use_container_width=True)
+    categories()
     #CPI Charts
     CPI_general()
     # Divider
