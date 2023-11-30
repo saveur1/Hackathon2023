@@ -442,7 +442,7 @@ def Urban():
   selected_columns = st.multiselect('Filter: ',df.columns,default=["GENERAL INDEX (CPI)"],key=23)
 
   fig = px.line(df, x='YEAR', y=selected_columns, title='Deciphering Urban Consumption Dynamics in Rwanda: A Focus on CPI Trends from 2009 to 2022')
-  fig.update_layout(yaxis_title="Percentage",legend=dict(yanchor="bottom", y=-1, xanchor="center", x=0.5))
+  fig.update_layout(yaxis_title="Index",legend=dict(yanchor="bottom", y=-1, xanchor="center", x=0.5))
   st.plotly_chart(fig,use_container_width=True)
 
 # ALL RWANDA
@@ -478,7 +478,7 @@ def Rural():
   selected_columns = st.multiselect('Filter: ',df.columns,default=["GENERAL INDEX (CPI)"],key=25)
 
   fig = px.line(df, x='YEAR', y=selected_columns, title='Unveiling Rural Consumption Dynamics in Rwanda: A Focus on CPI Trends from 2009 to 2022')
-  fig.update_layout(yaxis_title="Percentage",legend=dict(yanchor="bottom", y=-1, xanchor="center", x=0.5))
+  fig.update_layout(yaxis_title="Index",legend=dict(yanchor="bottom", y=-1, xanchor="center", x=0.5))
   st.plotly_chart(fig,use_container_width=True)
   
   
@@ -516,7 +516,7 @@ def Other_Indices():
   selected_columns = st.multiselect('Filter: ',df.columns,default=["Local Goods Index","Imported Goods Index","Fresh Products(1) index","Energy index"])
 
   fig = px.bar(df, x='YEAR', y=selected_columns, title='Complementing CPI Analysis with Additional Indices: A Comprehensive Look at Rwandas Consumption Trends')
-  fig.update_layout(yaxis_title="Percentage",legend=dict(yanchor="bottom", y=-1, xanchor="center", x=0.5))
+  fig.update_layout(yaxis_title="Index",legend=dict(yanchor="bottom", y=-1, xanchor="center", x=0.5))
   st.plotly_chart(fig,use_container_width=True)
 
 def CPI_general():
@@ -527,7 +527,16 @@ def CPI_general():
   # Select the initial columns to be displayed
   selected_columns=dfa.columns
   fig = px.line(dfa[8:], x="YEAR", y=selected_columns)
-  fig.update_layout(title="Charting Rwanda",yaxis_title="Index",legend=dict(yanchor="bottom", y=-1, xanchor="center", x=0.5))
+  fig.update_layout(title="Rwanda's inflation year on year from 2000",yaxis_title="Index",legend=dict(yanchor="bottom", y=-1, xanchor="center", x=0.5),
+                        xaxis=dict(
+        rangeselector=dict(
+            buttons=list([
+                dict(count=1, label='1Y', step='year'),
+                dict(count=2, label='4Y', step='year'),
+                dict(count=7, label='7Y', step='year'),
+                dict(step='all')
+            ]))
+                    ))
   st.plotly_chart(fig, use_container_width=True)
       
 def weights():
@@ -969,7 +978,17 @@ def home_dashboard():
                 st.plotly_chart(fig, use_container_width=True)
             with ExchangeGrowthRate:
                 selectedColumn=df_macro["Exchange Growth rate"]*100
-                fig = px.area(df_macro, x="Years", y=selectedColumn)
+                fig=go.Figure()
+                fig.add_trace(go.Scatter(
+                fill='tozeroy',
+                x=df_macro["Years"],
+                y=selectedColumn,
+                mode='lines+markers+text',
+                line_color='red'
+                  
+                ))
+      
+
                 fig.update_layout(title="Exchange growth rate: Rwf per US dollar",yaxis_title="Exchange Growth Rate (Percentage)",legend=dict(yanchor="bottom", y=-1, xanchor="center", x=0.5))
                 st.plotly_chart(fig, use_container_width=True)
         population_growth_illustration()  
