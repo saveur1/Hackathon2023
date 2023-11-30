@@ -1,3 +1,10 @@
+:root {
+    --color:rgb(255, 77, 77);
+    --color2:rgb(255, 166, 0);
+    --color3:rgb(255, 255, 0);
+    --line_color:rgb(5, 1, 21);
+    --color4:rgb(0, 128, 0);
+}
 [data-testid=metric-container] {
     box-shadow: 0 0 4px #cccccc;
     padding: 10px;
@@ -10,17 +17,35 @@
    
 }
 
+.sidebar .sidebar-content {
+    padding-top: 0px;
+}
+
+.streamlit-button.primary-button:active {
+    background-color: rgb(40,79,141);
+}
+
 div[data-testid="stExpander"] div[role="button"] p
 {
     font-size: 1.3rem;
-    color:rgb(40, 79, 141);
+    color:#284f8d;
 }
-/* .st-dd {
-    background-color: rgb(40,79,141);
-  } */
-  /* .e16nr0p30 {
-    color:rgb(40,79,141);
-  } */
-/* .st-ca {
-    background-color: rgb(40,79,141);
-} */
+.e16nr0p30 {
+color:rgb(40,79,141);
+}
+
+div.css-1fjr796.e1tzin5v1,
+div.css-j5r0tf.e1tzin5v1 {
+background-color: rgb(205, 224, 255);
+border: 1px solid rgb(159, 181, 217);
+border-radius: 12px;
+padding: 15px 5px;
+color:rgb(1, 13, 31) !important;
+}
+div.css-1fjr796.e1tzin5v1 p,
+div.css-j5r0tf.e1tzin5v1 p {
+color:rgb(1, 13, 31) !important;
+}
+div [data-testid="metric-container"]{
+box-shadow: none !important;
+}
