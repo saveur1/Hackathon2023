@@ -655,8 +655,8 @@ def gdp_dashboard():
                 ),
                 legend=dict(x=0.029, y=1.038, font_size=10),
                 margin=dict(l=100, r=20, t=70, b=70),
-                paper_bgcolor='rgb(248, 248, 255)',
-                plot_bgcolor='rgb(248, 248, 255)',
+                #paper_bgcolor='rgb(248, 248, 255)',
+                #plot_bgcolor='rgb(248, 248, 255)',
                 barmode = "stack"
             )
 
@@ -694,8 +694,8 @@ def gdp_dashboard():
                 ),
                 legend=dict(x=0.029, y=1.038, font_size=10),
                 margin=dict(l=100, r=20, t=70, b=70),
-                paper_bgcolor='rgb(248, 248, 255)',
-                plot_bgcolor='rgb(248, 248, 255)',
+                #paper_bgcolor='rgb(248, 248, 255)',
+                #plot_bgcolor='rgb(248, 248, 255)',
                 height = 450
             )
 
@@ -797,8 +797,8 @@ def gdp_dashboard():
                 ),
                 legend=dict(x=0.029, y=1.038, font_size=10),
                 margin=dict(l=100, r=20, t=70, b=70),
-                paper_bgcolor='rgb(248, 248, 255)',
-                plot_bgcolor='rgb(248, 248, 255)',
+                #paper_bgcolor='rgb(248, 248, 255)',
+                #plot_bgcolor='rgb(248, 248, 255)',
                 barmode = "stack"
             )
 
@@ -849,8 +849,8 @@ def gdp_dashboard():
                 ),
                 legend=dict(x=0.029, y=1.038, font_size=10),
                 margin=dict(l=100, r=20, t=70, b=70),
-                paper_bgcolor='rgb(248, 248, 255)',
-                plot_bgcolor='rgb(248, 248, 255)',
+                #paper_bgcolor='rgb(248, 248, 255)',
+                #plot_bgcolor='rgb(248, 248, 255)',
                 barmode = "stack"
               )
 
@@ -890,8 +890,8 @@ def gdp_dashboard():
                 ),
                 legend=dict(x=0.029, y=1.038, font_size=10),
                 margin=dict(l=100, r=20, t=70, b=70),
-                paper_bgcolor='rgb(248, 248, 255)',
-                plot_bgcolor='rgb(248, 248, 255)',
+                #paper_bgcolor='rgb(248, 248, 255)',
+                #plot_bgcolor='rgb(248, 248, 255)',
               )
 
             st.plotly_chart(fig, use_container_width=True)
@@ -964,8 +964,8 @@ def gdp_dashboard():
                 ),
                 legend=dict(x=0.029, y=1.038, font_size=10),
                 margin=dict(l=100, r=20, t=70, b=70),
-                paper_bgcolor='rgb(248, 248, 255)',
-                plot_bgcolor='rgb(248, 248, 255)',
+                #paper_bgcolor='rgb(248, 248, 255)',
+                #plot_bgcolor='rgb(248, 248, 255)',
               )
 
             st.plotly_chart(fig, use_container_width=True)
@@ -1077,8 +1077,8 @@ def gdp_dashboard():
                 ),
                 legend=dict(x=0.029, y=1.038, font_size=10),
                 margin=dict(l=100, r=20, t=70, b=70),
-                paper_bgcolor='rgb(248, 248, 255)',
-                plot_bgcolor='rgb(248, 248, 255)',
+                #paper_bgcolor='rgb(248, 248, 255)',
+                #plot_bgcolor='rgb(248, 248, 255)',
                 barmode = "stack"
               )
 
@@ -1116,8 +1116,8 @@ def gdp_dashboard():
                 ),
                 legend=dict(x=0.029, y=1.038, font_size=10),
                 margin=dict(l=100, r=20, t=70, b=70),
-                paper_bgcolor='rgb(248, 248, 255)',
-                plot_bgcolor='rgb(248, 248, 255)',
+                #paper_bgcolor='rgb(248, 248, 255)',
+                #plot_bgcolor='rgb(248, 248, 255)',
                 height = 450
             )
 
@@ -1219,8 +1219,8 @@ def gdp_dashboard():
                 ),
                 legend=dict(x=0.029, y=1.038, font_size=10),
                 margin=dict(l=100, r=20, t=70, b=70),
-                paper_bgcolor='rgb(248, 248, 255)',
-                plot_bgcolor='rgb(248, 248, 255)',
+                #paper_bgcolor='rgb(248, 248, 255)',
+                #plot_bgcolor='rgb(248, 248, 255)',
                 barmode = "stack"
               )
 
@@ -1271,8 +1271,8 @@ def gdp_dashboard():
                 ),
                 legend=dict(x=0.029, y=1.038, font_size=10),
                 margin=dict(l=100, r=20, t=70, b=70),
-                paper_bgcolor='rgb(248, 248, 255)',
-                plot_bgcolor='rgb(248, 248, 255)',
+                #paper_bgcolor='rgb(248, 248, 255)',
+                #plot_bgcolor='rgb(248, 248, 255)',
                 barmode = "stack"
               )
 
@@ -1312,8 +1312,8 @@ def gdp_dashboard():
                 ),
                 legend=dict(x=0.029, y=1.038, font_size=10),
                 margin=dict(l=100, r=20, t=70, b=70),
-                paper_bgcolor='rgb(248, 248, 255)',
-                plot_bgcolor='rgb(248, 248, 255)',
+                #paper_bgcolor='rgb(248, 248, 255)',
+                #plot_bgcolor='rgb(248, 248, 255)',
               )
 
             st.plotly_chart(fig, use_container_width=True)
@@ -1397,8 +1397,8 @@ def gdp_dashboard():
                 ),
                 legend=dict(x=0.029, y=1.038, font_size=10),
                 margin=dict(l=100, r=20, t=70, b=70),
-                paper_bgcolor='rgb(248, 248, 255)',
-                plot_bgcolor='rgb(248, 248, 255)',
+                #paper_bgcolor='rgb(248, 248, 255)',
+                #plot_bgcolor='rgb(248, 248, 255)',
               )
 
             st.plotly_chart(fig, use_container_width=True)
@@ -1510,8 +1510,8 @@ def gdp_dashboard():
                 ),
                 legend=dict(x=0.029, y=1.038, font_size=10),
                 margin=dict(l=100, r=20, t=70, b=70),
-                paper_bgcolor='rgb(248, 248, 255)',
-                plot_bgcolor='rgb(248, 248, 255)',
+                #paper_bgcolor='rgb(248, 248, 255)',
+                #plot_bgcolor='rgb(248, 248, 255)',
                 barmode = "stack"
               )
 
@@ -1550,8 +1550,8 @@ def gdp_dashboard():
                 ),
                 legend=dict(x=0.029, y=1.038, font_size=10),
                 margin=dict(l=100, r=20, t=70, b=70),
-                paper_bgcolor='rgb(248, 248, 255)',
-                plot_bgcolor='rgb(248, 248, 255)',
+                #paper_bgcolor='rgb(248, 248, 255)',
+                #plot_bgcolor='rgb(248, 248, 255)',
                 height = 450
             )
 
@@ -1653,8 +1653,8 @@ def gdp_dashboard():
                 ),
                 legend=dict(x=0.029, y=1.038, font_size=10),
                 margin=dict(l=100, r=20, t=70, b=70),
-                paper_bgcolor='rgb(248, 248, 255)',
-                plot_bgcolor='rgb(248, 248, 255)',
+                #paper_bgcolor='rgb(248, 248, 255)',
+                #plot_bgcolor='rgb(248, 248, 255)',
                 barmode = "stack"
               )
 
@@ -1705,8 +1705,8 @@ def gdp_dashboard():
                 ),
                 legend=dict(x=0.029, y=1.038, font_size=10),
                 margin=dict(l=100, r=20, t=70, b=70),
-                paper_bgcolor='rgb(248, 248, 255)',
-                plot_bgcolor='rgb(248, 248, 255)',
+                #paper_bgcolor='rgb(248, 248, 255)',
+                #plot_bgcolor='rgb(248, 248, 255)',
                 barmode = "stack"
               )
 
@@ -1746,8 +1746,8 @@ def gdp_dashboard():
                 ),
                 legend=dict(x=0.029, y=1.038, font_size=10),
                 margin=dict(l=100, r=20, t=70, b=70),
-                paper_bgcolor='rgb(248, 248, 255)',
-                plot_bgcolor='rgb(248, 248, 255)',
+                #paper_bgcolor='rgb(248, 248, 255)',
+                #plot_bgcolor='rgb(248, 248, 255)',
               )
 
             st.plotly_chart(fig, use_container_width=True)  
@@ -1812,8 +1812,8 @@ def gdp_dashboard():
                 ),
                 legend=dict(x=0.029, y=1.038, font_size=10),
                 margin=dict(l=100, r=20, t=70, b=70),
-                paper_bgcolor='rgb(248, 248, 255)',
-                plot_bgcolor='rgb(248, 248, 255)',
+                #paper_bgcolor='rgb(248, 248, 255)',
+                #plot_bgcolor='rgb(248, 248, 255)',
                 barmode = "stack"
               )
 
@@ -1859,8 +1859,8 @@ def gdp_dashboard():
                 ),
                 legend=dict(x=0.029, y=1.038, font_size=10),
                 margin=dict(l=100, r=20, t=70, b=70),
-                paper_bgcolor='rgb(248, 248, 255)',
-                plot_bgcolor='rgb(248, 248, 255)',
+                #paper_bgcolor='rgb(248, 248, 255)',
+                #plot_bgcolor='rgb(248, 248, 255)',
                 barmode = "relative"
               )
 
@@ -1906,8 +1906,8 @@ def gdp_dashboard():
                 ),
                 legend=dict(x=0.029, y=1.038, font_size=10),
                 margin=dict(l=100, r=20, t=70, b=70),
-                paper_bgcolor='rgb(248, 248, 255)',
-                plot_bgcolor='rgb(248, 248, 255)',
+                #paper_bgcolor='rgb(248, 248, 255)',
+                #plot_bgcolor='rgb(248, 248, 255)',
                 barmode = "relative"
               )
 
@@ -1953,8 +1953,8 @@ def gdp_dashboard():
                 ),
                 legend=dict(x=0.029, y=1.038, font_size=10),
                 margin=dict(l=100, r=20, t=70, b=70),
-                paper_bgcolor='rgb(248, 248, 255)',
-                plot_bgcolor='rgb(248, 248, 255)',
+                #paper_bgcolor='rgb(248, 248, 255)',
+                #plot_bgcolor='rgb(248, 248, 255)',
                 barmode = "stack"
               )
 
@@ -1963,6 +1963,7 @@ def gdp_dashboard():
             x = data_df["Years"][8:]
 
             # Creating Figure
+
             fig = go.Figure()
 
             fig.add_trace(go.Bar(
@@ -2008,8 +2009,8 @@ def gdp_dashboard():
                 ),
                 legend=dict(x=0.029, y=1.038, font_size=10),
                 margin=dict(l=100, r=20, t=70, b=70),
-                paper_bgcolor='rgb(248, 248, 255)',
-                plot_bgcolor='rgb(248, 248, 255)',
+                #paper_bgcolor='rgb(248, 248, 255)',
+                #plot_bgcolor='rgb(248, 248, 255)',
               )
 
             st.plotly_chart(fig, use_container_width=True)
@@ -2078,8 +2079,8 @@ def gdp_dashboard():
                 ),
                 legend=dict(x=0.029, y=1.038, font_size=10),
                 margin=dict(l=100, r=20, t=70, b=70),
-                paper_bgcolor='rgb(248, 248, 255)',
-                plot_bgcolor='rgb(248, 248, 255)',
+                #paper_bgcolor='rgb(248, 248, 255)',
+                #plot_bgcolor='rgb(248, 248, 255)',
               )
 
             st.plotly_chart(fig, use_container_width=True)
@@ -2116,8 +2117,8 @@ def gdp_dashboard():
                 ),
                 legend=dict(x=0.029, y=1.038, font_size=10),
                 margin=dict(l=100, r=20, t=70, b=70),
-                paper_bgcolor='rgb(248, 248, 255)',
-                plot_bgcolor='rgb(248, 248, 255)',
+                #paper_bgcolor='rgb(248, 248, 255)',
+                #plot_bgcolor='rgb(248, 248, 255)',
                 height = 450
             )
 
@@ -2278,8 +2279,8 @@ def home_dashboard():
               yanchor="bottom",
               x=0,
               y=-0.4,
-              bgcolor='rgba(255, 255, 255, 0)',
-              bordercolor='rgba(255, 255, 255, 0)'
+            #   bgcolor='rgba(255, 255, 255, 0)',
+            #   bordercolor='rgba(255, 255, 255, 0)'
           ),
           template="gridon",
           bargap=0.3, # gap between bars of adjacent location coordinates.
@@ -2359,8 +2360,8 @@ def home_dashboard():
                 yanchor="bottom",
                 x=0,
                 y=-0.4,
-                bgcolor='rgba(255, 255, 255, 0)',
-                bordercolor='rgba(255, 255, 255, 0)'
+                #bgcolor='rgba(255, 255, 255, 0)',
+                #bordercolor='rgba(255, 255, 255, 0)'
             ),
             template="gridon",
             bargap=0.3, # gap between bars of adjacent location coordinates.
@@ -2422,9 +2423,9 @@ def home_dashboard():
                       showgrid=True,
                   ),
                   legend=dict(x=0.029, y=1.038, font_size=10),
-                  margin=dict(l=100, r=20, t=70, b=70),
-                  paper_bgcolor='rgb(248, 248, 255)',
-                  plot_bgcolor='rgb(248, 248, 255)',
+                  margin=dict(l=100, r=20, t=70, b=70)
+                  #paper_bgcolor='rgb(248, 248, 255)',
+                  #plot_bgcolor='rgb(248, 248, 255)',
               )
 
               annotations = []
