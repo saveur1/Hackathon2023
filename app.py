@@ -2473,6 +2473,12 @@ def home_dashboard():
         population_growth_illustration()  
         ExchangeRate()
 
+    def gdp_per_capita():
+        st.info("GDP Per Head from 2007 to 2022")
+        fig = px.area(df_macro[8:], x="Years", y="GDP per head (in '000 Rwf)", markers=True)
+        fig.update_layout(title="GDP per head from 2007 to 2022",yaxis_title="GDP in Thousands Rwf",legend=dict(yanchor="bottom", y=-1, xanchor="center", x=0.5))
+        st.plotly_chart(fig, use_container_width=True)
+
     # GDP Summary
     gdp_summary_cards()
 
@@ -2490,12 +2496,15 @@ def home_dashboard():
 
     # gdp inflation
     st.markdown(""" 
-      ##### <div style='margin-top:20px'>GDP Information For Inflation</div>
+      ##### <div style='margin-top:20px'>GDP Deflators from 2007 to 2022</div>
     """,unsafe_allow_html=True )
     nominal_and_real_gdp()
 
     # gdp population
     MemorandumItems()
+
+    # gdp per capita
+    gdp_per_capita()
 
     # Divider
     st.markdown("""---""")
